@@ -22,6 +22,22 @@ cp templates/til-note.md _tils/YYYY-MM-DD-short-title.md
 
 Then edit the front matter and body.
 
+## Preview While Writing
+
+Run the local site:
+
+```bash
+bundle exec jekyll serve
+```
+
+Open:
+
+```text
+http://127.0.0.1:4000/
+```
+
+Save Markdown in VS Code, then refresh the browser.
+
 ## Keep a Note Private
 
 For genuinely private notes, keep the file under `_private/` or use a
