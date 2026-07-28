@@ -1,5 +1,3 @@
-document.documentElement.classList.add("js");
-
 const searchableLists = document.querySelectorAll("[data-search-list]");
 
 searchableLists.forEach((list) => {
@@ -24,48 +22,4 @@ searchableLists.forEach((list) => {
   });
 
   renderCount();
-});
-
-const revealItems = document.querySelectorAll("[data-reveal], .entry");
-
-if ("IntersectionObserver" in window) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
-  );
-
-  revealItems.forEach((item) => observer.observe(item));
-} else {
-  revealItems.forEach((item) => item.classList.add("is-visible"));
-}
-
-let pointerFrame = null;
-
-window.addEventListener("pointermove", (event) => {
-  if (pointerFrame) return;
-  pointerFrame = window.requestAnimationFrame(() => {
-    document.documentElement.style.setProperty("--mx", `${event.clientX}px`);
-    document.documentElement.style.setProperty("--my", `${event.clientY}px`);
-    pointerFrame = null;
-  });
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;
-  const active = document.activeElement;
-  const isTyping = active && ["INPUT", "TEXTAREA"].includes(active.tagName);
-  if (isTyping) return;
-
-  const search = document.querySelector("[data-search-input]");
-  if (!search) return;
-
-  event.preventDefault();
-  search.focus();
 });
