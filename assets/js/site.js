@@ -23,3 +23,24 @@ searchableLists.forEach((list) => {
 
   renderCount();
 });
+
+const revealEntries = document.querySelectorAll(".entry");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (!reduceMotion && "IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(
+    (observedEntries) => {
+      observedEntries.forEach((observedEntry) => {
+        if (!observedEntry.isIntersecting) return;
+        observedEntry.target.classList.add("is-visible");
+        observer.unobserve(observedEntry.target);
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+  );
+
+  revealEntries.forEach((entry) => {
+    entry.dataset.reveal = "";
+    observer.observe(entry);
+  });
+}
