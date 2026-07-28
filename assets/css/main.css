@@ -246,26 +246,23 @@ h3 {
 }
 
 .social-icon {
-  display: inline-grid;
-  width: 2.05rem;
-  height: 2.05rem;
-  place-items: center;
-  border: 1px solid var(--line);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--muted);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 0.72rem;
-  font-weight: 700;
-  line-height: 1;
   text-decoration: none;
-  text-transform: none;
-  transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  transition: color 160ms ease, transform 160ms ease;
 }
 
 .social-icon:hover,
 .social-icon:focus-visible {
-  border-color: var(--heavy-line);
   color: var(--ink);
   transform: translateY(-1px);
+}
+
+.social-icon svg {
+  width: 1.22rem;
+  height: 1.22rem;
 }
 
 .section-links {
