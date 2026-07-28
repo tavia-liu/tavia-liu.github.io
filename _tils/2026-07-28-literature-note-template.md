@@ -1,7 +1,7 @@
 ---
 title: "Literature Note Template"
 date: 2026-07-28
-description: "A compact structure for turning a paper into a useful research note."
+description: "Citation, claim, evidence, questions."
 tags: [literature, template]
 status: "template"
 ---

@@ -1,12 +1,12 @@
 ---
 title: "Research Map"
 date: 2026-07-28
-description: "A living index for research directions, questions, and paper trails."
+description: "Open threads and paper trails."
 tags: [research, survey, agenda]
 status: "living note"
 ---
 
-Use this page as a top-level map for active research threads.
+Use this page as a map for active threads.
 
 ## Questions
 

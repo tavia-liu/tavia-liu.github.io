@@ -1,7 +1,7 @@
 ---
 title: "Experiment Log Template"
 date: 2026-07-28
-description: "A repeatable format for logging hypotheses, setup, results, and follow-ups."
+description: "Hypothesis, setup, result, follow-up."
 tags: [experiments, template]
 status: "template"
 ---
