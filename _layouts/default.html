@@ -29,11 +29,7 @@
         <span>tavialiu.com</span>
       </div>
       <nav class="social-links" aria-label="Social links">
-        <a href="{{ site.author.links.github }}">GitHub</a>
-        <a href="{{ site.author.links.linkedin }}">LinkedIn</a>
-        <a href="{{ site.author.links.x }}">X</a>
-        <a href="{{ site.author.links.instagram }}">Instagram</a>
-        <a href="{{ site.author.links.xiaohongshu }}">Xiaohongshu</a>
+        {% include social-icons.html %}
       </nav>
     </footer>
     <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>

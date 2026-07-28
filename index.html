@@ -6,7 +6,6 @@ description: Tavia Liu's notebook.
 <section class="hero">
   <p class="eyebrow">Notebook</p>
   <h1>Tavia Liu</h1>
-  <p class="lede">Research / Blog / TILs / Archive</p>
 </section>
 
 <section class="home-grid" aria-label="Site sections">
@@ -14,11 +13,7 @@ description: Tavia Liu's notebook.
     <p class="index-number">01</p>
     <h2>Index</h2>
     <nav class="home-social" aria-label="Profile links">
-      <a href="{{ site.author.links.github }}">GitHub</a>
-      <a href="{{ site.author.links.linkedin }}">LinkedIn</a>
-      <a href="{{ site.author.links.x }}">X</a>
-      <a href="{{ site.author.links.instagram }}">Instagram</a>
-      <a href="{{ site.author.links.xiaohongshu }}">Xiaohongshu</a>
+      {% include social-icons.html %}
     </nav>
   </div>
 
