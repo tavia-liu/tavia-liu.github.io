@@ -564,7 +564,7 @@ h3 {
 
 .prose table {
   display: block;
-  width: min(980px, calc(100vw - 72px));
+  width: min(1120px, calc(100vw - 72px));
   max-width: none;
   margin: 1.4rem 0 2.2rem;
   overflow-x: auto;
@@ -578,7 +578,7 @@ h3 {
 
 .prose thead,
 .prose tbody {
-  min-width: 760px;
+  min-width: 1040px;
 }
 
 .prose th,
@@ -593,6 +593,11 @@ h3 {
 .prose th:first-child,
 .prose td:first-child {
   min-width: 190px;
+}
+
+.prose th:last-child,
+.prose td:last-child {
+  min-width: 220px;
 }
 
 .prose th {
