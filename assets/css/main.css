@@ -133,7 +133,7 @@ a:hover {
 }
 
 .social-links {
-  gap: 0.42rem;
+  gap: 0.68rem;
 }
 
 .hero {
@@ -238,7 +238,7 @@ h3 {
 .home-social {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.42rem;
+  gap: 0.68rem;
   margin-top: 1.4rem;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 0.78rem;
@@ -249,20 +249,24 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--muted);
+  width: 1.9rem;
+  height: 1.9rem;
+  color: var(--ink);
   text-decoration: none;
   transition: color 160ms ease, transform 160ms ease;
 }
 
 .social-icon:hover,
 .social-icon:focus-visible {
-  color: var(--ink);
+  color: var(--accent);
   transform: translateY(-1px);
 }
 
 .social-icon svg {
-  width: 1.22rem;
-  height: 1.22rem;
+  display: block;
+  width: 1.38rem;
+  height: 1.38rem;
+  overflow: visible;
 }
 
 .section-links {
