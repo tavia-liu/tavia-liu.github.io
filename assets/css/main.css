@@ -1,13 +1,13 @@
 :root {
-  --bg: #edf0e5;
-  --paper: #f8f5ea;
-  --ink: #16231e;
-  --muted: #657168;
-  --line: rgba(22, 35, 30, 0.22);
-  --heavy-line: rgba(22, 35, 30, 0.78);
-  --accent: #275f52;
-  --green: #496f5b;
-  --code: #e3e9dd;
+  --bg: #e4eadf;
+  --paper: #f7f3e6;
+  --ink: #14231d;
+  --muted: #627266;
+  --line: rgba(20, 35, 29, 0.22);
+  --heavy-line: rgba(20, 35, 29, 0.76);
+  --accent: #1f5c4e;
+  --green: #496f58;
+  --code: #dfe8dc;
   color-scheme: light;
 }
 
@@ -20,14 +20,10 @@ html {
 }
 
 body {
+  position: relative;
   min-height: 100vh;
   margin: 0;
-  background:
-    linear-gradient(90deg, rgba(22, 35, 30, 0.08), transparent 10%, transparent 90%, rgba(22, 35, 30, 0.08)),
-    radial-gradient(circle at 18% 8%, rgba(73, 111, 91, 0.18), transparent 30%),
-    radial-gradient(circle at 82% 42%, rgba(39, 95, 82, 0.12), transparent 34%),
-    linear-gradient(180deg, rgba(248, 245, 234, 0.58), rgba(237, 240, 229, 0.42)),
-    var(--bg);
+  background: var(--bg);
   color: var(--ink);
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   font-size: 18px;
@@ -35,28 +31,81 @@ body {
   overflow-x: hidden;
 }
 
-body::before {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  content: "";
-  background-image:
-    repeating-linear-gradient(0deg, rgba(22, 35, 30, 0.022) 0 1px, transparent 1px 4px),
-    repeating-radial-gradient(circle at 30% 20%, rgba(22, 35, 30, 0.11) 0 1px, transparent 1px 5px),
-    linear-gradient(90deg, transparent 0 12%, rgba(248, 245, 234, 0.16) 12.2%, transparent 12.6% 74%, rgba(22, 35, 30, 0.08) 74.15%, transparent 74.45%);
-  mix-blend-mode: multiply;
-  opacity: 0.36;
-}
-
+.texture-field,
+body::before,
 body::after {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
+}
+
+.texture-field {
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 16% 12%, rgba(176, 195, 157, 0.34), transparent 32%),
+    radial-gradient(ellipse at 78% 18%, rgba(31, 92, 78, 0.18), transparent 34%),
+    radial-gradient(ellipse at 58% 92%, rgba(236, 232, 211, 0.46), transparent 48%),
+    linear-gradient(100deg, rgba(20, 35, 29, 0.11), transparent 9%, transparent 91%, rgba(20, 35, 29, 0.12)),
+    linear-gradient(180deg, rgba(247, 243, 230, 0.6), rgba(228, 234, 223, 0.78));
+}
+
+.texture-field::before {
+  position: absolute;
+  inset: -18%;
   content: "";
-  border-left: 18px solid rgba(22, 35, 30, 0.78);
-  border-right: 18px solid rgba(22, 35, 30, 0.78);
+  background:
+    repeating-radial-gradient(circle at 22% 18%, rgba(20, 35, 29, 0.13) 0 0.7px, transparent 0.9px 4px),
+    repeating-linear-gradient(92deg, rgba(20, 35, 29, 0.022) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(2deg, transparent 0 11px, rgba(247, 243, 230, 0.2) 11px 12px);
+  background-size: 10px 10px, auto, auto;
+  mix-blend-mode: multiply;
+  opacity: 0.38;
+  transform: rotate(-1.2deg);
+}
+
+.texture-field::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(90deg, transparent 0 9.2%, rgba(247, 243, 230, 0.18) 9.35%, transparent 9.7% 72%, rgba(20, 35, 29, 0.1) 72.12%, transparent 72.42%),
+    linear-gradient(180deg, rgba(20, 35, 29, 0.1), transparent 16%, transparent 84%, rgba(20, 35, 29, 0.08));
+  opacity: 0.72;
+}
+
+.texture-field span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 18px;
+  background:
+    radial-gradient(circle, rgba(247, 243, 230, 0.76) 0 3px, transparent 3.4px) center 18px / 18px 34px repeat-y,
+    rgba(20, 35, 29, 0.75);
+  opacity: 0.72;
+}
+
+.texture-field span:first-child {
+  left: 0;
+}
+
+.texture-field span:last-child {
+  right: 0;
+}
+
+body::before {
+  content: "";
+  background:
+    radial-gradient(ellipse at center, transparent 0 58%, rgba(20, 35, 29, 0.13) 100%),
+    linear-gradient(90deg, rgba(20, 35, 29, 0.04), transparent 18%, transparent 82%, rgba(20, 35, 29, 0.04));
+}
+
+body::after {
+  content: "";
+  background:
+    linear-gradient(105deg, transparent 0 32%, rgba(247, 243, 230, 0.24) 32.15%, transparent 32.35%),
+    linear-gradient(84deg, transparent 0 61%, rgba(20, 35, 29, 0.08) 61.08%, transparent 61.22%);
+  opacity: 0.58;
 }
 
 a {
@@ -76,8 +125,15 @@ a:hover {
 .page-shell,
 .article-shell,
 .home-grid {
+  position: relative;
+  z-index: 1;
   width: min(1120px, calc(100vw - 72px));
   margin: 0 auto;
+}
+
+main {
+  position: relative;
+  z-index: 1;
 }
 
 .site-header,
@@ -526,8 +582,14 @@ h3 {
   }
 
   body::after {
-    border-left-width: 8px;
-    border-right-width: 8px;
+    opacity: 0.42;
+  }
+
+  .texture-field span {
+    width: 8px;
+    background:
+      radial-gradient(circle, rgba(247, 243, 230, 0.7) 0 1.5px, transparent 1.8px) center 16px / 8px 28px repeat-y,
+      rgba(20, 35, 29, 0.72);
   }
 
   .site-header,
