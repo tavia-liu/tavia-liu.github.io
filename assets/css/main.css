@@ -1,13 +1,13 @@
 :root {
-  --bg: #f3eee2;
-  --paper: #fffaf0;
-  --ink: #151410;
-  --muted: #686255;
-  --line: rgba(21, 20, 16, 0.24);
-  --heavy-line: rgba(21, 20, 16, 0.82);
-  --accent: #7a221c;
-  --green: #1f4d43;
-  --code: #ebe4d6;
+  --bg: #edf0e5;
+  --paper: #f8f5ea;
+  --ink: #16231e;
+  --muted: #657168;
+  --line: rgba(22, 35, 30, 0.22);
+  --heavy-line: rgba(22, 35, 30, 0.78);
+  --accent: #275f52;
+  --green: #496f5b;
+  --code: #e3e9dd;
   color-scheme: light;
 }
 
@@ -23,9 +23,10 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    linear-gradient(90deg, rgba(21, 20, 16, 0.09), transparent 10%, transparent 90%, rgba(21, 20, 16, 0.09)),
-    radial-gradient(circle at 18% 8%, rgba(122, 34, 28, 0.14), transparent 28%),
-    radial-gradient(circle at 86% 36%, rgba(31, 77, 67, 0.12), transparent 32%),
+    linear-gradient(90deg, rgba(22, 35, 30, 0.08), transparent 10%, transparent 90%, rgba(22, 35, 30, 0.08)),
+    radial-gradient(circle at 18% 8%, rgba(73, 111, 91, 0.18), transparent 30%),
+    radial-gradient(circle at 82% 42%, rgba(39, 95, 82, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(248, 245, 234, 0.58), rgba(237, 240, 229, 0.42)),
     var(--bg);
   color: var(--ink);
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
@@ -41,10 +42,11 @@ body::before {
   pointer-events: none;
   content: "";
   background-image:
-    repeating-linear-gradient(0deg, rgba(21, 20, 16, 0.025) 0 1px, transparent 1px 4px),
-    repeating-radial-gradient(circle at 30% 20%, rgba(21, 20, 16, 0.12) 0 1px, transparent 1px 5px);
+    repeating-linear-gradient(0deg, rgba(22, 35, 30, 0.022) 0 1px, transparent 1px 4px),
+    repeating-radial-gradient(circle at 30% 20%, rgba(22, 35, 30, 0.11) 0 1px, transparent 1px 5px),
+    linear-gradient(90deg, transparent 0 12%, rgba(248, 245, 234, 0.16) 12.2%, transparent 12.6% 74%, rgba(22, 35, 30, 0.08) 74.15%, transparent 74.45%);
   mix-blend-mode: multiply;
-  opacity: 0.42;
+  opacity: 0.36;
 }
 
 body::after {
@@ -53,13 +55,13 @@ body::after {
   z-index: -1;
   pointer-events: none;
   content: "";
-  border-left: 18px solid rgba(21, 20, 16, 0.82);
-  border-right: 18px solid rgba(21, 20, 16, 0.82);
+  border-left: 18px solid rgba(22, 35, 30, 0.78);
+  border-right: 18px solid rgba(22, 35, 30, 0.78);
 }
 
 a {
   color: var(--accent);
-  text-decoration-color: rgba(122, 34, 28, 0.38);
+  text-decoration-color: rgba(39, 95, 82, 0.38);
   text-underline-offset: 0.18em;
 }
 
@@ -187,8 +189,12 @@ h3 {
 
 h1 {
   max-width: 980px;
-  font-size: clamp(4.4rem, 15vw, 13rem);
+  font-size: clamp(2.5rem, 7vw, 5.8rem);
   font-weight: 400;
+}
+
+.hero h1 {
+  font-size: clamp(4.4rem, 15vw, 12rem);
 }
 
 h2 {
@@ -323,9 +329,13 @@ h3 {
 }
 
 .page-header {
-  margin-bottom: 36px;
+  margin-bottom: 32px;
   border-top: 1px solid var(--heavy-line);
   padding-top: 18px;
+}
+
+.page-header h1 {
+  font-size: clamp(2.5rem, 7vw, 5.6rem);
 }
 
 .page-header .lede {
@@ -421,7 +431,7 @@ h3 {
 
 .article-header h1 {
   margin-top: 0.8rem;
-  font-size: clamp(2.6rem, 7vw, 6rem);
+  font-size: clamp(2.25rem, 6vw, 4.8rem);
 }
 
 .article-meta {
@@ -487,7 +497,7 @@ h3 {
 .note-callout {
   border: 1px solid var(--line);
   border-radius: 0;
-  background: rgba(255, 250, 240, 0.72);
+  background: rgba(248, 245, 234, 0.74);
   margin: 2rem 0;
   padding: 1.2rem;
 }
@@ -546,6 +556,10 @@ h3 {
   }
 
   h1 {
+    font-size: clamp(2.35rem, 13vw, 4.8rem);
+  }
+
+  .hero h1 {
     font-size: clamp(4rem, 19vw, 7rem);
   }
 
