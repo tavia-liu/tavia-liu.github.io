@@ -189,6 +189,16 @@ h1 {
   animation: title-open 950ms 180ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+.is-home .hero {
+  min-height: clamp(260px, 38vh, 430px);
+  justify-content: center;
+  padding: 28px 0 26px;
+}
+
+.is-home .hero h1 {
+  font-size: clamp(3.4rem, 10vw, 7.4rem);
+}
+
 h2 {
   font-size: clamp(2.2rem, 6vw, 5rem);
   font-weight: 400;
@@ -391,13 +401,31 @@ h3 {
 }
 
 .entry {
+  position: relative;
   display: grid;
   grid-template-columns: 152px 1fr;
   gap: 1.4rem;
   border-bottom: 1px solid var(--line);
+  overflow: hidden;
   padding: 25px 0;
   transform-origin: top;
   transition: opacity 420ms ease, transform 420ms ease;
+}
+
+.entry::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(22, 22, 22, 0.055), transparent);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-42%);
+  transition: opacity 220ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.entry:hover::after {
+  opacity: 1;
+  transform: translateX(42%);
 }
 
 .entry[data-reveal] {
@@ -411,15 +439,19 @@ h3 {
 }
 
 .entry-title {
+  display: inline-block;
   color: var(--ink);
   font-size: clamp(1.35rem, 2.5vw, 2.15rem);
   font-weight: 400;
   line-height: 1.14;
   text-decoration: none;
+  transition: color 220ms ease, transform 260ms ease;
 }
 
+.entry:hover .entry-title,
 .entry-title:hover {
-  color: var(--accent);
+  color: var(--ink);
+  transform: translateX(10px);
 }
 
 .entry-summary {

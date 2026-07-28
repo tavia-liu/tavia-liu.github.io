@@ -7,9 +7,9 @@
     <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
     <link rel="canonical" href="{{ page.url | absolute_url }}">
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/main.css?v=20260728-filmaxis' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/main.css?v=20260728-homeentries' | relative_url }}">
   </head>
-  <body>
+  <body{% if page.url == "/" %} class="is-home"{% endif %}>
     <header class="site-header">
       <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
       <nav class="site-nav" aria-label="Main navigation">
@@ -23,14 +23,16 @@
       {{ content }}
     </main>
 
-    <nav class="film-axis" aria-label="Page timeline" hidden>
-      <span class="film-axis__index" data-film-index>01 / 01</span>
-      <span class="film-axis__track">
-        <span class="film-axis__progress" data-film-progress></span>
-        <span class="film-axis__ticks" data-film-ticks></span>
-      </span>
-      <span class="film-axis__caption" data-film-caption>Frame</span>
-    </nav>
+    {% unless page.url == "/" %}
+      <nav class="film-axis" aria-label="Page timeline" hidden>
+        <span class="film-axis__index" data-film-index>01 / 01</span>
+        <span class="film-axis__track">
+          <span class="film-axis__progress" data-film-progress></span>
+          <span class="film-axis__ticks" data-film-ticks></span>
+        </span>
+        <span class="film-axis__caption" data-film-caption>Frame</span>
+      </nav>
+    {% endunless %}
 
     <footer class="site-footer">
       <div>
@@ -41,6 +43,6 @@
         {% include social-icons.html %}
       </nav>
     </footer>
-    <script src="{{ '/assets/js/site.js?v=20260728-filmaxis' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/site.js?v=20260728-homeentries' | relative_url }}" defer></script>
   </body>
 </html>
