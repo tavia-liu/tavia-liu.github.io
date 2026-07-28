@@ -69,28 +69,34 @@ body::after {
   inset: 0;
   content: "";
   background:
-    linear-gradient(90deg, transparent 0 9.2%, rgba(247, 243, 230, 0.18) 9.35%, transparent 9.7% 72%, rgba(20, 35, 29, 0.1) 72.12%, transparent 72.42%),
+    linear-gradient(90deg, transparent 0 10.8%, rgba(247, 243, 230, 0.14) 10.95%, transparent 11.15% 72%, rgba(20, 35, 29, 0.08) 72.08%, transparent 72.2%),
+    linear-gradient(90deg, transparent 0 33%, rgba(20, 35, 29, 0.06) 33.08%, transparent 33.18% 89%, rgba(247, 243, 230, 0.12) 89.08%, transparent 89.22%),
     linear-gradient(180deg, rgba(20, 35, 29, 0.1), transparent 16%, transparent 84%, rgba(20, 35, 29, 0.08));
-  opacity: 0.72;
+  opacity: 0.7;
 }
 
 .texture-field span {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 18px;
+  width: clamp(18px, 3vw, 34px);
   background:
-    radial-gradient(circle, rgba(247, 243, 230, 0.76) 0 3px, transparent 3.4px) center 18px / 18px 34px repeat-y,
-    rgba(20, 35, 29, 0.75);
-  opacity: 0.72;
+    linear-gradient(90deg, rgba(5, 13, 10, 0.86), rgba(20, 35, 29, 0.72) 54%, rgba(5, 13, 10, 0.58)),
+    repeating-linear-gradient(180deg, rgba(247, 243, 230, 0.08) 0 1px, transparent 1px 21px);
+  box-shadow:
+    inset 5px 0 11px rgba(0, 0, 0, 0.18),
+    inset -4px 0 12px rgba(247, 243, 230, 0.08);
+  opacity: 0.84;
 }
 
 .texture-field span:first-child {
   left: 0;
+  clip-path: polygon(0 0, 86% 0, 100% 18%, 78% 37%, 94% 61%, 83% 100%, 0 100%);
 }
 
 .texture-field span:last-child {
   right: 0;
+  clip-path: polygon(17% 0, 100% 0, 100% 100%, 19% 100%, 0 78%, 22% 54%, 7% 29%);
 }
 
 body::before {
@@ -586,10 +592,10 @@ h3 {
   }
 
   .texture-field span {
-    width: 8px;
+    width: 10px;
     background:
-      radial-gradient(circle, rgba(247, 243, 230, 0.7) 0 1.5px, transparent 1.8px) center 16px / 8px 28px repeat-y,
-      rgba(20, 35, 29, 0.72);
+      linear-gradient(90deg, rgba(5, 13, 10, 0.78), rgba(20, 35, 29, 0.58)),
+      repeating-linear-gradient(180deg, rgba(247, 243, 230, 0.07) 0 1px, transparent 1px 18px);
   }
 
   .site-header,
