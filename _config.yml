@@ -1,0 +1,57 @@
+title: Tavia Liu
+description: Research notes, blog essays, and TILs by Tavia Liu.
+url: "https://tavialiu.com"
+baseurl: ""
+timezone: America/Chicago
+lang: en
+
+author:
+  name: Tavia Liu
+  links:
+    github: https://github.com/tavia-liu
+    linkedin: https://www.linkedin.com/in/tavialiu
+    instagram: https://www.instagram.com/buzhao_l
+    x: https://x.com/tavia_l
+    xiaohongshu: https://www.xiaohongshu.com/user/profile/5b4058d6e8ac2b533cb18aca
+
+collections:
+  research:
+    output: true
+    permalink: /research/:name/
+  tils:
+    output: true
+    permalink: /tils/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      category: blog
+  - scope:
+      path: ""
+      type: research
+    values:
+      layout: note
+      category: research
+  - scope:
+      path: ""
+      type: tils
+    values:
+      layout: note
+      category: til
+
+permalink: /blog/:year/:month/:day/:title/
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+exclude:
+  - README.md
+  - templates
+  - _private
+  - vendor
+  - Gemfile
+  - Gemfile.lock

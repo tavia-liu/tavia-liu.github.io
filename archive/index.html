@@ -1,0 +1,28 @@
+---
+layout: page
+title: Archive
+eyebrow: Index
+description: Everything public on the site, sorted by date.
+---
+<div class="toolbar">
+  <input type="search" placeholder="Search everything" data-search-input="archive" aria-label="Search archive">
+  <span class="count-label" data-search-count="archive"></span>
+</div>
+
+<section class="entry-list" data-search-list="archive">
+  {% assign items = site.posts | concat: site.research | concat: site.tils | sort: 'date' | reverse %}
+  {% for item in items %}
+    {% unless item.visibility == "private" or item.published == false %}
+      <article class="entry" data-search-text="{{ item.title | append: ' ' | append: item.description | append: ' ' | append: item.tags | append: ' ' | append: item.category | downcase | escape }}">
+        <div>
+          <time datetime="{{ item.date | date_to_xmlschema }}">{{ item.date | date: "%b %-d, %Y" }}</time>
+          <div class="entry-kind">{{ item.category | default: item.collection }}</div>
+        </div>
+        <div>
+          <a class="entry-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+          {% if item.description %}<p class="entry-summary">{{ item.description }}</p>{% endif %}
+        </div>
+      </article>
+    {% endunless %}
+  {% endfor %}
+</section>

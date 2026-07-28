@@ -1,0 +1,33 @@
+---
+layout: page
+title: TILs
+eyebrow: Today I learned
+description: Short notes from reading, experiments, implementation details, and research logs.
+---
+<div class="toolbar">
+  <input type="search" placeholder="Search TILs" data-search-input="tils" aria-label="Search TILs">
+  <span class="count-label" data-search-count="tils"></span>
+</div>
+
+<section class="entry-list" data-search-list="tils">
+  {% assign items = site.tils | sort: 'date' | reverse %}
+  {% for item in items %}
+    {% unless item.visibility == "private" or item.published == false %}
+      <article class="entry" data-search-text="{{ item.title | append: ' ' | append: item.description | append: ' ' | append: item.tags | downcase | escape }}">
+        <div>
+          <time datetime="{{ item.date | date_to_xmlschema }}">{{ item.date | date: "%b %-d, %Y" }}</time>
+          {% if item.status %}<div class="entry-kind">{{ item.status }}</div>{% endif %}
+        </div>
+        <div>
+          <a class="entry-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+          {% if item.description %}<p class="entry-summary">{{ item.description }}</p>{% endif %}
+          {% if item.tags %}
+            <div class="tag-row">
+              {% for tag in item.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </article>
+    {% endunless %}
+  {% endfor %}
+</section>

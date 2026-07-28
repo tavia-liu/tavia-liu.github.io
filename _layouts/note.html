@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<article class="article-shell">
+  <header class="article-header">
+    {% assign parent = page.category | default: "notes" %}
+    <a class="back-link" href="/{{ parent | replace: 'til', 'tils' }}/">{{ parent | upcase }}</a>
+    <h1>{{ page.title }}</h1>
+    <p class="article-meta">
+      {% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>{% endif %}
+      {% if page.status %}<span>{{ page.status }}</span>{% endif %}
+      {% if page.tags and page.tags.size > 0 %}<span>{{ page.tags | join: ", " }}</span>{% endif %}
+    </p>
+  </header>
+  <div class="prose">
+    {{ content }}
+  </div>
+</article>

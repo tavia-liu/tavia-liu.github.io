@@ -1,0 +1,76 @@
+---
+layout: default
+title: Home
+description: Research notes, blog essays, and TILs by Tavia Liu.
+---
+<section class="hero">
+  <p class="eyebrow">Research notebook</p>
+  <h1>A quiet home for research, literature notes, experiments, and essays.</h1>
+  <p class="lede">
+    I use this site to organize what I am reading, building, and thinking through:
+    research threads, longer blog posts, and compact TIL notes from day-to-day work.
+  </p>
+</section>
+
+<section class="home-grid" aria-label="Site sections">
+  <div class="home-intro">
+    <p>
+      This is a working notebook first: concise, searchable, and designed to age well.
+      Public writing lives here; private notes stay local until they are ready.
+    </p>
+    <p>
+      The structure is intentionally simple so adding a note is just adding a Markdown file.
+    </p>
+    <nav class="home-social" aria-label="Profile links">
+      <a href="{{ site.author.links.github }}">GitHub</a>
+      <a href="{{ site.author.links.linkedin }}">LinkedIn</a>
+      <a href="{{ site.author.links.x }}">X</a>
+      <a href="{{ site.author.links.instagram }}">Instagram</a>
+      <a href="{{ site.author.links.xiaohongshu }}">Xiaohongshu</a>
+    </nav>
+  </div>
+
+  <nav class="section-links" aria-label="Primary sections">
+    <a class="section-link" href="{{ '/research/' | relative_url }}">
+      <span>Research</span>
+      <p>Projects, paper notes, surveys, and research agendas.</p>
+    </a>
+    <a class="section-link" href="{{ '/blog/' | relative_url }}">
+      <span>Blog</span>
+      <p>Longer essays and polished writeups worth sharing.</p>
+    </a>
+    <a class="section-link" href="{{ '/tils/' | relative_url }}">
+      <span>TILs</span>
+      <p>Small notes from literature review, experiments, debugging, and reading.</p>
+    </a>
+  </nav>
+</section>
+
+<section class="page-shell">
+  <header class="page-header">
+    <p class="eyebrow">Recent</p>
+    <h2>Latest Notes</h2>
+  </header>
+
+  <div class="entry-list">
+    {% assign recent_items = site.posts | concat: site.research | concat: site.tils | sort: 'date' | reverse %}
+    {% assign shown = 0 %}
+    {% for item in recent_items %}
+      {% unless item.visibility == "private" or item.published == false %}
+        {% if shown < 6 %}
+          {% assign shown = shown | plus: 1 %}
+          <article class="entry">
+            <div>
+              <time datetime="{{ item.date | date_to_xmlschema }}">{{ item.date | date: "%b %-d, %Y" }}</time>
+              <div class="entry-kind">{{ item.category | default: item.collection }}</div>
+            </div>
+            <div>
+              <a class="entry-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+              {% if item.description %}<p class="entry-summary">{{ item.description }}</p>{% endif %}
+            </div>
+          </article>
+        {% endif %}
+      {% endunless %}
+    {% endfor %}
+  </div>
+</section>

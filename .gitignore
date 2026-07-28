@@ -1,0 +1,11 @@
+.DS_Store
+.sass-cache/
+.jekyll-cache/
+.bundle/
+_site/
+vendor/
+
+# Local-only notes. Anything committed to a public GitHub Pages repo should be
+# treated as public source, even when it is not linked from the website.
+_private/
+**/*.private.md
