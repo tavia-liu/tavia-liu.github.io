@@ -3,13 +3,24 @@ layout: default
 title: Home
 description: Tavia Liu's notebook.
 ---
-<section class="hero">
-  <p class="eyebrow">Notebook</p>
-  <h1>Tavia Liu</h1>
-  <p class="lede">Research / Blog / TILs / Archive</p>
+<section class="hero cinema-hero" data-reveal>
+  <div class="hero-topline">
+    <p class="eyebrow">Notebook</p>
+    <span>24 fps / research cut</span>
+  </div>
+  <h1 class="hero-title"><span>Tavia</span><span>Liu</span></h1>
+  <nav class="hero-jump" aria-label="Section shortcuts">
+    <a href="{{ '/research/' | relative_url }}">Research</a>
+    <a href="{{ '/blog/' | relative_url }}">Blog</a>
+    <a href="{{ '/tils/' | relative_url }}">TILs</a>
+    <a href="{{ '/archive/' | relative_url }}">Archive</a>
+  </nav>
+  <div class="signal-strip" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
 </section>
 
-<section class="home-grid" aria-label="Site sections">
+<section class="home-grid" aria-label="Site sections" data-reveal>
   <div class="home-intro">
     <p class="index-number">01</p>
     <h2>Index</h2>
@@ -23,22 +34,22 @@ description: Tavia Liu's notebook.
   </div>
 
   <nav class="section-links" aria-label="Primary sections">
-    <a class="section-link" href="{{ '/research/' | relative_url }}">
+    <a class="section-link" href="{{ '/research/' | relative_url }}" data-frame="Paper trail">
       <span>01</span>
       <strong>Research</strong>
       <p>Papers / projects</p>
     </a>
-    <a class="section-link" href="{{ '/blog/' | relative_url }}">
+    <a class="section-link" href="{{ '/blog/' | relative_url }}" data-frame="Longform">
       <span>02</span>
       <strong>Blog</strong>
       <p>Essays</p>
     </a>
-    <a class="section-link" href="{{ '/tils/' | relative_url }}">
+    <a class="section-link" href="{{ '/tils/' | relative_url }}" data-frame="Today I learned">
       <span>03</span>
       <strong>TILs</strong>
       <p>Logs / fragments</p>
     </a>
-    <a class="section-link" href="{{ '/archive/' | relative_url }}">
+    <a class="section-link" href="{{ '/archive/' | relative_url }}" data-frame="All entries">
       <span>04</span>
       <strong>Archive</strong>
       <p>Everything</p>
@@ -46,7 +57,7 @@ description: Tavia Liu's notebook.
   </nav>
 </section>
 
-<section class="page-shell">
+<section class="page-shell" data-reveal>
   <header class="page-header">
     <p class="eyebrow">Recent</p>
     <h2>Latest</h2>
