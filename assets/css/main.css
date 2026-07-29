@@ -338,10 +338,10 @@ h3 {
 
 .education-strip h2,
 .home-latest .page-header h2 {
-  font-family: var(--font-main);
-  font-size: 0.78rem;
-  font-weight: 650;
-  line-height: 1;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.8vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.08;
 }
 
 .education-list {
@@ -380,18 +380,18 @@ h3 {
 }
 
 .education-row h3 {
-  font-family: var(--font-main);
-  font-size: clamp(0.88rem, 1.1vw, 1rem);
-  font-weight: 600;
-  line-height: 1.18;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.55vw, 1.38rem);
+  font-weight: 400;
+  line-height: 1.12;
 }
 
 .education-row p {
   margin: 0.45rem 0 0;
   color: var(--muted);
-  font-family: var(--font-main);
-  font-size: 0.76rem;
-  line-height: 1.5;
+  font-family: var(--font-display);
+  font-size: clamp(0.92rem, 1.15vw, 1.04rem);
+  line-height: 1.42;
 }
 
 .proof-grid,
@@ -1304,8 +1304,8 @@ figcaption {
 
 .blog-row__number {
   color: var(--muted);
-  font-family: var(--font-main);
-  font-size: 0.66rem;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
   line-height: 1;
 }
 
@@ -1316,9 +1316,9 @@ figcaption {
 
 .blog-row .entry-title {
   max-width: 780px;
-  font-family: var(--font-main);
-  font-size: clamp(0.92rem, 1.35vw, 1.14rem);
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: clamp(1.18rem, 1.85vw, 1.58rem);
+  font-weight: 400;
   line-height: 1.12;
 }
 
@@ -1326,9 +1326,9 @@ figcaption {
   display: block;
   max-width: 640px;
   margin: 0;
-  font-family: var(--font-main);
-  font-size: 0.72rem;
-  line-height: 1.45;
+  font-family: var(--font-display);
+  font-size: clamp(0.92rem, 1.1vw, 1rem);
+  line-height: 1.42;
 }
 
 .blog-row__meta {
@@ -1336,8 +1336,8 @@ figcaption {
   justify-items: end;
   gap: 0.35rem;
   color: var(--ink);
-  font-family: var(--font-main);
-  font-size: 0.78rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
   font-weight: 650;
   line-height: 1.2;
 }
@@ -1896,7 +1896,7 @@ figcaption {
   }
 
   .blog-row .entry-title {
-    font-size: 0.98rem;
+    font-size: 1.12rem;
   }
 
   .blog-preview {
