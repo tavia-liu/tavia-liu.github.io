@@ -9,7 +9,7 @@ eyebrow: All entries
 </div>
 
 <section class="entry-list" data-search-list="archive">
-  {% assign items = site.posts | concat: site.research | concat: site.tils | sort: 'date' | reverse %}
+  {% assign items = site.posts | concat: site.research | sort: 'date' | reverse %}
   {% for item in items %}
     {% unless item.visibility == "private" or item.published == false %}
       <article class="entry" data-search-text="{{ item.title | append: ' ' | append: item.description | append: ' ' | append: item.tags | append: ' ' | append: item.category | downcase | escape }}">

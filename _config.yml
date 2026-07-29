@@ -18,9 +18,6 @@ collections:
   research:
     output: true
     permalink: /research/:name/
-  tils:
-    output: true
-    permalink: /tils/:name/
 
 defaults:
   - scope:
@@ -35,12 +32,6 @@ defaults:
     values:
       layout: note
       category: research
-  - scope:
-      path: ""
-      type: tils
-    values:
-      layout: note
-      category: til
 
 permalink: /blog/:year/:month/:day/:title/
 markdown: kramdown

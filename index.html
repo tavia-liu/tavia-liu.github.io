@@ -1,14 +1,60 @@
 ---
 layout: default
 title: Home
-description: Tavia Liu's notebook.
+description: Tavia Liu is an AI researcher and computer scientist working across ML security, language systems, and global field research.
 ---
 <section class="hero">
-  <p class="eyebrow">Notebook</p>
-  <h1>Tavia Liu</h1>
+  <div class="hero-profile">
+    <div>
+      <p class="eyebrow">AI Research / Security / Global Systems</p>
+      <h1>Tavia Liu</h1>
+      <p class="lede hero-lede">Computer Science and Global Studies student at Washington University in St. Louis. I work on secure AI agents, adversarial ML, NLP for political language, and research software that turns messy social data into usable systems.</p>
+      <div class="hero-actions" aria-label="Featured links">
+        <a href="{{ '/research/' | relative_url }}">Research</a>
+        <a href="{{ '/projects/' | relative_url }}">Projects</a>
+        <a href="{{ '/global-fieldwork/' | relative_url }}">Fieldwork</a>
+        <a href="{{ '/blog/' | relative_url }}">Blogs</a>
+      </div>
+    </div>
+    <img class="headshot" src="{{ '/assets/img/tavia-liu-headshot.jpg' | relative_url }}" alt="Headshot of Tavia Liu">
+  </div>
   <nav class="hero-social" aria-label="Profile links">
     {% include social-icons.html %}
   </nav>
+</section>
+
+<section class="profile-strip" aria-label="Research profile">
+  <article>
+    <p class="eyebrow">Focus</p>
+    <h2>AI systems that stay useful under pressure.</h2>
+  </article>
+  <div class="profile-copy">
+    <p>I am building toward AI research roles at the intersection of ML security, reinforcement-learning-style agent evaluation, and language technologies for real-world institutions. My strongest work asks how autonomous systems behave when instructions, incentives, context, and political stakes conflict.</p>
+    <p>The double major matters: CS gives me the tools to build and evaluate models; Global Studies gives me the habit of asking whose language, safety, records, borders, and institutions are represented in the data.</p>
+  </div>
+</section>
+
+<section class="proof-grid" aria-label="Highlights">
+  <article class="proof-item">
+    <span>01</span>
+    <strong>ML Security</strong>
+    <p>Context-aware detection for indirect prompt injection in LLM agents, evaluated across AgentDojo, AgentDyn, and AutoDojo-style adaptive attacks.</p>
+  </article>
+  <article class="proof-item">
+    <span>02</span>
+    <strong>Political NLP</strong>
+    <p>Automated pipelines for 230+ interviews with Indian municipal officials, converting qualitative transcripts into structured language-use datasets.</p>
+  </article>
+  <article class="proof-item">
+    <span>03</span>
+    <strong>Research Systems</strong>
+    <p>Django, React, and database infrastructure for historical immigrant records, with ingestion, cleaning, search, and custom admin tools.</p>
+  </article>
+  <article class="proof-item">
+    <span>04</span>
+    <strong>Global Fieldwork</strong>
+    <p>Field-based learning in Mexico and Italy on migration, Indigenous sovereignty, extractivism, development policy, and international institutions. <a href="{{ '/global-fieldwork/' | relative_url }}">Read more</a>.</p>
+  </article>
 </section>
 
 <section class="home-grid" aria-label="Site sections">
@@ -23,18 +69,23 @@ description: Tavia Liu's notebook.
       <strong>Research</strong>
       <p>Papers / projects</p>
     </a>
-    <a class="section-link" href="{{ '/blog/' | relative_url }}">
+    <a class="section-link" href="{{ '/projects/' | relative_url }}">
       <span>02</span>
-      <strong>Blog</strong>
+      <strong>Projects</strong>
+      <p>AI / systems / web</p>
+    </a>
+    <a class="section-link" href="{{ '/global-fieldwork/' | relative_url }}">
+      <span>03</span>
+      <strong>Fieldwork</strong>
+      <p>Global studies</p>
+    </a>
+    <a class="section-link" href="{{ '/blog/' | relative_url }}">
+      <span>04</span>
+      <strong>Blogs</strong>
       <p>Essays</p>
     </a>
-    <a class="section-link" href="{{ '/tils/' | relative_url }}">
-      <span>03</span>
-      <strong>TILs</strong>
-      <p>Logs / fragments</p>
-    </a>
     <a class="section-link" href="{{ '/archive/' | relative_url }}">
-      <span>04</span>
+      <span>05</span>
       <strong>Archive</strong>
       <p>Everything</p>
     </a>
@@ -48,7 +99,7 @@ description: Tavia Liu's notebook.
   </header>
 
   <div class="entry-list">
-    {% assign recent_items = site.posts | concat: site.research | concat: site.tils | sort: 'date' | reverse %}
+    {% assign recent_items = site.posts | concat: site.research | sort: 'date' | reverse %}
     {% assign shown = 0 %}
     {% for item in recent_items %}
       {% unless item.visibility == "private" or item.published == false %}

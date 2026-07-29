@@ -1,8 +1,10 @@
 - title: Research
   url: /research/
-- title: Blog
+- title: Projects
+  url: /projects/
+- title: Fieldwork
+  url: /global-fieldwork/
+- title: Blogs
   url: /blog/
-- title: TILs
-  url: /tils/
 - title: Archive
   url: /archive/
