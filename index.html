@@ -1,119 +1,84 @@
 ---
 layout: default
-title: Home
-description: Tavia Liu is an AI researcher and computer scientist working across ML security, language systems, and global field research.
+title: About Me
+description: Buzhao Liu works across AI security, embodied AI, and global field research.
 ---
 <section class="hero">
   <div class="hero-profile">
     <div>
-      <p class="eyebrow">AI Research / Security / Global Systems</p>
-      <h1>Tavia Liu</h1>
-      <p class="lede hero-lede">Computer Science and Global Studies student at Washington University in St. Louis. I work on secure AI agents, adversarial ML, NLP for political language, and research software that turns messy social data into usable systems.</p>
-      <div class="hero-actions" aria-label="Featured links">
-        <a href="{{ '/research/' | relative_url }}">Research</a>
-        <a href="{{ '/projects/' | relative_url }}">Projects</a>
-        <a href="{{ '/global-fieldwork/' | relative_url }}">Fieldwork</a>
-        <a href="{{ '/blog/' | relative_url }}">Blogs</a>
+      <h1>About Me</h1>
+      <div class="hero-copy">
+        <p>Hi, I'm Buzhao Liu (Tavia). I'm an AI researcher and a computer science and international relations student at Washington University in St. Louis. I work on AI security, multi-agent systems, and embodied AI. I like problems where technical systems have to be tested carefully, not just made impressive on paper.</p>
+        <p>I also think of myself as a global citizen in a practical way. Technology gives us speed, but humanity decides the direction. My global studies work keeps me close to people, migration, institutions, and the ways communities care for one another. I want the tools I build to stay connected to that responsibility.</p>
       </div>
     </div>
-    <img class="headshot" src="{{ '/assets/img/tavia-liu-headshot.jpg' | relative_url }}" alt="Headshot of Tavia Liu">
+    <img class="headshot" src="{{ '/assets/img/tavia-liu-headshot.jpg' | relative_url }}" alt="Headshot of Buzhao Liu">
   </div>
   <nav class="hero-social" aria-label="Profile links">
     {% include social-icons.html %}
   </nav>
 </section>
 
-<section class="profile-strip" aria-label="Research profile">
+<section class="education-strip" aria-label="Education">
   <article>
-    <p class="eyebrow">Focus</p>
-    <h2>AI systems that stay useful under pressure.</h2>
+    <h2>Education</h2>
   </article>
-  <div class="profile-copy">
-    <p>I am building toward AI research roles at the intersection of ML security, reinforcement-learning-style agent evaluation, and language technologies for real-world institutions. My strongest work asks how autonomous systems behave when instructions, incentives, context, and political stakes conflict.</p>
-    <p>The double major matters: CS gives me the tools to build and evaluate models; Global Studies gives me the habit of asking whose language, safety, records, borders, and institutions are represented in the data.</p>
+  <div class="education-list">
+    <article class="education-row">
+      <figure>
+        <img src="{{ '/assets/img/education/washu-mckelvey.webp' | relative_url }}" alt="Washington University McKelvey Engineering logo">
+      </figure>
+      <div>
+        <h3>Washington University in St. Louis</h3>
+        <p>Undergraduate Student, 2024-2027.<br>Dean's List.<br>B.S. in Computer Science and International Relations.</p>
+      </div>
+    </article>
+    <article class="education-row">
+      <figure>
+        <img src="{{ '/assets/img/education/rdfz.png' | relative_url }}" alt="The High School Affiliated to Renmin University of China logo">
+      </figure>
+      <div>
+        <h3>The High School Affiliated to Renmin University of China</h3>
+        <p>High School Student, 2021-2023.</p>
+      </div>
+    </article>
   </div>
 </section>
 
-<section class="proof-grid" aria-label="Highlights">
-  <article class="proof-item">
-    <span>01</span>
-    <strong>ML Security</strong>
-    <p>Context-aware detection for indirect prompt injection in LLM agents, evaluated across AgentDojo, AgentDyn, and AutoDojo-style adaptive attacks.</p>
-  </article>
-  <article class="proof-item">
-    <span>02</span>
-    <strong>Political NLP</strong>
-    <p>Automated pipelines for 230+ interviews with Indian municipal officials, converting qualitative transcripts into structured language-use datasets.</p>
-  </article>
-  <article class="proof-item">
-    <span>03</span>
-    <strong>Research Systems</strong>
-    <p>Django, React, and database infrastructure for historical immigrant records, with ingestion, cleaning, search, and custom admin tools.</p>
-  </article>
-  <article class="proof-item">
-    <span>04</span>
-    <strong>Global Fieldwork</strong>
-    <p>Field-based learning in Mexico and Italy on migration, Indigenous sovereignty, extractivism, development policy, and international institutions. <a href="{{ '/global-fieldwork/' | relative_url }}">Read more</a>.</p>
-  </article>
-</section>
-
-<section class="home-grid" aria-label="Site sections">
-  <div class="home-intro">
-    <p class="index-number">01</p>
-    <h2>Index</h2>
-  </div>
-
-  <nav class="section-links" aria-label="Primary sections">
-    <a class="section-link" href="{{ '/research/' | relative_url }}">
-      <span>01</span>
-      <strong>Research</strong>
-      <p>Papers / projects</p>
-    </a>
-    <a class="section-link" href="{{ '/projects/' | relative_url }}">
-      <span>02</span>
-      <strong>Projects</strong>
-      <p>AI / systems / web</p>
-    </a>
-    <a class="section-link" href="{{ '/global-fieldwork/' | relative_url }}">
-      <span>03</span>
-      <strong>Fieldwork</strong>
-      <p>Global studies</p>
-    </a>
-    <a class="section-link" href="{{ '/blog/' | relative_url }}">
-      <span>04</span>
-      <strong>Blogs</strong>
-      <p>Essays</p>
-    </a>
-    <a class="section-link" href="{{ '/archive/' | relative_url }}">
-      <span>05</span>
-      <strong>Archive</strong>
-      <p>Everything</p>
-    </a>
-  </nav>
-</section>
-
-<section class="page-shell">
+<section class="page-shell home-latest">
   <header class="page-header">
-    <p class="eyebrow">Recent</p>
     <h2>Latest</h2>
   </header>
 
-  <div class="entry-list">
+  <div class="entry-list blog-index">
+    <div class="blog-index__head" aria-hidden="true">
+      <span>Date</span>
+      <span>Index</span>
+      <span>Year</span>
+    </div>
     {% assign recent_items = site.posts | concat: site.research | sort: 'date' | reverse %}
     {% assign shown = 0 %}
     {% for item in recent_items %}
       {% unless item.visibility == "private" or item.published == false %}
         {% if shown < 6 %}
           {% assign shown = shown | plus: 1 %}
-          <article class="entry">
-            <div>
-              <time datetime="{{ item.date | date_to_xmlschema }}">{{ item.date | date: "%b %-d, %Y" }}</time>
-              <div class="entry-kind">{{ item.category | default: item.collection }}</div>
-            </div>
-            <div>
-              <a class="entry-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
-              {% if item.description %}<p class="entry-summary">{{ item.description }}</p>{% endif %}
-            </div>
+          {% assign calendar_mark = item.date | date: "%m.%d" %}
+          <article class="entry blog-row">
+            <a class="blog-row__link" href="{{ item.url | relative_url }}">
+              <span class="blog-row__number">{{ calendar_mark }}</span>
+              <span class="blog-row__main">
+                <span class="entry-title">{{ item.title }}</span>
+                {% if item.description %}<span class="entry-summary">{{ item.description }}</span>{% endif %}
+              </span>
+              <span class="blog-row__meta">
+                <time datetime="{{ item.date | date_to_xmlschema }}">{{ item.date | date: "%Y" }}</time>
+              </span>
+              {% if item.image %}
+                <span class="blog-preview" aria-hidden="true">
+                  <img src="{{ item.image | relative_url }}" alt="">
+                </span>
+              {% endif %}
+            </a>
           </article>
         {% endif %}
       {% endunless %}

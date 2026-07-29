@@ -1,23 +1,17 @@
-# tavia-liu.github.io
+# Buzhao Liu website
 
-Personal research notebook and blog for <https://tavialiu.com>.
+Personal research notebook and blog for Buzhao Liu at <https://tavialiu.com>.
 
 ## Structure
 
 - `_research/`: public research notes, survey maps, paper notes, and project pages.
-- `_posts/`: public blog posts using Jekyll's `YYYY-MM-DD-title.md` format.
 - `_posts/`: essays, logs, fragments, and literature-review notes.
 - `_private/`: local-only private notes. This directory is ignored by Git.
-- `templates/`: starter front matter for new notes.
 
 ## Add a Public Note
 
-Copy one of the files in `templates/` into the matching collection:
-
 ```bash
-cp templates/research-note.md _research/YYYY-MM-DD-short-title.md
-cp templates/blog-post.md _posts/YYYY-MM-DD-short-title.md
-cp templates/blog-post.md _posts/YYYY-MM-DD-short-title.md
+touch _posts/YYYY-MM-DD-short-title.md
 ```
 
 Then edit the front matter and body.

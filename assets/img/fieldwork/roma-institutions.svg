@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 630" role="img" aria-labelledby="title desc">
+  <title id="title">Roma fieldwork visual</title>
+  <desc id="desc">Minimal editorial visual for institutional fieldwork in Roma.</desc>
+  <rect width="840" height="630" fill="#f6f6f2"/>
+  <path d="M92 92h656v446H92z" fill="#fff" stroke="#161616" stroke-width="2"/>
+  <path d="M138 180h266M138 224h188M138 268h236" stroke="#161616" stroke-width="2"/>
+  <path d="M138 382h156M138 420h280" stroke="#8d8d86" stroke-width="2"/>
+  <text x="488" y="216" fill="#161616" font-family="Georgia, serif" font-size="86">Roma</text>
+  <text x="492" y="266" fill="#6f6f68" font-family="Arial, sans-serif" font-size="23" letter-spacing="4">JUNE JULY 2025</text>
+  <path d="M494 356c44-70 116-70 160 0" fill="none" stroke="#161616" stroke-width="2"/>
+  <path d="M466 394h218M492 430h166M524 466h102" stroke="#161616" stroke-width="2"/>
+  <circle cx="468" cy="356" r="5" fill="#161616"/>
+  <circle cx="680" cy="356" r="5" fill="#161616"/>
+  <text x="138" y="502" fill="#6f6f68" font-family="Arial, sans-serif" font-size="18" letter-spacing="3">EGIC · CeSPI · policy research</text>
+</svg>

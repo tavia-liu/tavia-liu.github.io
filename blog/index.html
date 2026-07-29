@@ -1,30 +1,38 @@
 ---
 layout: page
 title: Blogs
-eyebrow: Longform
 ---
-<div class="toolbar">
+<div class="toolbar blog-toolbar">
   <input type="search" placeholder="Search blogs" data-search-input="blog" aria-label="Search blogs">
   <span class="count-label" data-search-count="blog"></span>
 </div>
 
-<section class="entry-list" data-search-list="blog">
+<section class="entry-list blog-index" data-search-list="blog" aria-label="Blog index">
+  <div class="blog-index__head" aria-hidden="true">
+    <span>Date</span>
+    <span>Index</span>
+    <span>Year</span>
+  </div>
   {% for post in site.posts %}
     {% unless post.visibility == "private" or post.published == false %}
-      <article class="entry" data-search-text="{{ post.title | append: ' ' | append: post.description | append: ' ' | append: post.tags | downcase | escape }}">
-        <div>
-          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
-          {% if post.reading_time %}<div class="entry-kind">{{ post.reading_time }}</div>{% endif %}
-        </div>
-        <div>
-          <a class="entry-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          {% if post.description %}<p class="entry-summary">{{ post.description }}</p>{% endif %}
-          {% if post.tags %}
-            <div class="tag-row">
-              {% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
-            </div>
+      {% assign calendar_mark = post.date | date: "%m.%d" %}
+      <article class="entry blog-row" data-search-text="{{ post.title | append: ' ' | append: post.description | append: ' ' | append: post.tags | downcase | escape }}">
+        <a class="blog-row__link" href="{{ post.url | relative_url }}">
+          <span class="blog-row__number">{{ calendar_mark }}</span>
+          <span class="blog-row__main">
+            <span class="entry-title">{{ post.title }}</span>
+            {% if post.description %}<span class="entry-summary">{{ post.description }}</span>{% endif %}
+          </span>
+          <span class="blog-row__meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y" }}</time>
+            {% if post.reading_time %}<span class="entry-kind">{{ post.reading_time }}</span>{% endif %}
+          </span>
+          {% if post.image %}
+            <span class="blog-preview" aria-hidden="true">
+              <img src="{{ post.image | relative_url }}" alt="">
+            </span>
           {% endif %}
-        </div>
+        </a>
       </article>
     {% endunless %}
   {% endfor %}

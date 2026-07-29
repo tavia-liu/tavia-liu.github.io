@@ -24,8 +24,37 @@ searchableLists.forEach((list) => {
   renderCount();
 });
 
-const revealEntries = document.querySelectorAll(".entry");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const siteNav = document.querySelector(".site-nav");
+
+if (siteNav && !reduceMotion) {
+  const navLinks = Array.from(siteNav.querySelectorAll("a"));
+  const activeLink = siteNav.querySelector('[aria-current="page"]') || navLinks[0];
+
+  const moveIndicator = (link) => {
+    if (!link) return;
+    const navRect = siteNav.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    siteNav.style.setProperty("--nav-x", `${linkRect.left - navRect.left}px`);
+    siteNav.style.setProperty("--nav-y", `${linkRect.top - navRect.top + linkRect.height}px`);
+    siteNav.style.setProperty("--nav-w", `${linkRect.width}px`);
+    siteNav.classList.add("is-indicator-ready");
+  };
+
+  moveIndicator(activeLink);
+
+  navLinks.forEach((link) => {
+    link.addEventListener("mouseenter", () => moveIndicator(link));
+    link.addEventListener("focus", () => moveIndicator(link));
+  });
+
+  siteNav.addEventListener("mouseleave", () => moveIndicator(activeLink));
+  window.addEventListener("resize", () => moveIndicator(activeLink));
+}
+
+const revealEntries = document.querySelectorAll(
+  ".entry, .work-card, .education-row, .proof-item, .field-hero, .field-card, .media-grid figure"
+);
 
 if (!reduceMotion && "IntersectionObserver" in window) {
   const observer = new IntersectionObserver(
@@ -39,8 +68,9 @@ if (!reduceMotion && "IntersectionObserver" in window) {
     { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
   );
 
-  revealEntries.forEach((entry) => {
+  revealEntries.forEach((entry, index) => {
     entry.dataset.reveal = "";
+    entry.style.transitionDelay = `${Math.min(index % 6, 5) * 70}ms`;
     observer.observe(entry);
   });
 }

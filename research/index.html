@@ -1,32 +1,54 @@
 ---
 layout: page
 title: Research
-eyebrow: Paper trail
 ---
-<div class="toolbar">
-  <input type="search" placeholder="Search research notes" data-search-input="research" aria-label="Search research notes">
-  <span class="count-label" data-search-count="research"></span>
-</div>
 
-<section class="entry-list" data-search-list="research">
-  {% assign items = site.research | sort: 'date' | reverse %}
-  {% for item in items %}
-    {% unless item.visibility == "private" or item.published == false %}
-      <article class="entry" data-search-text="{{ item.title | append: ' ' | append: item.description | append: ' ' | append: item.tags | downcase | escape }}">
-        <div>
-          <time datetime="{{ item.date | date_to_xmlschema }}">{{ item.date | date: "%b %-d, %Y" }}</time>
-          {% if item.status %}<div class="entry-kind">{{ item.status }}</div>{% endif %}
-        </div>
-        <div>
-          <a class="entry-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
-          {% if item.description %}<p class="entry-summary">{{ item.description }}</p>{% endif %}
-          {% if item.tags %}
-            <div class="tag-row">
-              {% for tag in item.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
-            </div>
-          {% endif %}
-        </div>
-      </article>
-    {% endunless %}
-  {% endfor %}
+<section class="work-list research-list" aria-label="Research projects">
+  <article class="work-card work-card--compact">
+    <div>
+      <figure class="research-media research-media--logo">
+        <img src="{{ '/assets/img/research/aaai-logo-fullcolor.svg' | relative_url }}" alt="Association for the Advancement of Artificial Intelligence logo">
+      </figure>
+    </div>
+    <div>
+      <h2>Robust Context-Aware Detection of Malicious Instructions in Text</h2>
+      <div class="paper-meta">
+        <p>Buzhao Liu, Xinhang Ma, Yevgeniy Vorobeychik</p>
+        <p>Submitted to AAAI 2027</p>
+      </div>
+      <p>We propose CAD, a query- and context-aware defense for detecting malicious instructions in text used by LLM agents. By classifying text at the sentence level and hardening the detector with feature-space and LLM-paraphrase adversarial training, CAD improves robustness against static and adaptive indirect prompt injection attacks while preserving agent utility across application domains.</p>
+    </div>
+  </article>
+
+  <article class="work-card">
+    <div>
+      <figure class="research-media research-media--photo">
+        <img src="{{ '/assets/img/research/indian-language-study.jpg' | relative_url }}" alt="Buzhao Liu with Professor Sunita Parikh in front of political science bookshelves">
+      </figure>
+    </div>
+    <div>
+      <h2>Language Use in Indian Municipal Politics</h2>
+      <div class="paper-meta">
+        <p>Buzhao Liu, Sunita Parikh</p>
+        <p>working paper / computational social science study</p>
+      </div>
+      <p>We study how Indian municipal corporators choose language across campaigns, public meetings, constituent grievances, and bureaucratic work. Using 230+ interviews, I developed an AI-assisted pipeline that extracts language-use variables from qualitative transcripts and measures shifts between standard Hindi, regional dialects, and other local languages. The project shows that local political speech is not just communication. It is a practical way for politicians to adjust to audience, place, and institutional pressure.</p>
+    </div>
+  </article>
+
+  <article class="work-card">
+    <div>
+      <figure class="research-media research-media--photo">
+        <img src="{{ '/assets/img/research/ethnic-identity-fieldwork.png' | relative_url }}" alt="Buzhao Liu during fieldwork on ethnic identity and cultural tourism">
+      </figure>
+    </div>
+    <div>
+      <h2><a href="https://youngscholarsacademicjournal.com/pdf/YoungScholarsAcademicJournal_final3">Acting Out Who I Am: Will the Ethnic Identity of Minorities Die Out in Modernization?</a></h2>
+      <div class="paper-meta">
+        <p>Buzhao Liu</p>
+        <p>Young Scholars Academic Journal Volume 3, June 2022</p>
+      </div>
+      <p>We examine tourism-driven ethnicization in Guizhou and ask how modernization reshapes minority identity. Using ethnographic fieldwork and interviews with Buyi, Maonan, and Miao communities, the paper compares primordialist and constructivist explanations and shows that responses to ethnicization vary across groups and within the Miao, where leaders and residents negotiate culture, economic opportunity, and identity differently.</p>
+    </div>
+  </article>
 </section>

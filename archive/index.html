@@ -1,7 +1,6 @@
 ---
 layout: page
 title: Archive
-eyebrow: All entries
 ---
 <div class="toolbar">
   <input type="search" placeholder="Search everything" data-search-input="archive" aria-label="Search archive">
@@ -15,7 +14,6 @@ eyebrow: All entries
       <article class="entry" data-search-text="{{ item.title | append: ' ' | append: item.description | append: ' ' | append: item.tags | append: ' ' | append: item.category | downcase | escape }}">
         <div>
           <time datetime="{{ item.date | date_to_xmlschema }}">{{ item.date | date: "%b %-d, %Y" }}</time>
-          <div class="entry-kind">{{ item.category | default: item.collection }}</div>
         </div>
         <div>
           <a class="entry-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>

@@ -1,12 +1,13 @@
-title: Tavia Liu
-description: Tavia Liu's notebook.
+title: Buzhao Liu
+description: Buzhao Liu's notebook.
 url: "https://tavialiu.com"
 baseurl: ""
 timezone: America/Chicago
 lang: en
 
 author:
-  name: Tavia Liu
+  name: Buzhao Liu
+  email: buzhao@wustl.edu
   links:
     github: https://github.com/tavia-liu
     linkedin: https://www.linkedin.com/in/tavialiu
@@ -41,7 +42,6 @@ kramdown:
 
 exclude:
   - README.md
-  - templates
   - _private
   - vendor
   - Gemfile

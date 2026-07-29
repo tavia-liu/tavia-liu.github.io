@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 540" role="img" aria-labelledby="title desc">
+  <title id="title">Archive database interface illustration</title>
+  <desc id="desc">Minimal archive drawers, database rows, and search interface.</desc>
+  <rect width="840" height="540" fill="#f6f6f2"/>
+  <path d="M96 110h648v320H96z" fill="#ffffff" stroke="#161616" stroke-width="2"/>
+  <path d="M96 164h648" stroke="#d7d7cf" stroke-width="2"/>
+  <circle cx="128" cy="137" r="8" fill="#161616"/>
+  <circle cx="154" cy="137" r="8" fill="#d7d7cf"/>
+  <circle cx="180" cy="137" r="8" fill="#d7d7cf"/>
+  <path d="M132 206h224v60H132zM132 296h224v60H132z" fill="#f6f6f2" stroke="#161616" stroke-width="2"/>
+  <path d="M176 236h136M176 326h136" stroke="#161616" stroke-width="2"/>
+  <path d="M424 210h252M424 246h210M424 302h252M424 338h176" stroke="#161616" stroke-width="2"/>
+  <path d="M424 386h122" stroke="#8d8d86" stroke-width="2"/>
+  <path d="M616 374l38 38 66-86" fill="none" stroke="#161616" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M110 454h620" stroke="#161616" stroke-width="2"/>
+</svg>

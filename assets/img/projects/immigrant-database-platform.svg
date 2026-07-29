@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+  <title id="title">National Archives Research Database interface</title>
+  <desc id="desc">A browser interface for searchable historical passenger records, using real local database fields and counts.</desc>
+  <rect width="1200" height="820" fill="#f5f4ef"/>
+  <rect x="70" y="62" width="1060" height="696" fill="#ffffff"/>
+  <rect x="70" y="62" width="1060" height="70" fill="#161616"/>
+  <text x="104" y="106" fill="#ffffff" font-family="Arial, sans-serif" font-size="25" font-weight="700">National Archives Research Database</text>
+  <text x="766" y="105" fill="#d7d4ca" font-family="Arial, sans-serif" font-size="15">Passenger records. Search. Filters. Export.</text>
+
+  <rect x="102" y="166" width="206" height="92" fill="#eef3f4"/>
+  <rect x="332" y="166" width="206" height="92" fill="#f5efe8"/>
+  <rect x="562" y="166" width="206" height="92" fill="#eef0f6"/>
+  <rect x="792" y="166" width="306" height="92" fill="#f4f4f0"/>
+  <text x="122" y="198" fill="#6b6b66" font-family="Arial, sans-serif" font-size="14">Total Records</text>
+  <text x="122" y="237" fill="#161616" font-family="Georgia, serif" font-size="42">165</text>
+  <text x="352" y="198" fill="#6b6b66" font-family="Arial, sans-serif" font-size="14">Arrival Ports</text>
+  <text x="352" y="237" fill="#161616" font-family="Georgia, serif" font-size="42">2</text>
+  <text x="582" y="198" fill="#6b6b66" font-family="Arial, sans-serif" font-size="14">Primary Route</text>
+  <text x="582" y="237" fill="#161616" font-family="Georgia, serif" font-size="32">Hong Kong</text>
+  <text x="812" y="198" fill="#6b6b66" font-family="Arial, sans-serif" font-size="14">Top Arrival Port</text>
+  <text x="812" y="237" fill="#161616" font-family="Georgia, serif" font-size="32">San Francisco</text>
+
+  <rect x="102" y="294" width="996" height="54" fill="#fbfbf8" stroke="#d9d7cf"/>
+  <text x="126" y="327" fill="#77736b" font-family="Arial, sans-serif" font-size="15">Quick search</text>
+  <text x="262" y="327" fill="#161616" font-family="Arial, sans-serif" font-size="15">passenger name, NAID, ship name, or ID</text>
+  <rect x="942" y="308" width="126" height="26" fill="#161616"/>
+  <text x="976" y="326" fill="#ffffff" font-family="Arial, sans-serif" font-size="13">Export CSV</text>
+
+  <rect x="102" y="382" width="996" height="300" fill="#ffffff" stroke="#d9d7cf"/>
+  <rect x="102" y="382" width="996" height="42" fill="#efeee9"/>
+  <text x="124" y="408" fill="#4e4b46" font-family="Arial, sans-serif" font-size="13" font-weight="700">Passenger ID</text>
+  <text x="348" y="408" fill="#4e4b46" font-family="Arial, sans-serif" font-size="13" font-weight="700">Name</text>
+  <text x="544" y="408" fill="#4e4b46" font-family="Arial, sans-serif" font-size="13" font-weight="700">Ship</text>
+  <text x="676" y="408" fill="#4e4b46" font-family="Arial, sans-serif" font-size="13" font-weight="700">Route</text>
+  <text x="910" y="408" fill="#4e4b46" font-family="Arial, sans-serif" font-size="13" font-weight="700">Arrival</text>
+
+  <g font-family="Arial, sans-serif" font-size="13" fill="#191919">
+    <rect x="102" y="424" width="996" height="43" fill="#ffffff"/>
+    <text x="124" y="451">120138296 Line1 Image107</text><text x="348" y="451">Quan Tong Kwan</text><text x="544" y="451">China</text><text x="676" y="451">Hong Kong to San Francisco</text><text x="910" y="451">1910-06-25</text>
+    <rect x="102" y="467" width="996" height="43" fill="#fafaf7"/>
+    <text x="124" y="494">120138296 Line22 Image112</text><text x="348" y="494">Lee On</text><text x="544" y="494">China</text><text x="676" y="494">Hong Kong to San Francisco</text><text x="910" y="494">1910-06-25</text>
+    <rect x="102" y="510" width="996" height="43" fill="#ffffff"/>
+    <text x="124" y="537">120138296 Line25 Image112</text><text x="348" y="537">Quan Hing</text><text x="544" y="537">China</text><text x="676" y="537">Hong Kong to San Francisco</text><text x="910" y="537">1910-06-25</text>
+    <rect x="102" y="553" width="996" height="43" fill="#fafaf7"/>
+    <text x="124" y="580">120129207 Line6 Image34</text><text x="348" y="580">Law Oye</text><text x="544" y="580">China</text><text x="676" y="580">Hong Kong to San Francisco</text><text x="910" y="580">1905-08-23</text>
+    <rect x="102" y="596" width="996" height="43" fill="#ffffff"/>
+    <text x="124" y="623">120129207 Line22 Image34</text><text x="348" y="623">Chin Chan</text><text x="544" y="623">China</text><text x="676" y="623">Hong Kong to San Francisco</text><text x="910" y="623">1905-08-23</text>
+    <rect x="102" y="639" width="996" height="43" fill="#fafaf7"/>
+    <text x="124" y="666">120129207 Line23 Image34</text><text x="348" y="666">Wong Saw</text><text x="544" y="666">China</text><text x="676" y="666">Hong Kong to San Francisco</text><text x="910" y="666">1905-08-23</text>
+  </g>
+
+  <text x="102" y="724" fill="#6b6b66" font-family="Arial, sans-serif" font-size="13">Live frontend target. https://ada.artsci.wustl.edu/miles/</text>
+</svg>

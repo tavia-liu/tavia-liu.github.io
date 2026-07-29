@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 540" role="img" aria-labelledby="title desc">
+  <title id="title">Life in weeks grid illustration</title>
+  <desc id="desc">Minimal calendar-like grid representing weeks across a life.</desc>
+  <rect width="840" height="540" fill="#f6f6f2"/>
+  <path d="M102 94h636v352H102z" fill="#fff" stroke="#161616" stroke-width="2"/>
+  <g fill="#161616">
+    <rect x="138" y="130" width="12" height="12"/>
+    <rect x="166" y="130" width="12" height="12"/>
+    <rect x="194" y="130" width="12" height="12"/>
+    <rect x="222" y="130" width="12" height="12"/>
+    <rect x="250" y="130" width="12" height="12"/>
+    <rect x="278" y="130" width="12" height="12"/>
+    <rect x="306" y="130" width="12" height="12"/>
+    <rect x="334" y="130" width="12" height="12"/>
+    <rect x="362" y="130" width="12" height="12"/>
+    <rect x="390" y="130" width="12" height="12"/>
+    <rect x="418" y="130" width="12" height="12"/>
+    <rect x="446" y="130" width="12" height="12"/>
+  </g>
+  <g fill="#d7d7cf">
+    <rect x="138" y="170" width="12" height="12"/>
+    <rect x="166" y="170" width="12" height="12"/>
+    <rect x="194" y="170" width="12" height="12"/>
+    <rect x="222" y="170" width="12" height="12"/>
+    <rect x="250" y="170" width="12" height="12"/>
+    <rect x="278" y="170" width="12" height="12"/>
+    <rect x="306" y="170" width="12" height="12"/>
+    <rect x="334" y="170" width="12" height="12"/>
+    <rect x="362" y="170" width="12" height="12"/>
+    <rect x="390" y="170" width="12" height="12"/>
+    <rect x="418" y="170" width="12" height="12"/>
+    <rect x="446" y="170" width="12" height="12"/>
+  </g>
+  <path d="M138 236h430M138 278h356M138 320h504" stroke="#161616" stroke-width="2"/>
+  <path d="M138 372h160" stroke="#8d8d86" stroke-width="2"/>
+  <circle cx="630" cy="142" r="58" fill="none" stroke="#161616" stroke-width="2"/>
+  <path d="M630 108v34l24 20" fill="none" stroke="#161616" stroke-width="3" stroke-linecap="round"/>
+</svg>
