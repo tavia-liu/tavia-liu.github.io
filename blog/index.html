@@ -11,7 +11,6 @@ title: Blogs
   <div class="blog-index__head" aria-hidden="true">
     <span>Date</span>
     <span>Index</span>
-    <span>Year</span>
   </div>
   {% for post in site.posts %}
     {% unless post.visibility == "private" or post.published == false %}
@@ -22,10 +21,6 @@ title: Blogs
           <span class="blog-row__main">
             <span class="entry-title">{{ post.title }}</span>
             {% if post.description %}<span class="entry-summary">{{ post.description }}</span>{% endif %}
-          </span>
-          <span class="blog-row__meta">
-            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y" }}</time>
-            {% if post.reading_time %}<span class="entry-kind">{{ post.reading_time }}</span>{% endif %}
           </span>
           {% if post.image %}
             <span class="blog-preview" aria-hidden="true">

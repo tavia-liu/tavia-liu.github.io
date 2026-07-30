@@ -8,7 +8,7 @@ description: Buzhao Liu works across AI security, embodied AI, and global field 
     <div>
       <h1>About Me</h1>
       <div class="hero-copy">
-        <p>Hi, I'm Buzhao Liu (Tavia). I'm an AI researcher and a computer science and international relations student at Washington University in St. Louis. I work on AI security, multi-agent systems, and embodied AI. I care about systems that can be studied carefully, trusted in practice, and understood in the world they enter.</p>
+        <p>Hi, I'm Buzhao (Tavia) Liu . I'm an AI researcher and a computer science and international relations student at Washington University in St. Louis. I work on AI security, multi-agent systems, and embodied AI. I care about systems that can be studied carefully, trusted in practice, and understood in the world they enter.</p>
         <p>I also think of myself as a global citizen in a practical way. Technology gives us speed, but humanity decides the direction. My global studies work keeps me close to people, migration, institutions, and the ways communities care for one another. I want the tools I build to stay connected to that responsibility.</p>
       </div>
     </div>
@@ -30,7 +30,7 @@ description: Buzhao Liu works across AI security, embodied AI, and global field 
       </figure>
       <div>
         <h3>Washington University in St. Louis</h3>
-        <p>Undergraduate Student, 2024-2027.<br>Dean's List.<br>B.S. in Computer Science and International Relations.</p>
+        <p>Undergraduate Student, 2023-2027.<br>Dean's List.<br>B.S. in Computer Science and International Relations.</p>
       </div>
     </article>
     <article class="education-row">
@@ -39,7 +39,7 @@ description: Buzhao Liu works across AI security, embodied AI, and global field 
       </figure>
       <div>
         <h3>The High School Affiliated to Renmin University of China</h3>
-        <p>High School Student, 2021-2023.</p>
+        <p>High School Student, 2020-2023.</p>
       </div>
     </article>
   </div>
@@ -54,7 +54,6 @@ description: Buzhao Liu works across AI security, embodied AI, and global field 
     <div class="blog-index__head" aria-hidden="true">
       <span>Date</span>
       <span>Index</span>
-      <span>Year</span>
     </div>
     {% assign recent_items = site.posts | concat: site.research | sort: 'date' | reverse %}
     {% assign shown = 0 %}
@@ -69,9 +68,6 @@ description: Buzhao Liu works across AI security, embodied AI, and global field 
               <span class="blog-row__main">
                 <span class="entry-title">{{ item.title }}</span>
                 {% if item.description %}<span class="entry-summary">{{ item.description }}</span>{% endif %}
-              </span>
-              <span class="blog-row__meta">
-                <time datetime="{{ item.date | date_to_xmlschema }}">{{ item.date | date: "%Y" }}</time>
               </span>
               {% if item.image %}
                 <span class="blog-preview" aria-hidden="true">
