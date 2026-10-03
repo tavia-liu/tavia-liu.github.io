@@ -51,17 +51,13 @@ description: Buzhao Liu works across AI security, embodied AI, and global field 
   </header>
 
   <div class="entry-list blog-index">
-    <div class="blog-index__head" aria-hidden="true">
-      <span>Date</span>
-      <span>Index</span>
-    </div>
     {% assign recent_items = site.posts | concat: site.research | sort: 'date' | reverse %}
     {% assign shown = 0 %}
     {% for item in recent_items %}
       {% unless item.visibility == "private" or item.published == false %}
         {% if shown < 6 %}
           {% assign shown = shown | plus: 1 %}
-          {% assign calendar_mark = item.date | date: "%m.%d" %}
+          {% assign calendar_mark = item.date | date: "%b, %Y" %}
           <article class="entry blog-row">
             <a class="blog-row__link" href="{{ item.url | relative_url }}">
               <span class="blog-row__number">{{ calendar_mark }}</span>

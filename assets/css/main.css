@@ -2,8 +2,8 @@
   --bg: #ffffff;
   --paper: #ffffff;
   --ink: #1f1f1f;
-  --muted: #666666;
-  --soft-muted: #9a9a9a;
+  --muted: #1f1f1f;
+  --soft-muted: #1f1f1f;
   --line: rgba(0, 0, 0, 0.12);
   --heavy-line: rgba(0, 0, 0, 0.72);
   --accent: #4c6450;
@@ -1287,9 +1287,13 @@ figcaption {
   border-top: 0;
 }
 
+.blog-index {
+  border-top: 1px solid var(--heavy-line);
+}
+
 .blog-index__head {
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
+  grid-template-columns: 96px minmax(0, 1fr);
   gap: 24px;
   border-bottom: 1px solid var(--heavy-line);
   color: var(--muted);
@@ -1307,7 +1311,7 @@ figcaption {
 .blog-row__link {
   position: relative;
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
+  grid-template-columns: 96px minmax(0, 1fr);
   gap: 24px;
   align-items: start;
   min-height: 92px;

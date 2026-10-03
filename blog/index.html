@@ -8,13 +8,9 @@ title: Blogs
 </div>
 
 <section class="entry-list blog-index" data-search-list="blog" aria-label="Blog index">
-  <div class="blog-index__head" aria-hidden="true">
-    <span>Date</span>
-    <span>Index</span>
-  </div>
   {% for post in site.posts %}
     {% unless post.visibility == "private" or post.published == false %}
-      {% assign calendar_mark = post.date | date: "%m.%d" %}
+      {% assign calendar_mark = post.date | date: "%b, %Y" %}
       <article class="entry blog-row" data-search-text="{{ post.title | append: ' ' | append: post.description | append: ' ' | append: post.tags | downcase | escape }}">
         <a class="blog-row__link" href="{{ post.url | relative_url }}">
           <span class="blog-row__number">{{ calendar_mark }}</span>
