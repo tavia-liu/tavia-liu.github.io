@@ -29,7 +29,7 @@ const siteNav = document.querySelector(".site-nav");
 
 if (siteNav && !reduceMotion) {
   const navLinks = Array.from(siteNav.querySelectorAll("a"));
-  const activeLink = siteNav.querySelector('[aria-current="page"]') || navLinks[0];
+  const activeLink = siteNav.querySelector('[aria-current="page"]');
 
   const moveIndicator = (link) => {
     if (!link) return;
@@ -41,6 +41,11 @@ if (siteNav && !reduceMotion) {
     siteNav.classList.add("is-indicator-ready");
   };
 
+  const resetIndicator = () => {
+    if (activeLink) moveIndicator(activeLink);
+    else siteNav.classList.remove("is-indicator-ready");
+  };
+
   moveIndicator(activeLink);
 
   navLinks.forEach((link) => {
@@ -48,8 +53,8 @@ if (siteNav && !reduceMotion) {
     link.addEventListener("focus", () => moveIndicator(link));
   });
 
-  siteNav.addEventListener("mouseleave", () => moveIndicator(activeLink));
-  window.addEventListener("resize", () => moveIndicator(activeLink));
+  siteNav.addEventListener("mouseleave", resetIndicator);
+  window.addEventListener("resize", resetIndicator);
 }
 
 const revealEntries = document.querySelectorAll(
