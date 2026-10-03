@@ -123,9 +123,9 @@ main {
   top: calc(var(--nav-y) + 0.44rem);
   left: 0;
   width: var(--nav-w);
-  height: 1px;
+  height: 2px;
   content: "";
-  background: var(--ink);
+  background: var(--accent);
   opacity: 0;
   transform: translateX(var(--nav-x)) scaleX(0.72);
   transform-origin: center;
