@@ -93,7 +93,7 @@ main {
 .site-title {
   color: var(--ink);
   font-family: var(--font-main);
-  font-size: 0.82rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0;
   text-decoration: none;
@@ -106,7 +106,7 @@ main {
   align-items: center;
   justify-content: flex-end;
   gap: 0.65rem 1rem;
-  font-size: 0.78rem;
+  font-size: 0.95rem;
   font-weight: 500;
 }
 
