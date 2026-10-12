@@ -1,0 +1,248 @@
+/* Fixed left sidebar shared by all layouts (modeled on swapnilgandhi.com) */
+:root {
+  --sidebar-w: 18.75rem;
+  --accent: #1d5b9a;
+  --font-heading: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--sidebar-w);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 2.5rem 2.25rem 1.75rem;
+  /* dotted world map, dragged sideways by the visitor (see sidebar.html) */
+  background: #cfe4f7 url("/assets/img/world-map.png?v=1791782037") -400px center / auto 100% repeat-x;
+  cursor: grab;
+  touch-action: pan-y;
+  border-right: 1px solid #b9d5ef;
+  color: #0b2545;
+  transition: width 0.4s ease;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.sidebar__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  justify-content: flex-start;
+}
+
+.sidebar__photo {
+  width: 11rem;
+  height: 11rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px rgba(29, 91, 154, 0.25), 0 8px 24px rgba(11, 37, 69, 0.14);
+}
+
+.sidebar__name {
+  margin-top: 1.125rem;
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #0b2545;
+  text-decoration: none;
+}
+
+.sidebar__tagline {
+  margin: 0.5rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #2f5f8f;
+}
+
+.sidebar__tagline a { color: #2f5f8f; text-decoration: none; }
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  margin: 1.75rem 0;
+}
+
+.sidebar__nav a {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2f5f8f;
+  text-decoration: none;
+}
+
+.sidebar__nav a:hover,
+.sidebar__nav a[aria-current="page"] { color: #0b2545; }
+
+.sidebar__social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.sidebar__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #fff;
+  color: #1d5b9a;
+}
+
+.sidebar__social svg { width: 1rem; height: 1rem; }
+
+/* Full-screen sidebar showing the whole world map */
+.sidebar__toggle {
+  position: absolute;
+  top: 0.875rem;
+  left: 0.875rem;
+  z-index: 2;
+  width: 2.125rem;
+  height: 2.125rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  color: #1d5b9a;
+  cursor: pointer;
+}
+.sidebar__toggle:hover { background: #fff; }
+.sidebar__toggle svg { width: 1rem; height: 1rem; }
+.sidebar__toggle .icon-close { display: none; }
+/* No expand button on the normal sidebar: it only appears as the close (X) for the Global Fieldwork map */
+.sidebar__toggle { display: none; }
+body.sidebar-open .sidebar__toggle { display: inline-flex; }
+
+body.sidebar-open .sidebar {
+  width: 100vw;
+  background-position: center !important;
+  background-size: min(92vw, 100rem) auto;
+  background-repeat: no-repeat;
+  cursor: default;
+}
+.sidebar.is-dragging { cursor: grabbing; user-select: none; }
+.sidebar a, .sidebar button { cursor: pointer; }
+body.sidebar-open .sidebar__toggle .icon-open { display: none; }
+body.sidebar-open .sidebar__toggle .icon-close { display: block; }
+body.sidebar-open { overflow: hidden; }
+
+/* Global Fieldwork: full-screen map with one pin per site */
+.sidebar__fieldwork { display: none; }
+body.fieldwork-open .sidebar__inner { display: none; }
+body.fieldwork-open .sidebar__fieldwork {
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.sidebar__fieldwork-title {
+  position: absolute;
+  top: 1.75rem;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111;
+}
+.sidebar__fieldwork-title span {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: #2f5f8f;
+}
+.sidebar__pins {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(92vw, 100rem);
+  aspect-ratio: 2160 / 828;
+  transform: translate(-50%, -50%);
+}
+.sidebar__pins .field-pin { text-decoration: none; }
+
+@media (max-width: 900px) {
+  .sidebar__toggle { display: none; }
+  .sidebar {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    padding: 1.75rem 1.25rem;
+  }
+  .sidebar__photo { width: 6.875rem; height: 6.875rem; }
+  .sidebar__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.625rem 1.25rem;
+    margin: 1.375rem 0;
+  }
+  .sidebar__social { margin-top: 0; }
+}
+
+
+/* Center photo, name and menu vertically (social icons stay at the bottom), like swapnilgandhi.com */
+.sidebar__inner > a:first-child { margin-top: auto; }
+.sidebar__nav { margin-bottom: auto !important; }
+@media (max-width: 900px) {
+  .sidebar__inner > a:first-child { margin-top: 0; }
+  .sidebar__nav { margin-bottom: 1.25rem !important; }
+}
+
+/* Map pins (shared by the sidebar map and the Global Fieldwork page) */
+.field-pin {
+  position: absolute;
+  transform: translate(-8px, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+}
+.field-pin__dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: #1d5b9a;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 4px rgba(29, 91, 154, 0.25);
+  flex: none;
+}
+.field-pin__label {
+  padding: 4px 0.625rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(11, 37, 69, 0.15);
+}
+.field-pin:hover .field-pin__label,
+.field-pin[aria-pressed="true"] .field-pin__label { background: #1d5b9a; color: #fff; }
+
+/* Scale the whole site with the screen: 16px on laptops and phones, up to 20px on large monitors */
+html { font-size: clamp(16px, calc(10px + 0.42vw), 20px); }
+@media (min-width: 901px) {
+  .sidebar { padding-left: 1rem; padding-right: 1rem; }
+  .sidebar__social { flex-wrap: nowrap; }
+}

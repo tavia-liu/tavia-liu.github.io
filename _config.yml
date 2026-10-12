@@ -1,0 +1,49 @@
+title: Buzhao Liu
+description: Buzhao Liu's notebook.
+url: "https://tavialiu.com"
+baseurl: ""
+timezone: America/Chicago
+lang: en
+
+author:
+  name: Buzhao Liu
+  email: buzhao@wustl.edu
+  links:
+    scholar: https://scholar.google.com/citations?user=iCb3ZZ0AAAAJ&hl=en
+    github: https://github.com/tavia-liu
+    linkedin: https://www.linkedin.com/in/tavialiu
+    instagram: https://www.instagram.com/buzhao_l
+    x: https://x.com/tavia_l
+    xiaohongshu: https://www.xiaohongshu.com/user/profile/5b4058d6e8ac2b533cb18aca
+
+collections:
+  research:
+    output: true
+    permalink: /research/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      category: blog
+  - scope:
+      path: ""
+      type: research
+    values:
+      layout: note
+      category: research
+
+permalink: /blog/:year/:month/:day/:title/
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+exclude:
+  - README.md
+  - _private
+  - vendor
+  - Gemfile
+  - Gemfile.lock

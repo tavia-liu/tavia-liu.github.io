@@ -1,0 +1,83 @@
+<aside class="sidebar" aria-label="Profile and navigation">
+  <button class="sidebar__toggle" type="button" aria-label="Close the map" aria-expanded="false">
+    <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+    <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="sidebar__fieldwork" aria-label="Global fieldwork sites">
+    <p class="sidebar__fieldwork-title">Global Fieldwork <span>Choose a place</span></p>
+    <div class="sidebar__pins">
+    <a class="field-pin" href="{{ '/global-fieldwork/#cuetzalan' | relative_url }}" style="left:22.9%;top:43.4%"><span class="field-pin__dot"></span><span class="field-pin__label">Cuetzalan, Mexico</span></a>
+    <a class="field-pin" href="{{ '/global-fieldwork/#roma' | relative_url }}" style="left:53.5%;top:27.6%"><span class="field-pin__dot"></span><span class="field-pin__label">Roma, Italy</span></a>
+    <a class="field-pin" href="{{ '/global-fieldwork/#guizhou' | relative_url }}" style="left:79.6%;top:38.7%"><span class="field-pin__dot"></span><span class="field-pin__label">Guizhou, China</span></a>
+    </div>
+  </div>
+  <div class="sidebar__inner">
+    <a href="{{ '/' | relative_url }}"><img class="sidebar__photo" src="{{ '/assets/img/tavia-liu-headshot-2026-campus.jpg?v=3' | relative_url }}" alt="Buzhao (Tavia) Liu"></a>
+    <a class="sidebar__name" href="{{ '/' | relative_url }}">Buzhao (Tavia) Liu</a>
+    <nav class="sidebar__nav" aria-label="Main navigation">
+      <a href="{{ '/blog/' | relative_url }}" {% if page.url == "/blog/" %}aria-current="page"{% endif %}>Blogs</a>
+      <a href="{{ '/global-fieldwork/' | relative_url }}" data-fieldwork {% if page.url == "/global-fieldwork/" %}aria-current="page"{% endif %}>Global Fieldwork</a>
+      <a href="{{ '/#about' | relative_url }}" data-section="about" {% if page.url == "/" %}aria-current="page"{% endif %}>About</a>
+      <a href="{{ '/#research' | relative_url }}" data-section="research">Research</a>
+      <a href="{{ '/#projects' | relative_url }}" data-section="projects">Projects</a>
+    </nav>
+    <nav class="sidebar__social" aria-label="Social links">
+      {% include social-icons.html %}
+    </nav>
+  </div>
+</aside>
+<script>
+  // Expand the sidebar to full screen (like lucys0.github.io); click again or press Esc to close
+  (function () {
+    var btn = document.querySelector(".sidebar__toggle");
+    function set(open, fieldwork) {
+      document.body.classList.toggle("sidebar-open", open);
+      document.body.classList.toggle("fieldwork-open", !!(open && fieldwork));
+      btn.setAttribute("aria-expanded", open);
+      btn.setAttribute("aria-label", "Close the map");
+    }
+    btn.addEventListener("click", function () { set(!document.body.classList.contains("sidebar-open")); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
+
+    // Drag the sidebar map sideways like spinning a globe; it wraps around endlessly
+    var sidebar = document.querySelector(".sidebar");
+    var MAP_RATIO = 4320 / 1656;               // world-map.png width / height
+    var mapX = null, dragX = null;
+    function mapWidth() { return sidebar.clientHeight * MAP_RATIO; }
+    function place() { sidebar.style.backgroundPosition = mapX + "px 50%"; }
+    function startView() {
+      // center longitude -95 (the Americas) in the sidebar
+      mapX = sidebar.clientWidth / 2 - mapWidth() * (85 / 360);
+      place();
+    }
+    startView();
+    window.addEventListener("resize", startView);
+    sidebar.addEventListener("pointerdown", function (e) {
+      if (document.body.classList.contains("sidebar-open")) return;
+      if (e.target.closest("a, button, img")) return;
+      dragX = e.clientX;
+      sidebar.classList.add("is-dragging");
+      try { sidebar.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+    sidebar.addEventListener("pointermove", function (e) {
+      if (dragX === null) return;
+      mapX += e.clientX - dragX; dragX = e.clientX;
+      mapX = ((mapX % mapWidth()) + mapWidth()) % mapWidth() - mapWidth();
+      place();
+    });
+    function stop() { dragX = null; sidebar.classList.remove("is-dragging"); }
+    sidebar.addEventListener("pointerup", stop);
+    sidebar.addEventListener("pointercancel", stop);
+
+    document.querySelectorAll(".sidebar__nav a").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        if (a.hasAttribute("data-fieldwork") && window.innerWidth > 900) {
+          e.preventDefault();
+          set(true, true);
+        } else {
+          set(false);
+        }
+      });
+    });
+  })();
+</script>

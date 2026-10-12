@@ -1,0 +1,207 @@
+/* Homepage: content fills the full width beside the sidebar
+   (layout after swapnilgandhi.com, type after kawine.github.io) */
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #333;
+  background: #fff;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.home {
+  margin-left: var(--sidebar-w);
+  padding: 3rem 4.5rem 2.5rem 3rem;
+}
+.home > * { max-width: 55rem; }
+
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: -24px 0 2.5rem;
+  padding: 0.75rem 0 1.75rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+.masthead__sub { white-space: nowrap; }
+
+.masthead h1 {
+  margin: 0;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #343a40;
+}
+
+.masthead h1 span { color: var(--accent); }
+
+.masthead__sub {
+  margin: 0.875rem 0 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #868e96;
+}
+
+.masthead__sub a { color: #868e96; text-transform: none; letter-spacing: 0; font-weight: 400; }
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #111;
+  margin: 3rem 0 1.25rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 2px solid #cfe4f7;
+}
+
+#about h2 { margin-top: 0; }
+
+p { margin: 0 0 0.875rem; }
+
+section { scroll-margin-top: 1.5rem; }
+
+/* Education: simple left-aligned list */
+.edu { list-style: none; padding: 0; margin: 0; }
+.edu li { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.125rem; }
+.edu img { width: 6rem; height: 3.25rem; object-fit: contain; object-position: left center; flex: none; }
+.edu b { display: block; font-size: 1.0625rem; color: #111; margin-bottom: 2px; }
+
+/* Research and project entries: one card per entry, cards fill the width */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(23.75rem, 1fr));
+  gap: 1.75rem;
+}
+.entry {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 1px solid #e3e8ef;
+  border-top: 3px solid var(--accent);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(16, 42, 67, 0.06);
+}
+.entry__row { display: flex; flex-direction: column; gap: 1rem; }
+.entry__media img {
+  display: block;
+  width: 100%;
+  height: 13.125rem;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+.entry__title { font-weight: 700; font-size: 1.125rem; line-height: 1.35; color: #111; margin-bottom: 0.5rem; }
+.entry__meta { margin: 0 0 4px; }
+.entry__venue { font-style: italic; color: #666; }
+.entry__summary { margin: 0.75rem 0 0; color: #444; }
+.me { font-weight: 700; }
+
+/* Research and projects: one block per entry, image beside text (block style after kawine.github.io) */
+.rows { display: flex; flex-direction: column; gap: 1rem; }
+.rows .entry {
+  border: 1px solid #e3e3e3;
+  border-left: 5px solid var(--accent);
+  border-radius: 2px;
+  background: #f9f9f9;
+  box-shadow: none;
+  padding: 1.125rem 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+.rows .entry__title { font-style: normal; font-weight: 700; color: #111; font-size: inherit; line-height: inherit; color: #333; margin-bottom: 0; }
+.rows .entry__meta { margin: 0; line-height: 1.5; }
+.rows .entry__venue { font-style: normal; color: #333; }
+.rows .me { font-weight: 400; text-decoration: underline; }
+.rows .entry__summary { margin: 0.875rem 0 0; padding-top: 0.875rem; border-top: 1px solid #e5e5e5; color: #333; }
+.rows .entry__row { flex-direction: row; gap: 1.75rem; align-items: center; }
+.rows .entry__media { flex: 0 0 16rem; }
+.rows .entry__media img { width: 16rem; height: 10rem; }
+.rows .entry__row > div:last-child { flex: 1; min-width: 0; }
+
+.home-footer {
+  margin-top: 4rem;
+  padding-top: 1rem;
+  border-top: 2px solid #cfe4f7;
+  color: #5b7ea3;
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 900px) {
+  .home { margin-left: 0; padding: 2.25rem 1.25rem; }
+  .masthead { flex-direction: column; align-items: flex-start; }
+  .masthead h1 { font-size: 2.625rem; }
+  .masthead__sub { white-space: normal; }
+  .cards, .edu { grid-template-columns: 1fr; }
+  .rows .entry__row { flex-direction: column; gap: 0.875rem; }
+  .rows .entry__media, .rows .entry__media img { width: 100%; flex-basis: auto; height: auto; }
+  .entry__media img { height: auto; }
+}
+
+/* Link tags, after kawine.github.io */
+.entry__links { margin: 0.375rem 0 0; display: flex; flex-wrap: wrap; gap: 0.375rem; }
+.tag {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #fff;
+}
+.tag:hover { text-decoration: none; opacity: 0.85; }
+.tag--site { background: #1d5b9a; }
+.tag--paper { background: #777; }
+.tag--blog { background: #5bc0de; }
+.tag--code { background: #5cb85c; }
+
+/* Traditional academic-page density */
+body { font-size: 1rem; line-height: 1.55; }
+.home { padding-top: 2.25rem; }
+h2 {
+  font-size: 1.375rem;
+  text-transform: none;
+  letter-spacing: 0;
+  margin: 2.25rem 0 0.875rem;
+  padding-bottom: 0.375rem;
+  border-bottom: 1px solid #cfe4f7;
+}
+p { margin-bottom: 0.625rem; }
+.edu li { margin-bottom: 0.75rem; gap: 1rem; }
+.edu img { width: 5rem; height: 2.75rem; }
+.edu b { font-size: 1rem; margin-bottom: 0; }
+.rows { gap: 0.75rem; }
+.rows .entry { padding: 0.875rem 1rem; font-size: 1rem; line-height: 1.5; }
+@media (min-width: 901px) { .rows .entry__row { gap: 1.25rem; } }
+@media (min-width: 901px) {
+  .rows .entry__media { flex-basis: 18rem; }
+  .rows .entry__media img { width: 18rem; height: 11.25rem; }
+}
+.rows .entry__summary { margin-top: 0.625rem; padding-top: 0.625rem; }
+.entry__links { margin-top: 0.25rem; }
+.home-footer { margin-top: 2.5rem; }
+
+/* Same black text and size everywhere (About, Education, Research, Projects) */
+body { color: #1a1a1a; }
+.rows .entry,
+.rows .entry__title,
+.rows .entry__meta,
+.rows .entry__venue,
+.rows .entry__summary,
+.entry__summary { color: #1a1a1a; font-size: 1rem; line-height: 1.55; }
+.rows .me { font-weight: 700; text-decoration: none; }

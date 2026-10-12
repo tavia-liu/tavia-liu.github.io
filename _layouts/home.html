@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'en' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ page.description | default: site.description | escape }}">
+    <title>{% if page.title and page.url != "/" %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    {% assign og_image = page.og_image | default: '/assets/img/tavia-liu-headshot-2026-campus.jpg' %}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ site.title }}">
+    <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}">
+    <meta property="og:description" content="{{ page.description | default: site.description | escape }}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:image" content="{{ og_image | absolute_url }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="{{ og_image | absolute_url }}">
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/sidebar.css?v=1791816884' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/home.css?v=1791816884' | relative_url }}">
+  </head>
+  <body>
+    {% include sidebar.html %}
+
+    <main class="home">
+      {{ content }}
+      <footer class="home-footer">&copy; {{ site.time | date: "%Y" }} Buzhao (Tavia) Liu</footer>
+    </main>
+
+    {% if page.url == "/" %}
+    <script>
+      // Underline the menu item for the section currently in view
+      (function () {
+        var links = document.querySelectorAll(".sidebar__nav a[data-section]");
+        var sections = Array.prototype.map.call(links, function (a) {
+          return document.getElementById(a.dataset.section);
+        });
+        function update() {
+          var current = sections[0];
+          sections.forEach(function (sec) {
+            if (sec && sec.getBoundingClientRect().top <= window.innerHeight * 0.35) current = sec;
+          });
+          links.forEach(function (a) {
+            if (current && a.dataset.section === current.id) a.setAttribute("aria-current", "page");
+            else a.removeAttribute("aria-current");
+          });
+        }
+        window.addEventListener("scroll", update, { passive: true });
+        update();
+      })();
+    </script>
+    {% endif %}
+  </body>
+</html>

@@ -1,0 +1,30 @@
+---
+layout: page
+title: Blogs
+---
+<div class="toolbar blog-toolbar">
+  <input type="search" placeholder="Search blogs" data-search-input="blog" aria-label="Search blogs">
+  <span class="count-label" data-search-count="blog"></span>
+</div>
+
+<section class="entry-list blog-index" data-search-list="blog" aria-label="Blog index">
+  {% for post in site.posts %}
+    {% unless post.visibility == "private" or post.published == false %}
+      {% assign calendar_mark = post.date | date: "%b, %Y" %}
+      <article class="entry blog-row" data-search-text="{{ post.title | append: ' ' | append: post.description | append: ' ' | append: post.tags | downcase | escape }}">
+        <a class="blog-row__link" href="{{ post.url | relative_url }}">
+          <span class="blog-row__number">{{ calendar_mark }}</span>
+          <span class="blog-row__main">
+            <span class="entry-title">{{ post.title }}</span>
+            {% if post.description %}<span class="entry-summary">{{ post.description }}</span>{% endif %}
+          </span>
+          {% if post.image %}
+            <span class="blog-preview" aria-hidden="true">
+              <img src="{{ post.image | relative_url }}" alt="">
+            </span>
+          {% endif %}
+        </a>
+      </article>
+    {% endunless %}
+  {% endfor %}
+</section>
