@@ -42,16 +42,32 @@
     // Drag the sidebar map sideways like spinning a globe; it wraps around endlessly
     var sidebar = document.querySelector(".sidebar");
     var MAP_RATIO = 4320 / 1656;               // world-map.png width / height
-    var mapX = null, dragX = null;
+    var SPIN_SPEED = 12;                       // px per second, eastward like the Earth
+    var mapX = null, dragX = null, hovering = false, lastT = null;
     function mapWidth() { return sidebar.clientHeight * MAP_RATIO; }
-    function place() { sidebar.style.backgroundPosition = mapX + "px 50%"; }
+    function place() {
+      mapX = ((mapX % mapWidth()) + mapWidth()) % mapWidth() - mapWidth();
+      sidebar.style.backgroundPosition = mapX + "px 50%";
+    }
     function startView() {
-      // center longitude -95 (the Americas) in the sidebar
-      mapX = sidebar.clientWidth / 2 - mapWidth() * (85 / 360);
+      // center Beijing (longitude 116.4) in the sidebar
+      mapX = sidebar.clientWidth / 2 - mapWidth() * ((116.4 + 180) / 360);
       place();
     }
     startView();
     window.addEventListener("resize", startView);
+
+    // Slowly spin the map; pause while hovering, dragging, or showing the full-screen map
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function spin(t) {
+      var paused = hovering || dragX !== null || document.body.classList.contains("sidebar-open");
+      if (lastT !== null && !paused) { mapX += SPIN_SPEED * Math.min(t - lastT, 100) / 1000; place(); }
+      lastT = t;
+      requestAnimationFrame(spin);
+    }
+    if (!reduceMotion) requestAnimationFrame(spin);
+    sidebar.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") hovering = true; });
+    sidebar.addEventListener("pointerleave", function () { hovering = false; });
     sidebar.addEventListener("pointerdown", function (e) {
       if (document.body.classList.contains("sidebar-open")) return;
       if (e.target.closest("a, button, img")) return;
@@ -62,7 +78,6 @@
     sidebar.addEventListener("pointermove", function (e) {
       if (dragX === null) return;
       mapX += e.clientX - dragX; dragX = e.clientX;
-      mapX = ((mapX % mapWidth()) + mapWidth()) % mapWidth() - mapWidth();
       place();
     });
     function stop() { dragX = null; sidebar.classList.remove("is-dragging"); }
