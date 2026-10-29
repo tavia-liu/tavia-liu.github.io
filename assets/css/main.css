@@ -2231,3 +2231,19 @@ body { color: #1a1a1a; }
 .reflection-photo img { width: 100%; height: auto; max-height: none; border-radius: 4px; }
 .prose .reflection-photo-grid { max-width: none; margin: 1.25rem 0; }
 .reflection-photo--wide { margin: 1.25rem 0; }
+
+/* Reflection post: uniform photo crops */
+.reflection-photo img { object-fit: cover; }
+.reflection-photo--wide img { aspect-ratio: 16 / 9; }
+.reflection-photo-grid--two .reflection-photo { grid-column: span 3; }
+.reflection-photo-grid--two .reflection-photo img { aspect-ratio: 1 / 1; }
+.reflection-photo-grid--three .reflection-photo { grid-column: span 2; }
+.reflection-photo-grid--three .reflection-photo img { aspect-ratio: 1 / 1; }
+@media (max-width: 640px) {
+  .prose .reflection-photo-grid--two,
+  .prose .reflection-photo-grid--three { grid-template-columns: repeat(2, 1fr); }
+  .reflection-photo-grid--two .reflection-photo,
+  .reflection-photo-grid--three .reflection-photo { grid-column: span 1; }
+  .reflection-photo-grid--three .reflection-photo:last-child { grid-column: span 2; }
+  .reflection-photo-grid--three .reflection-photo:last-child img { aspect-ratio: 16 / 9; }
+}
