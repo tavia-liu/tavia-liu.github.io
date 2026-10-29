@@ -1,7 +1,7 @@
 ---
 title: "The Density of a Life"
 date: 2026-08-28
-description: "An essay on measuring a life by density rather than length: two majors, dance, and a summer in Italy."
+description: "Why I measure a life by its density, told through two majors, dance, and a summer in Italy."
 tags: [essay, life-in-weeks]
 reading_time: "4 min"
 permalink: /blog/density-of-a-life/
