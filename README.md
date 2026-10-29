@@ -1,6 +1,6 @@
 # Buzhao Liu website
 
-Personal research notebook and blog for Buzhao Liu at <https://tavialiu.com>.
+Personal research website and blog for Buzhao Liu at <https://tavialiu.com>.
 
 ## Structure
 
