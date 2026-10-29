@@ -70,6 +70,7 @@ h2 {
 }
 
 #about h2 { margin-top: 0; }
+.section-note { margin: -0.25rem 0 0.75rem; font-size: 0.875rem; color: #666; }
 
 p { margin: 0 0 0.875rem; }
 
