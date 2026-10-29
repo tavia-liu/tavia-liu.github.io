@@ -53,4 +53,4 @@ These practices reshaped how I understand research. Good research begins with hu
   <img src="{{ '/assets/img/fieldwork/mexico-heritage-site.jpg' | relative_url }}" alt="Field study group at a heritage site in Mexico" style="object-position: center 72%">
 </figure>
 
-I carry this discipline into technical work. As a computer scientist, I work on AI systems, and systems like these increasingly decide who is searched, whose language is legible, and whose record can be found. The same attention applies there: learn the terms people use for their own lives, and build systems in which those terms survive. My global studies training keeps me close to that responsibility.
+I carry this discipline into my work on AI. AI systems increasingly decide who is searched, whose language is legible, and whose record can be found. The same attention applies there: learn the terms people use for their own lives, and build systems in which those terms survive. My global studies training keeps me close to that responsibility.
