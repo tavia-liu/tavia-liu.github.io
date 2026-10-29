@@ -3,20 +3,26 @@ title: "Cuetzalan As A Discipline Of Attention"
 date: 2024-05-30
 description: "A reflection on Cuetzalan, Masejwual territorial defense, food culture, and research accountability."
 tags: [fieldwork, mexico, global-studies]
-reading_time: "5 min"
+reading_time: "6 min"
 permalink: /blog/mexico-field-reflection/
 image: /assets/img/fieldwork/mexico-jungle-group.jpg
 ---
 
-I arrived in Mexico thinking about global citizenship as a moral vocabulary. I left understanding it more as a discipline of attention. It is easy to say that the world is connected. It is harder to sit with the concrete form of that connection when it appears as a family divided by immigration policy, a river threatened by a dam, or a community meeting where people decide how to defend their territory.
+I arrived in Mexico with global citizenship as a moral vocabulary and left with it as a discipline of attention. Saying the world is connected takes one sentence. Attending to that connection takes much longer, because it arrives in concrete forms: a family divided by immigration policy, a river threatened by a dam, a community meeting where people decide how to defend their territory.
 
 <figure class="reflection-photo reflection-photo--wide">
   <img src="{{ '/assets/img/fieldwork/mexico-jungle-group.jpg' | relative_url }}" alt="Field study group in Cuetzalan">
 </figure>
 
-Our conversations made abstraction difficult. Migrants did not speak about the United States as an idea. They spoke about distance from family and the cost of waiting. Social movement leaders spoke about policy through the daily pressure it places on people who cross borders or live with someone absent because of them.
+In May 2024, our group traveled to Cuetzalan, in the Sierra Norte of Puebla, and worked with Augsburg University to meet people whose lives sit at the center of arguments usually made far away from them. Every conversation pulled abstractions back to the ground. Migrants spoke about the United States through distance from family, money sent home, and the cost of waiting. Social movement leaders described immigration policy by its daily weight on people who cross borders and on families who live around someone's absence. The fear that policy produced was ordinary, and its ordinariness was the most unsettling part.
 
-The Masejwual communities we learned from did not treat sovereignty as an academic keyword. They described the work of defending territory and water against mining projects and hydroelectric dams. What stayed with me was how ordinary the work looked from the outside. Cooperative organization. Local government. Hospitality offered with care. A language kept alive through use.
+The Masejwual communities we learned from speak about sovereignty as work. They described defending territory and water against mining projects and hydroelectric dams, and their organizers and elders spoke with the precision of people who had defended this land long before researchers arrived. From the outside, the defense looks ordinary: cooperative organization, local government, hospitality offered with care, a language kept alive through daily use. Each of these holds territory in its own way. A cooperative keeps decisions inside the community. Local government gives refusal an institutional form. A living language keeps the community's own terms in use.
+
+<figure class="reflection-photo reflection-photo--wide">
+  <img src="{{ '/assets/img/fieldwork/mexico-community-resistance.JPG' | relative_url }}" alt="Field study group with community hosts in Cuetzalan, Mexico">
+</figure>
+
+Attention, in this sense, is a method. It means letting people define their situation in their own terms before I fit it into mine. I came with categories such as migration, sovereignty, and resistance, and Cuetzalan kept handing them back with more texture than they could hold. Even the town plaza held the wider world: hand-lettered signs there declared that the children of Gaza are not a threat.
 
 <section class="reflection-photo-grid" aria-label="Cuetzalan field notes in photos">
   <figure class="reflection-photo">
@@ -27,7 +33,7 @@ The Masejwual communities we learned from did not treat sovereignty as an academ
   </figure>
 </section>
 
-Food made that lesson easier to understand. A meal was not only something served after the serious conversation ended. It was part of the conversation. We learned how outside judgment can misread a culture quickly. Some people see children drinking coffee and call the practice uncultured. The more careful story is that families often use decaf coffee, and the drink belongs to a local food world with its own knowledge. At PAJTI, even handmade local oil carried that same lesson. Culture was not decoration. It was technique, memory, and care made practical.
+Meals carried the same lesson. Eating together belonged to the conversation itself, and it showed how quickly outside judgment misreads a culture. Visitors who see children drinking coffee sometimes call the practice uncultured. Families often serve decaf, and the drink belongs to a local food world with its own knowledge. At PAJTI, handmade local oil made the point again: culture here is technique, memory, and care made practical.
 
 <section class="reflection-photo-grid" aria-label="Cuetzalan food culture photos">
   <figure class="reflection-photo">
@@ -38,4 +44,14 @@ Food made that lesson easier to understand. A meal was not only something served
   </figure>
 </section>
 
-Those practices changed how I understand research. Good research is not extraction with better language. It requires humility about what one does not know and accountability to the people whose lives become data. As a computer scientist, I carry this back into technical work because systems increasingly decide who is searched, whose language is legible, and whose record can be found. My global studies training keeps me close to that responsibility.
+<figure class="reflection-photo reflection-photo--wide">
+  <img src="{{ '/assets/img/fieldwork/mexico-dialogue-table.jpg' | relative_url }}" alt="Students and community hosts gathered around a table in Mexico">
+</figure>
+
+<figure class="reflection-photo reflection-photo--wide">
+  <img src="{{ '/assets/img/fieldwork/mexico-heritage-site.jpg' | relative_url }}" alt="Field study group at a heritage site in Mexico">
+</figure>
+
+These practices reshaped how I understand research. Good research begins with humility about the limits of one's knowledge and stays accountable to the people whose lives become data. Cuetzalan taught me that political research has to notice the practices that keep people alive as closely as the systems that harm them.
+
+I carry this discipline into technical work. As a computer scientist, I work on AI systems, and systems like these increasingly decide who is searched, whose language is legible, and whose record can be found. The same attention applies there: learn the terms people use for their own lives, and build systems in which those terms survive. My global studies training keeps me close to that responsibility.
