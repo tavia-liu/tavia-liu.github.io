@@ -53,4 +53,4 @@ These practices reshaped how I understand research. Good research begins with hu
   <img src="{{ '/assets/img/fieldwork/mexico-heritage-site.jpg' | relative_url }}" alt="Field study group at a heritage site in Mexico" style="object-position: center 72%">
 </figure>
 
-I carry this discipline into my work on AI. AI systems increasingly decide who is searched, whose language is legible, and whose record can be found. The same attention applies there: learn the terms people use for their own lives, and build systems in which those terms survive. My global studies training keeps me close to that responsibility.
+I carry this discipline into everything I study. Wherever I work, I try to learn the terms people use for their own lives before I reach for mine, and to keep those terms intact in what I write and make. Cuetzalan is where I learned that this is a responsibility.
