@@ -129,7 +129,7 @@ section { scroll-margin-top: 1.5rem; }
 .rows .entry__venue { font-style: normal; color: #333; }
 .rows .me { font-weight: 400; text-decoration: underline; }
 .rows .entry__summary { margin: 0.875rem 0 0; padding-top: 0.875rem; border-top: 1px solid #e5e5e5; color: #333; }
-.rows .entry__row { flex-direction: row; gap: 1.75rem; align-items: center; }
+.rows .entry__row { flex-direction: row; gap: 1.75rem; align-items: flex-start; }
 .rows .entry__media { flex: 0 0 16rem; }
 .rows .entry__media img { width: 16rem; height: 10rem; }
 .rows .entry__row > div:last-child { flex: 1; min-width: 0; }
