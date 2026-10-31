@@ -33,7 +33,7 @@ We tested this on two benchmarks. In [Overcooked](https://github.com/HumanCompat
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 1.</strong> Example tasks. Left: Overcooked Coordination Ring, where two chefs execute a joint schedule. Right: Google Research Football Counterattack Hard, where the team controller seeks an early shot. Both clips are selected successful rollouts of LLM-written policies.</figcaption>
 </figure>
 
-The loop worked strikingly well in Overcooked. After ten rounds, Fable 5 and GPT 6.1 Sol both beat neural policies trained with IPPO self-play on all five layouts. Their best policies are joint schedules found by search programs the models wrote for themselves. Google Research Football is a soccer simulator where players coordinate against built-in opponents while controlling their movement, first touches, and shot timing under stochastic dynamics. There, the same loop improved its policies but remained below the reported IPPO results on all seven scenarios and MAPPO on six.
+The loop worked strikingly well in Overcooked. After ten rounds, Fable 5 and GPT 6.1 Sol both beat neural policies trained with PPO self-play on all five layouts. Their best policies are joint schedules found by search programs the models wrote for themselves. Google Research Football is a soccer simulator where players coordinate against built-in opponents while controlling their movement, first touches, and shot timing under stochastic dynamics. There, the same loop improved its policies but remained below the reported IPPO results on all seven scenarios and MAPPO on six.
 
 The gap comes from the feedback each game returns. In the kitchen, a failed rollout points to a specific collision or idle step, so the loop can treat coordination like a math problem and search for a joint schedule. In football, a single evaluation rarely says what went wrong. A lost episode could come from the team strategy, from low-level control of one player, or from a random bounce, and the loop spends most of its effort separating real improvements from lucky evaluations. When the evaluator leaks information, it learns to exploit that instead. The loop is strong at coordination it can reason out on paper and still weak at coordination that lives in physical movement, where low-level control must absorb large amounts of randomness. The rest of this post shows how each of these happens.
 
@@ -59,15 +59,15 @@ We use two existing benchmarks with different demands on coordination, [Overcook
 
 Each Overcooked run has a budget of ten rounds, numbered 0 to 9. Overcooked is deterministic, so training and evaluation both use seed 0. In each football round, the agent runs its policy on a fresh batch of 25 to 100 random training seeds, choosing the batch size itself, and no seed is reused. Reported football scores come from 100 fresh evaluation seeds, or 300 for Three vs One. The football campaigns have varying stopping rules and lengths.
 
-Official evaluation rounds are one part of the computation. The agent can run offline simulations and search between them, and these become central to the Overcooked results. We compare the self-evolved controllers with reported reinforcement-learning results: IPPO self-play from [Gessler et al. (2025)](https://arxiv.org/abs/2503.17821) on Overcooked, and IPPO and MAPPO from [Song et al. (2023)](https://arxiv.org/abs/2309.12951) on Google Research Football. Our experiment measures team performance from one campaign per model and task, with access to joint observations and control of the team.
+Official evaluation rounds are one part of the computation. The agent can run offline simulations and search between them, and these become central to the Overcooked results. We compare the self-evolved controllers with reported reinforcement-learning results: PPO self-play from [Gessler et al. (2025)](https://arxiv.org/abs/2503.17821) on Overcooked, and IPPO and MAPPO from [Song et al. (2023)](https://arxiv.org/abs/2309.12951) on Google Research Football. Our experiment measures team performance from one campaign per model and task, with access to joint observations and control of the team.
 
 ## Results: strong schedules in Overcooked, a larger gap in football
 
 ### Overcooked: two models arrive at nearly the same scores
 
-Both models finish above the published IPPO self-play mean on all five layouts. The two models agree at 260, 500, and 340 on Cramped Room, Asymmetric Advantages, and Forced Coordination. GPT finishes one soup ahead on Coordination Ring and Counter Circuit.
+Both models finish above the published PPO self-play mean on all five layouts. The two models agree at 260, 500, and 340 on Cramped Room, Asymmetric Advantages, and Forced Coordination. GPT finishes one soup ahead on Coordination Ring and Counter Circuit.
 
-| Layout | IPPO self-play | Fable 5 | GPT 6.1 Sol |
+| Layout | PPO self-play | Fable 5 | GPT 6.1 Sol |
 | --- | ---: | ---: | ---: |
 | Cramped Room | 259 | **260** | **260** |
 | Asymmetric Advantages | 278 | **500** | **500** |
@@ -75,11 +75,11 @@ Both models finish above the published IPPO self-play mean on all five layouts. 
 | Forced Coordination | 199 | **340** | **340** |
 | Counter Circuit | 163 | 260 | **280** |
 
-IPPO values are the standard self-play means in [Gessler et al., Table 1](https://arxiv.org/html/2503.17821v1#S5.T1), where agents are trained with independent PPO on classic Overcooked. The code-policy columns report each campaign's best evaluated score within rounds 0–9.
+PPO values are the standard self-play means in [Gessler et al., Table 1](https://arxiv.org/html/2503.17821v1#S5.T1), measured on classic Overcooked. The code-policy columns report each campaign's best evaluated score within rounds 0–9.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}?v=20261031-ippo" alt="Best reward across ten rounds on five Overcooked layouts. The models tie on three layouts; GPT finishes one delivery ahead on the other two." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked over ten rounds. Solid lines show the best score so far; faint dots show individual evaluations. Dashed lines show the IPPO reference values.</figcaption>
+  <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}?v=20261031-ppo" alt="Best reward across ten rounds on five Overcooked layouts. The models tie on three layouts; GPT finishes one delivery ahead on the other two." style="display: block; width: 100%; height: auto;">
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked over ten rounds. Solid lines show the best score so far; faint dots show individual evaluations. Dashed lines show the PPO reference values.</figcaption>
 </figure>
 
 The starting policies differ much more than the final ones. GPT begins with zero reward on two layouts, then recovers to match Fable on three layouts and finish one soup ahead on two. The trajectories below explain what changes between those first rules and the final schedules.
@@ -211,4 +211,4 @@ Thanks to Jianing Ye for helpful discussions on this project.
 3. Kurach, K. et al. [Google Research Football: A Novel Reinforcement Learning Environment](https://research.google/pubs/google-research-football-a-novel-reinforcement-learning-environment/). AAAI, 2020.
 4. Yu, C. et al. [The Surprising Effectiveness of PPO in Cooperative Multi Agent Games](https://papers.neurips.cc/paper_files/paper/2022/hash/9c1535a02f0ce079433344e14d910597-Abstract-Datasets_and_Benchmarks.html). NeurIPS, 2022.
 5. Song, Y. et al. [Boosting Studies of Multi-Agent Reinforcement Learning on Google Research Football Environment: the Past, Present, and Future](https://arxiv.org/abs/2309.12951). arXiv, 2023. Football references: Table 3.
-6. Gessler, T. et al. [OvercookedV2: Rethinking Overcooked for Zero-Shot Coordination](https://arxiv.org/abs/2503.17821). ICLR, 2025. Classic Overcooked IPPO references: Table 1, standard self-play.
+6. Gessler, T. et al. [OvercookedV2: Rethinking Overcooked for Zero-Shot Coordination](https://arxiv.org/abs/2503.17821). ICLR, 2025. Classic Overcooked PPO references: Table 1, standard self-play.
