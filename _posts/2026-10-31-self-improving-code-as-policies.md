@@ -75,7 +75,7 @@ Both models finish above the published PPO self-play mean on all five layouts. O
 | Forced Coordination | 199 | 320 | **340** |
 | Counter Circuit | 163 | **300** | 240 |
 
-PPO values are the standard self-play means in [Gessler et al., Table 1](https://arxiv.org/html/2503.17821v1#S5.T1), measured on classic Overcooked. The code-policy columns report each campaign's best evaluated score within rounds 0–9. Fable's Counter Circuit campaign had completed five rounds when this was written.
+The code-policy columns report each campaign's best evaluated score within rounds 0–9. Fable's Counter Circuit campaign had completed six rounds when this was written.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}?v=20261031-bb" alt="Best reward across ten rounds on five Overcooked layouts for both models, with the PPO reference as a dashed line." style="display: block; width: 100%; height: auto;">
