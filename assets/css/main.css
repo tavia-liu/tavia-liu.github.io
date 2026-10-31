@@ -2247,3 +2247,33 @@ body { color: #1a1a1a; }
   .reflection-photo-grid--three .reflection-photo:last-child { grid-column: span 2; }
   .reflection-photo-grid--three .reflection-photo:last-child img { aspect-ratio: 16 / 9; }
 }
+
+/* Blog post tables: fit the text column, readable size */
+.blog-article .prose table {
+  display: table;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: visible;
+  font-size: 0.95rem;
+}
+.blog-article .prose thead,
+.blog-article .prose tbody { min-width: 0; }
+.blog-article .prose th,
+.blog-article .prose td,
+.blog-article .prose th:first-child,
+.blog-article .prose td:first-child,
+.blog-article .prose th:last-child,
+.blog-article .prose td:last-child {
+  min-width: 0;
+  padding: 0.6rem 0.9rem 0.6rem 0;
+}
+.blog-article .prose th:last-child,
+.blog-article .prose td:last-child { padding-right: 0; }
+.blog-article .prose th { font-size: 0.8rem; }
+@media (max-width: 700px) {
+  .blog-article .prose table {
+    display: block;
+    overflow-x: auto;
+    font-size: 0.85rem;
+  }
+}
