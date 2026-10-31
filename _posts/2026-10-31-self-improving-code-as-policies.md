@@ -57,7 +57,7 @@ We use two existing benchmarks with different demands on coordination, [Overcook
 | Metric | Soup reward over 400 steps; 20 points per delivery | Success rate on 100 fresh evaluation seeds |
 | Models | Fable 5 in Claude Code; GPT 6.1 Sol in Codex | Fable 5 in Claude Code |
 
-Each Overcooked run has a budget of ten rounds, numbered 0 to 9. Overcooked is deterministic, so training and evaluation both use seed 0. Each football campaign has a two-hour limit. In each round, the agent runs its policy on a fresh batch of 25 to 100 random training seeds, choosing the batch size itself, and no seed is reused. Reported football scores come from 100 fresh evaluation seeds, or 300 for Three vs One.
+Each Overcooked run has a budget of ten rounds, numbered 0 to 9. Overcooked is deterministic, so training and evaluation both use seed 0. In each football round, the agent runs its policy on a fresh batch of 25 to 100 random training seeds, choosing the batch size itself, and no seed is reused. Reported football scores come from 100 fresh evaluation seeds, or 300 for Three vs One. The football campaigns have varying stopping rules and lengths.
 
 Official evaluation rounds are one part of the computation. The agent can run offline simulations and search between them, and these become central to the Overcooked results. We compare the self-evolved controllers with reported reinforcement-learning results: IPPO self-play from [Gessler et al. (2025)](https://arxiv.org/abs/2503.17821) on Overcooked, and IPPO and MAPPO from [Song et al. (2023)](https://arxiv.org/abs/2309.12951) on Google Research Football. Our experiment measures team performance from one campaign per model and task, with access to joint observations and control of the team.
 
