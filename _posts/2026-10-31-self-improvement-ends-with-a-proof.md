@@ -94,15 +94,15 @@ The strongest rule-based football policies fall below the IPPO reference on all 
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> Football results under fresh seeds. Code-policy values come from larger validation batches, pooling designated replications where applicable. IPPO and MAPPO are published references from Song et al. (2023).</figcaption>
 </figure>
 
-| Scenario | IPPO, mean (SD) | MAPPO, mean (SD) | Fable 5 rules |
+| Scenario | IPPO | MAPPO | Fable 5 rules |
 | --- | ---: | ---: | ---: |
-| Pass and Shoot | 93.7 (0.9) | 92.9 (2.6) | 74 |
-| Run, Pass and Shoot | 73.7 (13.4) | 66.0 (6.3) | 72 |
-| Three vs One | 91.7 (3.1) | 90.0 (3.2) | 80 |
-| Counterattack Easy | 85.7 (6.6) | 88.9 (6.6) | 65 |
-| Counterattack Hard | 71.6 (4.9) | 81.3 (9.6) | 29 |
-| Corner | 50.4 (10.3) | 50.5 (7.2) | 41 |
-| Five vs Five | 99.1 (0.6) | 96.0 (1.8) | 65 |
+| Pass and Shoot | 93.7 | 92.9 | 74 |
+| Run, Pass and Shoot | 73.7 | 66.0 | 72 |
+| Three vs One | 91.7 | 90.0 | 80 |
+| Counterattack Easy | 85.7 | 88.9 | 65 |
+| Counterattack Hard | 71.6 | 81.3 | 29 |
+| Corner | 50.4 | 50.5 | 41 |
+| Five vs Five | 99.1 | 96.0 | 65 |
 
 All entries are percentages. The reinforcement-learning columns are maximum mean win rates during training from [Song et al., Table 3](https://arxiv.org/html/2309.12951v1#S4.T3); their SDs summarize variation across training seeds. Our column reports success on fresh evaluation seeds for selected policies, with at least 100 episodes and 300 for Three vs One. These batches also informed selection during the campaigns. The following analysis examines how the policies reached these scores and what held them back.
 
