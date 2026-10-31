@@ -1,5 +1,5 @@
 ---
-title: "Self-Improving Code as Policies for Multi-Agent Coordination"
+title: "Recursive Self-Improvement of Code as Policies for Multi-Agent Coordination"
 date: 2026-10-31
 description: "We let language models write, run, and revise multi-agent controllers in Overcooked and Google Research Football. The results show how the loop discovers joint schedules, mistakes its search space for a performance ceiling, and adapts to the evaluator."
 reading_time: "14 min"
@@ -37,13 +37,13 @@ The loop worked strikingly well in Overcooked. After ten rounds, Fable 5 and GPT
 
 The gap comes from the feedback each game returns. In the kitchen, a failed rollout points to a specific collision or idle step, so the loop can treat coordination like a math problem and search for a joint schedule. In football, a single evaluation rarely says what went wrong. A lost episode could come from the team strategy, from low-level control of one player, or from a random bounce, and the loop spends most of its effort separating real improvements from lucky evaluations. When the evaluator leaks information, it learns to exploit that instead. The loop is strong at coordination it can reason out on paper and still weak at coordination that lives in physical movement, where low-level control must absorb large amounts of randomness. The rest of this post shows how each of these happens.
 
-## The self-improvement loop
+## The RSI loop
 
 Each round, the language model writes `policy.py`, which maps the team's observations to actions for every controlled player. The harness then runs evaluation on training seeds and returns the score, a step-level trace, a failure summary, and rendered rollouts. The model reads this feedback, keeps the best policy so far, and revises the policy code for the next round.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-loop5" alt="The language model writes a team policy, evaluates it, reads the feedback, and starts the next round." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> The self-improvement loop.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> The RSI loop.</figcaption>
 </figure>
 
 ## Benchmarks and evaluation
@@ -126,7 +126,7 @@ A short sequence from GPT's round-six Coordination Ring controller shows what a 
 
 The plate has to arrive before the soup finishes cooking. The chef who fetched it can then return to ingredient collection while the other plates the soup. This is a concrete dependency between two agents' plans: an object, a place, and a time connect their otherwise separate routes. Searching the joint action sequence makes that dependency explicit.
 
-The important shift is what gets improved. Early rounds modify the controller directly. Later rounds improve a program that finds controllers. A language model can reach a strong policy by constructing a useful search procedure, making simulator accuracy and search coverage part of the self-improvement process.
+The important shift is what gets improved. Early rounds modify the controller directly. Later rounds improve a program that finds controllers. A language model can reach a strong policy by constructing a useful search procedure, making simulator accuracy and search coverage part of the RSI process.
 
 This shift also solves a persistent timing problem. Reactive policies repeatedly bring the two pots into the same phase: both soups become ready together, then both pots wait. Fable's Asymmetric Advantages policies oscillate between 460 and 480 for eight rounds while local gating rules move the timing problem around. A joint schedule can explicitly stagger the cycles and maintain the offset. The coordination becomes visible as a relationship between events across time.
 
