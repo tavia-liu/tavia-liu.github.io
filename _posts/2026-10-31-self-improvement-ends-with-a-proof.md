@@ -19,22 +19,14 @@ Three results. In Overcooked, both models pass the PPO self-play reference on ev
 
 ## How the loop works
 
-Each experiment starts from an empty folder. The agent has the task description, the simulator source, and an evaluation harness. One round is:
-
-1. Write `proposal.md` with a hypothesis, the invariants the policy will keep, the failure modes expected, and an abandon criterion.
-2. Write `policy.py`, a function from the joint observation to a joint action.
-3. Run one official evaluation. In Overcooked this is a 400-step episode with seed 0; in football it is a batch of 50 to 100 fresh random seeds.
-4. Read `metrics.json`, the step-level trace, the failure summary, and the rendered rollout.
-5. Update the frontier and the strategy log, then start the next round.
-
-The budget is ten official evaluations per layout. The agent may write any offline tooling it wants, and both models did: simulators, trace analyzers, beam searches. Only the ten harness calls count. The model weights never change.
+The loop is the simplest form of recursive self-improvement: the agent writes `policy.py`, runs one official evaluation, reads the metrics, the step trace, and the rollout, and writes the next policy. Ten rounds, then stop. Each round also records a short proposal with a hypothesis and an abandon criterion, so the strategy history is readable afterward. The agent may build any offline tooling it wants, and both models did, but only the ten harness calls count, and the model weights never change.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/self-evolution-workflow.svg' | relative_url }}" alt="Six stage self evolution workflow from task specification to frontier selection and policy revision" style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> One round of the loop. Every revision is grounded in the trace and rollout of the previous candidate.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> One round of the loop.</figcaption>
 </figure>
 
-The Overcooked code policies run in the overcooked_ai simulator, where cooking starts with an explicit interact and takes twenty ticks, and score sparse return at twenty points per delivered soup. The PPO reference is the standard self-play score of ten PPO agents from OvercookedV2 (Gessler et al., 2025, Table 1), measured over 500 episodes on the JaxMARL implementation of the same layouts. The MATCHA reference is the final return of the MATCHA training curve after one million environment transitions, read from Figure 6 of the MATCHA paper. The football reference is MAPPO from Table 2 of Yu et al. (2022).
+Overcooked policies score sparse return at twenty points per delivered soup over a 400-step episode with seed 0. The PPO reference is self-play PPO from OvercookedV2 (Gessler et al., 2025); the MATCHA reference is the MATCHA training curve after one million transitions; the football reference is MAPPO from Yu et al. (2022).
 
 ## Results
 
