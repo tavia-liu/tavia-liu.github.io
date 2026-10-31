@@ -3,7 +3,7 @@ title: "What Self-Improving Code Policies Learn About Coordination"
 date: 2026-10-31
 description: "We let language models write, run, and revise multi-agent controllers in Overcooked and Google Research Football. The results show how the loop discovers joint schedules, mistakes its search space for a performance ceiling, and adapts to the evaluator."
 tags: [recursive self-improvement, agents, code as policy, multi agent systems]
-reading_time: "13 min"
+reading_time: "14 min"
 permalink: /blog/self-improvement-ends-with-a-proof/
 image: /assets/img/research/overcooked-rsi-ten-rounds.png
 ---
@@ -11,6 +11,28 @@ image: /assets/img/research/overcooked-rsi-ten-rounds.png
 Can a language model discover how a team should coordinate by writing a controller, watching it fail, and rewriting it?
 
 We tested this in two games. In [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai), two chefs must prepare and deliver soup without blocking each other. In [Google Research Football](https://github.com/google-research/football), teammates must move the ball past defenders and score. The language model writes a Python policy for the team, runs it, reads the resulting trace, and decides what to change. Its weights stay fixed; the controller and the tools it builds improve over time.
+
+<figure style="margin: 2rem 0;">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1.25rem;">
+    <div>
+      <p style="margin: 0 0 .6rem;"><strong>Overcooked: Coordination Ring</strong></p>
+      <video controls muted playsinline preload="none" poster="{{ '/assets/img/research/coordination-ring-poster.png' | relative_url }}" aria-label="Recorded Overcooked rollout of the joint schedule from round six" style="display: block; width: 100%; height: 300px; object-fit: contain; background: #f6f5f2; border-radius: 8px;">
+        <source src="{{ '/assets/media/code-policies/coordination-ring-run006.mp4' | relative_url }}" type="video/mp4">
+        <a href="{{ '/assets/media/code-policies/coordination-ring-run006.mp4' | relative_url }}">Watch the Overcooked rollout</a>
+      </video>
+    </div>
+    <div>
+      <p style="margin: 0 0 .6rem;"><strong>Football: Counterattack Hard</strong></p>
+      <video controls muted playsinline preload="none" poster="{{ '/assets/img/research/counterattack-hard-poster.png' | relative_url }}" aria-label="One recorded successful Counterattack Hard rollout from round seven" style="display: block; width: 100%; height: 300px; object-fit: contain; background: #f6f5f2; border-radius: 8px;">
+        <source src="{{ '/assets/media/code-policies/counterattack-hard-run007-win.mp4' | relative_url }}" type="video/mp4">
+        <a href="{{ '/assets/media/code-policies/counterattack-hard-run007-win.mp4' | relative_url }}">Watch the football rollout</a>
+      </video>
+    </div>
+  </div>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 1.</strong> Two team controllers in action. The kitchen executes a joint schedule; the football controller seeks an early shot. These are selected successful rollouts. Aggregate results appear below.</figcaption>
+</figure>
+
+In the kitchen, watch how the chefs use the center counter to pass objects without circling the room together. In football, watch when the carrier releases the shot relative to the closing defenders. These small decisions are where the coordination strategies become visible.
 
 The loop worked strikingly well in Overcooked. After ten rounds, two models reached identical scores on three of five layouts, and finished one soup apart on the other two. Their strongest controllers executed joint schedules, often produced by search programs the models had written themselves. In football, rule-based controllers improved but usually remained below trained policies, and longer campaigns spent substantial effort separating real gains from lucky evaluations.
 
@@ -21,8 +43,8 @@ The most useful finding is how the loop changes its approach to the task. In a p
 Each round has four steps: write `policy.py`, evaluate it, inspect the feedback, and propose the next revision. The policy maps the team's observations to actions for all controlled players. Feedback includes metrics, a step-level trace, a failure summary, and rendered rollouts. Proposals record a hypothesis and a criterion for abandoning it, giving us a history of what the agent believed and what it tested.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}" alt="The language model writes a team policy, evaluates it, reads scores and rollout traces, and revises the policy." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 1.</strong> The self-improvement loop. The language model can also write simulators, planners, and analysis scripts between evaluations. Its weights remain fixed.</figcaption>
+  <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-short" alt="The language model writes a team policy, evaluates it, reads scores and rollout traces, and revises the policy." style="display: block; width: 100%; height: auto;">
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> The self-improvement loop.</figcaption>
 </figure>
 
 We use two existing benchmarks with different demands on coordination:
@@ -59,10 +81,10 @@ PPO values are the standard self-play means in [Gessler et al., Table 1](https:/
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}" alt="Best reward across ten rounds on five Overcooked layouts. The models tie on three layouts; GPT finishes one delivery ahead on the other two." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> Overcooked over ten rounds. Solid lines show the best score so far; faint dots show individual evaluations. Dashed and dotted lines show published PPO and approximate MATCHA reference values.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked over ten rounds. Solid lines show the best score so far; faint dots show individual evaluations. Dashed and dotted lines show published PPO and approximate MATCHA reference values.</figcaption>
 </figure>
 
-The starting policies differ much more than the final ones. GPT begins with zero reward on two layouts, then recovers and reaches the same neighborhood as Fable. The trajectories below explain what changes between those first rules and the final schedules.
+The starting policies differ much more than the final ones. GPT begins with zero reward on two layouts, then recovers to match Fable on three layouts and finish one soup ahead on two. The trajectories below explain what changes between those first rules and the final schedules.
 
 ### Football: iteration improves rules, but most gaps remain
 
@@ -70,7 +92,7 @@ The strongest rule-based football policies fall below the IPPO reference on all 
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}" alt="Success rates on seven football tasks. Code policies trail IPPO on all seven and MAPPO on six, with the largest gaps on Counterattack Hard and Five vs Five." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Football results under fresh seeds. Code-policy values come from larger validation batches, pooling designated replications where applicable. IPPO and MAPPO are published references from Song et al. (2023).</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> Football results under fresh seeds. Code-policy values come from larger validation batches, pooling designated replications where applicable. IPPO and MAPPO are published references from Song et al. (2023).</figcaption>
 </figure>
 
 | Scenario | IPPO, mean (SD) | MAPPO, mean (SD) | Fable 5 rules |
@@ -95,6 +117,17 @@ The next representation is division of labor. One chef loads while the other ser
 
 The strongest representation is a joint schedule. The agent builds a model of the kitchen, searches over both chefs' actions, and emits a sequence for the team to execute. In eight of the ten campaigns, an agent-written search program produces the final schedule. GPT's Coordination Ring search explores about 1.49 million states; Fable's Counter Circuit search tries about 830,000 plan mutations. The executors check live state against the expected state and retain a reactive fallback.
 
+### Case study: a plate crosses the center counter
+
+A short sequence from GPT's round-six Coordination Ring controller shows what a joint schedule captures. At tick 219, the green chef holds a plate on the left of the kitchen. At tick 220, the plate sits on the center counter. At tick 222, the blue chef has retrieved it from the right, while the green chef is already collecting the next onion.
+
+<figure style="margin: 2rem 0;">
+  <a href="{{ '/assets/img/research/coordination-ring-handoff.png' | relative_url }}"><img src="{{ '/assets/img/research/coordination-ring-handoff.png' | relative_url }}" loading="lazy" alt="Three real rollout frames at ticks 219, 220, and 222. The green chef carries a plate, stages it on the highlighted center counter, and the blue chef retrieves it as the green chef collects an onion." style="display: block; width: 100%; height: auto;"></a>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> A plate handoff in Coordination Ring, checked against the step trace. The highlighted counter lets the chefs exchange an object while continuing different jobs. The next soup becomes ready at tick 223.</figcaption>
+</figure>
+
+The plate has to arrive before the soup finishes cooking. The chef who fetched it can then return to ingredient collection while the other plates the soup. This is a concrete dependency between two agents' plans: an object, a place, and a time connect their otherwise separate routes. Searching the joint action sequence makes that dependency explicit.
+
 The important shift is what gets improved. Early rounds modify the controller directly. Later rounds improve a program that finds controllers. A language model can reach a strong policy by constructing a useful search procedure, making simulator accuracy and search coverage part of the self-improvement process.
 
 This shift also solves a persistent timing problem. Reactive policies repeatedly bring the two pots into the same phase: both soups become ready together, then both pots wait. Fable's Asymmetric Advantages policies oscillate between 460 and 480 for eight rounds while local gating rules move the timing problem around. A joint schedule can explicitly stagger the cycles and maintain the offset. The coordination becomes visible as a relationship between events across time.
@@ -117,16 +150,27 @@ In deterministic Overcooked, a saved tick survives the next evaluation from the 
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031c" alt="Football evaluations across the campaigns. Individual scores fluctuate; larger-batch leaders progress more slowly. Separate markers indicate learned-policy follow-ups and excluded seed-reading evaluations." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> Football campaign histories. Dot size reflects evaluation size. Lines summarize the best values meeting each scenario's validation threshold; designated replications are pooled retrospectively. Triangles mark learned-policy follow-ups reported in the Pass and Shoot campaign summary. Crosses mark seed-reading evaluations, excluded from the valid frontier.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football campaign histories. Dot size reflects evaluation size. Lines summarize the best values meeting each scenario's validation threshold; designated replications are pooled retrospectively. Triangles mark learned-policy follow-ups reported in the Pass and Shoot campaign summary. Crosses mark seed-reading evaluations, excluded from the valid frontier.</figcaption>
 </figure>
+
+### Case study: find the shot that actually wins
 
 Counterattack Hard shows what trace analysis can still recover. The early controller tries to draw defenders wide and cut the ball back. It wins 18 of 100 episodes. Reading the traces overturns the explanation attached to that strategy: 17 of those wins come from a shot through the central seam, while entries into the wide phase produce only one win in 54 episodes.
 
 The agent changes the controller to seek the seam shot earlier. Attempts rise from 38 to 59 per 100 episodes, conversion stays near 48%, and overall success rises from 18% to 29%. Later rule changes fail to produce a confirmed improvement.
 
+<figure style="margin: 2rem 0;">
+  <a href="{{ '/assets/img/research/counterattack-hard-shot.png' | relative_url }}"><img src="{{ '/assets/img/research/counterattack-hard-shot.png' | relative_url }}" loading="lazy" alt="Three actual frames from a successful round-seven football rollout: the carrier approaches the central seam at tick 60, issues a shot command at tick 65, and releases the ball by tick 74." style="display: block; width: 100%; height: auto;"></a>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 7.</strong> The revised controller seeks the central shot early. These frames come from one successful round-seven rollout; the full batch wins 29 of 100 episodes. The complete replay is in Figure 1.</figcaption>
+</figure>
+
+The video makes the revision easier to interpret. The controller moves the carrier toward the center and begins shooting while defenders are still closing. It improves how often the team reaches this opportunity. The 100-episode comparison determines whether that visible change helps across random outcomes.
+
 The useful diagnosis separates reaching an opportunity from converting it. Routing improves the first; the tested finishing rules leave the second largely unchanged. This identifies where to spend the next round of work without claiming that the remaining conversion rate is an intrinsic ceiling.
 
 The same pressure shapes coordination. Extra passes create more opportunities for interception or a poor touch, so several campaigns abandon elaborate passing sequences. Yet teammates remain useful: the validated Three vs One leader places an attacker at the far post to collect parries, taking advantage of the scenario's disabled offside rule. The loop retains spatial support while discarding several unreliable sequences of transfers.
+
+### Can the initial observation predict the outcome?
 
 An outcome-prediction experiment gives another view of the difficulty. In Three vs One, an MLP trained on 1,200 seeds predicts success from an early observation and one of eight tactical options. Held-out classification accuracy is 69.2%, compared with a 68.3% majority baseline. Its selected policy scores 76% on 100 fresh seeds, below the 80% validated leader. That feature set and training procedure recover little predictive signal about the later outcome; the result directs attention toward richer control and training across trajectories.
 
