@@ -54,7 +54,7 @@ We use two existing benchmarks with different demands on coordination:
 | --- | --- | --- |
 | Tasks | Five classic two-chef layouts | Six academy scenarios and Five vs Five |
 | Dynamics | Deterministic, fixed start | Random outcomes and scripted opponents |
-| Metric | Soup reward over 400 steps; 20 points per delivery | Success rate on fresh engine seeds |
+| Metric | Soup reward over 400 steps; 20 points per delivery | Success rate on 100 fresh evaluation seeds |
 | Models | Fable 5 in Claude Code; GPT 6.1 Sol in Codex | Fable 5 in Claude Code |
 | Budget | Ten evaluated rounds per model and layout, numbered 0–9 | Scenario-dependent campaigns with screening and larger validation batches |
 
