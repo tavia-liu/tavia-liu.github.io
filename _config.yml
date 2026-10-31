@@ -47,3 +47,6 @@ exclude:
   - vendor
   - Gemfile
   - Gemfile.lock
+
+plugins:
+  - jekyll-redirect-from
