@@ -63,7 +63,9 @@ We compare the self-evolved controllers with reported reinforcement-learning res
 
 ## Results and Analysis
 
-### Overcooked: both models beat PPO without touching the simulator
+### Overcooked: coordination becomes search
+
+#### Both models beat PPO without touching the simulator
 
 Both models finish above the published PPO self-play mean on all five layouts. On four layouts they end within one soup of each other: they tie at 260 on Cramped Room and 300 on Coordination Ring, Fable finishes one soup ahead on Asymmetric Advantages, and GPT one soup ahead on Forced Coordination. Counter Circuit separates them. Fable reaches 300 in its fifth round, three soups ahead of GPT's 240.
 
@@ -84,7 +86,7 @@ The code-policy columns report each campaign's best evaluated score within round
 
 Each model opens with a zero-reward policy on one layout. GPT's first Cramped Room controller spends the episode on interactions that accomplish nothing; Fable's first two Coordination Ring controllers lock both chefs onto the same tile of the ring. Both recover within three rounds, and from there the curves climb in steps of one or two soups as the controllers change shape.
 
-### How the agents found the schedules
+#### How the agents found the schedules
 
 The campaigns pass through three increasingly explicit representations of coordination.
 
@@ -101,13 +103,15 @@ The third representation is a joint schedule found by search, and here the two m
 
 The important shift is what gets improved. Early rounds modify the controller directly. Later rounds improve a model and a search procedure that produce controllers. In a deterministic kitchen a model fitted to the traces predicts the evaluator exactly, so a plan found offline survives the official evaluation unchanged. That property is what turns coordination into search, and it is the property football lacks.
 
-### A plateau becomes a proof
+#### A plateau becomes a proof
 
 Fable closes four of its five campaigns with an argument that its score is the ceiling: 260 on Cramped Room is "proven optimal", 500 on Asymmetric Advantages is "triple-confirmed", Coordination Ring has a "hard cap" near 20 deliveries, and 320 on Forced Coordination is "near the ceiling for this architecture". The GPT campaigns provide a check. Two of the claims survive it: GPT also stops at 260 on Cramped Room and below 500 on Asymmetric Advantages. The Forced Coordination claim does not. Fable's note puts the cook's labor at a floor of about 23 steps per soup and concludes that a seventeenth soup is out of reach. GPT's controller uses the same division of labor, the left chef feeding the shared counter and the right chef running both pots and serving, and delivers 17 soups with the last one at tick 385. Over the episode GPT's cook walks 51 steps and Fable's walks 69; the proof had counted that walking as unavoidable.
 
 This is a specific failure of self-verification. An agent can use the same controller to propose a solution, justify its ceiling, and search for counterexamples, so agreement among those steps can reflect a shared blind spot. The bound described Fable's own controller, not the kitchen. A useful stopping rule should distinguish a plateau in the current search from a bound over the environment's legal actions, and a ceiling claim needs a checker that does not share the proposer's habits.
 
-### Football: iteration improves rules, but most gaps remain
+### Google Research Football: noisy feedback changes what counts as a useful revision
+
+#### Iteration improves rules, but most gaps remain
 
 The strongest rule-based football policies fall below the IPPO reference on all eight scenarios, and below MAPPO on seven. Run, Pass and Shoot is the exception: 72% compared with MAPPO's reported 66%. The largest gaps appear on Counterattack Hard and the full Eleven vs Eleven game, where the controller wins 14 of 100 matches and draws 57 against the strongest built-in opponent.
 
@@ -129,7 +133,7 @@ The strongest rule-based football policies fall below the IPPO reference on all 
 
 All entries are percentages. The reinforcement-learning columns are maximum mean win rates during training. Our column reports success on 100 fresh evaluation seeds for each selected policy. These batches also informed selection during the campaigns. The following analysis examines how the policies reached these scores and what held them back.
 
-### Noisy feedback changes what counts as a useful revision
+#### A promising revision has to survive fresh seeds
 
 In deterministic Overcooked, a saved tick survives the next evaluation from the same start. In football, a promising revision can disappear when replayed on fresh seeds. Three vs One illustrates the cost: an early policy scores 63% on one 100-episode batch and 46% on its exact replication. Larger batches become part of discovering whether an edit helped.
 
@@ -159,7 +163,7 @@ The same pressure shapes coordination. Extra passes create more opportunities fo
 
 An outcome-prediction experiment gives another view of the difficulty. In Three vs One, an MLP trained on 1,200 seeds predicts success from an early observation and one of eight tactical options. Held-out classification accuracy is 69.2%, compared with a 68.3% majority baseline. Its selected policy scores 76% on 100 fresh seeds, below the 80% validated leader. That feature set and training procedure recover little predictive signal about the later outcome; the result directs attention toward richer control and training across trajectories.
 
-### The evaluator shapes what the loop learns
+#### The evaluator shapes what the loop learns
 
 We first evaluated football on fixed development seeds. This made it possible to improve a particular trajectory until it succeeded. Transfer to other seeds told a different story.
 
