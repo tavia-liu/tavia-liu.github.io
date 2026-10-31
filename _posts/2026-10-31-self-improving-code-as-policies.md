@@ -33,7 +33,7 @@ We study this with a simple recursive self-improvement (RSI) loop. The language 
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 1.</strong> Example tasks. Left: Overcooked Coordination Ring, where two chefs execute a joint schedule. Right: Google Research Football Counterattack Hard, where the team controller seeks an early shot. Both clips are selected successful rollouts of LLM-written policies.</figcaption>
 </figure>
 
-The loop worked strikingly well in Overcooked. After ten rounds, Fable 5 and GPT 6.1 Sol both beat neural policies trained with PPO self-play on all five layouts. Their best policies are joint schedules found by search programs the models wrote for themselves. Google Research Football is a soccer simulator where players coordinate against built-in opponents while controlling their movement, first touches, and shot timing under stochastic dynamics. There, the same loop improved its policies but remained below the reported IPPO results on all seven scenarios and MAPPO on six.
+The loop worked strikingly well in Overcooked. After ten rounds, Fable 5 and GPT 6.1 Sol both beat neural policies trained with PPO self-play on all five layouts. Their best policies are joint schedules found by search programs the models wrote for themselves. Google Research Football is a soccer simulator where players coordinate against built-in opponents while controlling their movement, first touches, and shot timing under stochastic dynamics. There, the same loop improved its policies but remained below the reported IPPO results on all eight scenarios and MAPPO on seven.
 
 The gap comes from the feedback each game returns. In the kitchen, a failed rollout points to a specific collision or idle step, so the loop can treat coordination like a math problem and search for a joint schedule. In football, a single evaluation rarely says what went wrong. A lost episode could come from the team strategy, from low-level control of one player, or from a random bounce, and the loop spends most of its effort separating real improvements from lucky evaluations. When the evaluator leaks information, it learns to exploit that instead. The loop is strong at coordination it can reason out on paper and still weak at coordination that lives in physical movement, where low-level control must absorb large amounts of randomness. The rest of this post shows how each of these happens.
 
@@ -42,7 +42,7 @@ The gap comes from the feedback each game returns. In the kitchen, a failed roll
 Each round, the language model writes `policy.py`, which maps the team's observations to actions for every controlled player. The harness then runs evaluation on training seeds and returns the score, a step-level trace, a failure summary, and rendered rollouts. The model reads this feedback, keeps the best policy so far, and revises the policy code for the next round.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-loop5" alt="The language model writes a team policy, evaluates it, reads the feedback, and starts the next round." style="display: block; width: 100%; height: auto;">
+  <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-loop6" alt="The language model writes policy.py, the harness runs evaluation on training seeds, and the score, trace, failure summary, and video return to the model for the next round. Offline simulation and search sit inside the model step." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> The RSI loop.</figcaption>
 </figure>
 
@@ -52,7 +52,7 @@ We use two existing benchmarks with different demands on coordination, [Overcook
 
 | | Overcooked | Google Research Football |
 | --- | --- | --- |
-| Tasks | Five classic two-chef layouts | Six academy scenarios and Five vs Five |
+| Tasks | Five classic two-chef layouts | Six academy scenarios, Five vs Five, and Eleven vs Eleven |
 | Dynamics | Deterministic, fixed start | Random outcomes and scripted opponents |
 | Metric | Soup reward over 400 steps; 20 points per delivery | Success rate on 100 fresh evaluation seeds |
 | Models | Fable 5 in Claude Code; GPT 6.1 Sol in Codex | Fable 5 in Claude Code |
@@ -86,10 +86,10 @@ The starting policies differ much more than the final ones. GPT begins with zero
 
 ### Football: iteration improves rules, but most gaps remain
 
-The strongest rule-based football policies fall below the IPPO reference on all seven scenarios, and below MAPPO on six. Run, Pass and Shoot is the exception: 72% compared with MAPPO's reported 66%. The largest gaps appear on Counterattack Hard and Five vs Five.
+The strongest rule-based football policies fall below the IPPO reference on all eight scenarios, and below MAPPO on seven. Run, Pass and Shoot is the exception: 72% compared with MAPPO's reported 66%. The largest gaps appear on Counterattack Hard and the full Eleven vs Eleven game, where the controller wins 14 of 100 matches and draws 57 against the strongest built-in opponent.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}" alt="Success rates on seven football tasks. Code policies trail IPPO on all seven and MAPPO on six, with the largest gaps on Counterattack Hard and Five vs Five." style="display: block; width: 100%; height: auto;">
+  <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-11v11" alt="Success rates on eight football tasks. Code policies trail IPPO on all eight and MAPPO on seven, with the largest gaps on Counterattack Hard and Eleven vs Eleven." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> Football results under fresh seeds. Code-policy values come from larger validation batches, pooling designated replications where applicable. IPPO and MAPPO are published references from Song et al. (2023).</figcaption>
 </figure>
 
@@ -102,6 +102,7 @@ The strongest rule-based football policies fall below the IPPO reference on all 
 | Counterattack Hard | 71.6 | 81.3 | 29 |
 | Corner | 50.4 | 50.5 | 41 |
 | Five vs Five | 99.1 | 96.0 | 65 |
+| Eleven vs Eleven | 52.7 | 45.4 | 14 |
 
 All entries are percentages. The reinforcement-learning columns are maximum mean win rates during training from [Song et al., Table 3](https://arxiv.org/html/2309.12951v1#S4.T3). Our column reports success on fresh evaluation seeds for selected policies, with at least 100 episodes and 300 for Three vs One. These batches also informed selection during the campaigns. The following analysis examines how the policies reached these scores and what held them back.
 
@@ -147,7 +148,7 @@ A useful stopping rule should therefore distinguish a plateau in the current sea
 In deterministic Overcooked, a saved tick survives the next evaluation from the same start. In football, a promising revision can disappear when replayed on fresh seeds. Three vs One illustrates the cost: an early policy scores 63% on one 100-episode batch and 46% on its exact replication. Larger batches become part of discovering whether an edit helped.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031c" alt="Football evaluations across the campaigns. Individual scores fluctuate; larger-batch leaders progress more slowly. Separate markers indicate learned-policy follow-ups and excluded seed-reading evaluations." style="display: block; width: 100%; height: auto;">
+  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-11v11" alt="Football evaluations across the campaigns. Individual scores fluctuate; larger-batch leaders progress more slowly. Separate markers indicate learned-policy follow-ups and excluded seed-reading evaluations." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football campaign histories. Dot size reflects evaluation size. Lines summarize the best values meeting each scenario's validation threshold; designated replications are pooled retrospectively. Triangles mark learned-policy follow-ups reported in the Pass and Shoot campaign summary. Crosses mark seed-reading evaluations, excluded from the valid frontier.</figcaption>
 </figure>
 
