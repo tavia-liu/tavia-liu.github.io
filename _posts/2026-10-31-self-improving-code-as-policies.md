@@ -39,7 +39,7 @@ The loop worked strikingly well in Overcooked. After ten rounds, two models reac
 
 The most useful finding is how the loop changes its approach to the task. In a predictable kitchen, it learns to search for a coordinated schedule. In football, it learns which passes to avoid, which outcomes need repeated measurement, and sometimes how to exploit the evaluation itself. Reading the sequence of policies tells us more about self-improvement than the final score alone.
 
-## The experiment
+## The self-improvement loop
 
 Each round has four steps: write `policy.py`, evaluate it, inspect the feedback, and propose the next revision. The policy maps the team's observations to actions for all controlled players. Feedback includes metrics, a step-level trace, a failure summary, and rendered rollouts. Proposals record a hypothesis and a criterion for abandoning it, giving us a history of what the agent believed and what it tested.
 
@@ -47,6 +47,8 @@ Each round has four steps: write `policy.py`, evaluate it, inspect the feedback,
   <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-loop2" alt="The language model writes a team policy, evaluates it, reads scores and rollout traces, and revises the policy." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> The self-improvement loop.</figcaption>
 </figure>
+
+## Benchmarks and evaluation
 
 We use two existing benchmarks with different demands on coordination:
 
