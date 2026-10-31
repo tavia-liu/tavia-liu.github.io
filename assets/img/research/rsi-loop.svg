@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="t d">
+  <title id="t">The self-improvement loop</title>
+  <desc id="d">A four-step cycle: the language model writes a policy, the harness runs one official evaluation, the run produces a score, a step trace, and a video, and the model reads them and writes the next policy. Ten rounds, weights frozen.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#52514e"/>
+    </marker>
+    <style>
+      .box { fill: #ffffff; stroke: #aab3b8; stroke-width: 1.5; }
+      .agent { fill: #fdf1ec; stroke: #d97757; stroke-width: 2; }
+      .label { font: 700 19px Arial, sans-serif; fill: #1f1f1f; }
+      .detail { font: 14.5px Arial, sans-serif; fill: #52514e; }
+      .arrow { fill: none; stroke: #52514e; stroke-width: 2; marker-end: url(#a); }
+      .loop { fill: none; stroke: #d97757; stroke-width: 2.5; marker-end: url(#a); }
+      .looptext { font: 700 15px Arial, sans-serif; fill: #d97757; }
+      .note { font: 14px Arial, sans-serif; fill: #52514e; }
+    </style>
+  </defs>
+  <rect width="1200" height="300" fill="#ffffff"/>
+
+  <g transform="translate(40 60)">
+    <rect class="agent" width="240" height="120" rx="10"/>
+    <text class="label" x="20" y="40">Language model</text>
+    <text class="detail" x="20" y="70">writes proposal.md</text>
+    <text class="detail" x="20" y="92">and policy.py</text>
+  </g>
+  <path class="arrow" d="M 288 120 L 328 120"/>
+
+  <g transform="translate(336 60)">
+    <rect class="box" width="240" height="120" rx="10"/>
+    <text class="label" x="20" y="40">Harness</text>
+    <text class="detail" x="20" y="70">one official evaluation</text>
+    <text class="detail" x="20" y="92">(the only call that counts)</text>
+  </g>
+  <path class="arrow" d="M 584 120 L 624 120"/>
+
+  <g transform="translate(632 60)">
+    <rect class="box" width="240" height="120" rx="10"/>
+    <text class="label" x="20" y="40">Artifacts</text>
+    <text class="detail" x="20" y="70">score, step trace,</text>
+    <text class="detail" x="20" y="92">failure summary, video</text>
+  </g>
+  <path class="arrow" d="M 880 120 L 920 120"/>
+
+  <g transform="translate(928 60)">
+    <rect class="agent" width="232" height="120" rx="10"/>
+    <text class="label" x="20" y="40">Language model</text>
+    <text class="detail" x="20" y="70">reads the artifacts,</text>
+    <text class="detail" x="20" y="92">updates the frontier</text>
+  </g>
+
+  <path class="loop" d="M 1044 188 C 1044 262, 160 262, 160 188"/>
+  <text class="looptext" x="600" y="256" text-anchor="middle">next round: write a new policy  (x10)</text>
+  <text class="note" x="600" y="288" text-anchor="middle">Model weights are frozen throughout. Offline tooling the model writes for itself does not count against the budget.</text>
+</svg>
