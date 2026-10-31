@@ -77,7 +77,7 @@ We ran the same loop on Google Research Football with fresh random seeds on ever
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}" alt="Grouped bar chart of success rate on six Google Research Football scenarios: IPPO and MAPPO from Song et al. 2023 versus the self-evolved Fable 5 code policy" style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> Final success rate under fresh random seeds. IPPO and MAPPO values are from Table 3 of Song et al. 2023: the maximum mean win rate during training, with standard deviation across seeds, after 10 to 30 million environment steps on academy scenarios and 100 million on Five vs Five. Code-policy values are the frontier policy of each self-evolution run, measured on 100 fresh seeds.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> Final success rate under fresh random seeds. IPPO and MAPPO values are from Table 3 of Song et al. 2023: the maximum mean win rate during training, after 10 to 30 million environment steps on academy scenarios and 100 million on Five vs Five. Code-policy values are the frontier policy of each self-evolution run, measured on 100 fresh seeds.</figcaption>
 </figure>
 
 | Scenario | IPPO, mean (SD) | MAPPO, mean (SD) | Code policy, Fable 5 |
