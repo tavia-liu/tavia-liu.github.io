@@ -2,7 +2,6 @@
 title: "What Self-Improving Code Policies Learn About Coordination"
 date: 2026-10-31
 description: "We let language models write, run, and revise multi-agent controllers in Overcooked and Google Research Football. The results show how the loop discovers joint schedules, mistakes its search space for a performance ceiling, and adapts to the evaluator."
-tags: [recursive self-improvement, agents, code as policy, multi agent systems]
 reading_time: "14 min"
 permalink: /blog/self-improvement-ends-with-a-proof/
 image: /assets/img/research/overcooked-rsi-ten-rounds.png
