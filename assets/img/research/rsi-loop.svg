@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1008" height="250" viewBox="0 0 1008 250" role="img" aria-labelledby="title desc">
   <title id="title">The self-improvement loop</title>
-  <desc id="desc">The language model writes a proposal and a team policy, the harness runs one official evaluation, and the feedback returns to the model for the next round. Offline simulation and search happen inside the model's step.</desc>
+  <desc id="desc">The language model writes a team policy, the harness runs one official evaluation, and the feedback returns to the model for the next round. Offline simulation and search happen inside the model's step.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#52514e"/>
@@ -25,7 +25,7 @@
   <rect class="agent" x="24" y="24" width="280" height="104" rx="10"/>
   <text class="label" x="164" y="56">Language model</text>
   <text class="detail" x="164" y="82">writes the next round</text>
-  <text class="mono" x="164" y="106">proposal.md  policy.py</text>
+  <text class="mono" x="164" y="106">policy.py</text>
 
   <path class="arrow" d="M 316 76 H 352"/>
 
