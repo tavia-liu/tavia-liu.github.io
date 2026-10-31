@@ -69,19 +69,9 @@ We compare the self-evolved controllers with reported reinforcement-learning res
 
 Both models finish above the published PPO self-play mean on all five layouts. On four layouts they end within one soup of each other: they tie at 260 on Cramped Room and 300 on Coordination Ring, Fable finishes one soup ahead on Asymmetric Advantages, and GPT one soup ahead on Forced Coordination. Counter Circuit separates them. Fable reaches 300 in its fifth round, three soups ahead of GPT's 240.
 
-| Layout | PPO self-play | Fable 5 | GPT 6.1 Sol |
-| --- | ---: | ---: | ---: |
-| Cramped Room | 259 | **260** | **260** |
-| Asymmetric Advantages | 278 | **500** | 480 |
-| Coordination Ring | 214 | **300** | **300** |
-| Forced Coordination | 199 | 320 | **340** |
-| Counter Circuit | 163 | **300** | 240 |
-
-The code-policy columns report each campaign's best evaluated score within rounds 0–9. Fable's Counter Circuit campaign had completed six rounds when this was written.
-
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}?v=20261031-bb" alt="Best reward across ten rounds on five Overcooked layouts for both models, with the PPO reference as a dashed line." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked over ten rounds. Solid lines show the best score so far; faint dots show individual evaluations. Dashed lines show the PPO reference values.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked over ten rounds. Solid lines show the best score so far; faint dots show individual evaluations. Dashed lines show the PPO reference values. Fable's Counter Circuit campaign had completed six rounds when this was written.</figcaption>
 </figure>
 
 Each model opens with a zero-reward policy on one layout. GPT's first Cramped Room controller spends the episode on interactions that accomplish nothing; Fable's first two Coordination Ring controllers lock both chefs onto the same tile of the ring. Both recover within three rounds, and from there the curves climb in steps of one or two soups as the controllers change shape.
