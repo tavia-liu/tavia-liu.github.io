@@ -72,17 +72,17 @@ We ran the same loop on Google Research Football with fresh random seeds on ever
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}" alt="Grouped bar chart of success rate on six Google Research Football scenarios: trained MAPPO from Yu et al. 2022 versus the self-evolved Fable 5 code policy" style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Success rate under fresh random seeds. MAPPO values are from Table 3 of Song et al. 2023: the maximum mean win rate during training, with standard deviation across seeds, after 10 to 30 million environment steps on academy scenarios and 100 million on Five vs Five. Code-policy values are the frontier of each self-evolution run, measured on 100 fresh seeds, or 50 for Five vs Five, with replication required before promotion.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Success rate under fresh random seeds. MAPPO values are from Table 3 of Song et al. 2023: the maximum mean win rate during training, with standard deviation across seeds, after 10 to 30 million environment steps on academy scenarios and 100 million on Five vs Five. Code-policy values are the frontier policy of each self-evolution run, measured on 100 fresh seeds.</figcaption>
 </figure>
 
-| Scenario | MAPPO, mean (SD) | Code policy, Fable 5 | Evaluation seeds |
-| --- | ---: | ---: | ---: |
-| Pass and Shoot | 92.9 (2.6) | 74 | 100, replicated |
-| Run, Pass and Shoot | 66.0 (6.3) | 72 | 100, replicated |
-| Counterattack Easy | 88.9 (6.6) | 65 | 100 |
-| Counterattack Hard | 81.3 (9.6) | 29 | 100 |
-| Corner | 50.5 (7.2) | 35 | 100 |
-| Five vs Five | 96.0 (1.8) | 68 | 50 |
+| Scenario | MAPPO, mean (SD) | Code policy, Fable 5 |
+| --- | ---: | ---: |
+| Pass and Shoot | 92.9 (2.6) | 74 |
+| Run, Pass and Shoot | 66.0 (6.3) | 72 |
+| Counterattack Easy | 88.9 (6.6) | 65 |
+| Counterattack Hard | 81.3 (9.6) | 29 |
+| Corner | 50.5 (7.2) | 35 |
+| Five vs Five | 96.0 (1.8) | 65 |
 
 Three things change under fresh seeds, each visible in the run logs. First, the loop optimizes a sample. A Five versus Five candidate looked like a gain on a sixteen-seed screen and was rejected on a fifty-seed confirmation with the note *screen was noise*; a large share of the rounds went to re-measuring. Second, the planner disappears. The third rung needs a transition function to search over, and in football an offline model cannot be validated against official traces, so the agent stays on the second rung: hand-edited rules screened by twenty-minute noisy rollouts.
 
