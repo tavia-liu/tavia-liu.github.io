@@ -33,9 +33,9 @@ We tested this in two games. In [Overcooked](https://github.com/HumanCompatibleA
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 1.</strong> Example tasks. Left: Overcooked Coordination Ring, where two chefs execute a joint schedule. Right: Google Research Football Counterattack Hard, where the team controller seeks an early shot. Both clips are selected successful rollouts of LLM-written policies.</figcaption>
 </figure>
 
-The loop worked strikingly well in Overcooked. After ten rounds, two models reached identical scores on three of five layouts, and finished one soup apart on the other two. Their strongest controllers executed joint schedules, often produced by search programs the models had written themselves. In football, rule-based controllers improved but usually remained below trained policies, and longer campaigns spent substantial effort separating real gains from lucky evaluations.
+The answer depends on how predictable the world is. In Overcooked, a deterministic kitchen, ten rounds of rewriting were enough for Fable 5 and GPT 6.1 Sol to beat published PPO self-play on all five layouts. Their best policies are joint schedules found by search programs the models wrote for themselves. In Google Research Football, where every kick is random, the same loop improved its policies but stayed below trained IPPO on all seven scenarios and below MAPPO on six.
 
-In a predictable kitchen, it learns to search for a coordinated schedule. In football, it learns which passes to avoid, which outcomes need repeated measurement, and sometimes how to exploit the evaluation itself.
+The gap comes from what the loop learns to do. When outcomes are predictable, it turns coordination into search and plans both chefs' moves together. When outcomes are noisy, most of its effort goes into separating real improvements from lucky evaluations, and when the evaluator leaks information, it learns to exploit that too. The rest of this post shows how each of these happens.
 
 ## The self-improvement loop
 
