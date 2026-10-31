@@ -28,7 +28,7 @@ The loop is the simplest form of recursive self-improvement. The agent writes `p
 
 **Overcooked** (Carroll et al., 2019) is a two-chef kitchen: collect onions, fill a pot, start it cooking, plate the soup, deliver. The five classic layouts each force a different coordination problem, from a shared corridor to a wall that splits the kitchen so onions cannot cross. Dynamics are deterministic; we score sparse return at twenty points per soup over a 400-step episode with seed 0. **Google Research Football** (Kurach et al., 2020) is a physics engine with scripted opponents; we use six academy and small-sided scenarios with two to ten controlled players, evaluated on fresh random seeds every round.
 
-We ran Codex with GPT 6.1 Sol and Claude Code with Fable 5 on all five Overcooked layouts, each from an empty folder, and Fable 5 on the football scenarios. The PPO reference for Overcooked is self-play PPO from OvercookedV2 (Gessler et al., 2025); the MATCHA reference is the MATCHA training curve after one million transitions; the football reference is MAPPO from Yu et al. (2022).
+We ran Codex with GPT 6.1 Sol and Claude Code with Fable 5 on all five Overcooked layouts, each from an empty folder, and Fable 5 on the football scenarios. The PPO reference for Overcooked is self-play PPO from OvercookedV2 (Gessler et al., 2025); the MATCHA reference is the MATCHA training curve after one million transitions; the football references are MAPPO as reported by Yu et al. (2022) and by the Song et al. (2023) GRF benchmark.
 
 | Layout | PPO self-play | MATCHA, 1M transitions | Fable 5 (round reached) | GPT 6.1 Sol (round reached) |
 | --- | ---: | ---: | ---: | ---: |
@@ -72,8 +72,17 @@ We ran the same loop on Google Research Football with fresh random seeds on ever
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}" alt="Grouped bar chart of success rate on six Google Research Football scenarios: trained MAPPO from Yu et al. 2022 versus the self-evolved Fable 5 code policy" style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Success rate under fresh random seeds. MAPPO values are from Table 2 of Yu et al. (2022): mean and standard deviation over six seeds of the last ten evaluations, after 25 million environment steps (50 million for Counterattack Hard and Corner). Code-policy values are the frontier of each self-evolution run, measured on 100 fresh seeds (50 for Five vs Five) with replication required before promotion. Yu et al. report no Five vs Five result.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Success rate under fresh random seeds. Yu et al. (2022, Table 2) report the mean over six seeds of the last ten evaluations after 25 million environment steps (50 million for Counterattack Hard and Corner). Song et al. (2023, Table 3) report the maximum mean win rate during training in their benchmark framework, after 10 to 30 million steps on academy scenarios and 100 million on Five vs Five. Code-policy values are the frontier of each self-evolution run, measured on 100 fresh seeds (50 for Five vs Five) with replication required before promotion. Yu et al. report no Five vs Five result.</figcaption>
 </figure>
+
+| Scenario | MAPPO, Yu et al. | MAPPO, Song et al. | Code policy, Fable 5 | Evaluation seeds |
+| --- | ---: | ---: | ---: | ---: |
+| Pass and Shoot | 94.92 (0.68) | 92.9 (2.6) | 74 | 100, replicated |
+| Run, Pass and Shoot | 76.83 (1.81) | 66.0 (6.3) | 72 | 100, replicated |
+| Counterattack Easy | 87.76 (1.34) | 88.9 (6.6) | 65 | 100 |
+| Counterattack Hard | 77.38 (4.81) | 81.3 (9.6) | 29 | 100 |
+| Corner | 65.53 (2.19) | 50.5 (7.2) | 35 | 100 |
+| Five vs Five | not reported | 96.0 (1.8) | 68 | 50 |
 
 Three things change under fresh seeds, each visible in the run logs. First, the loop optimizes a sample. A Five versus Five candidate looked like a gain on a sixteen-seed screen and was rejected on a fifty-seed confirmation with the note *screen was noise*; a large share of the rounds went to re-measuring. Second, the planner disappears. The third rung needs a transition function to search over, and in football an offline model cannot be validated against official traces, so the agent stays on the second rung: hand-edited rules screened by twenty-minute noisy rollouts.
 
@@ -95,5 +104,6 @@ The open question is on the stochastic side. The 82 percent hybrid on pass-and-s
 2. Carroll, M. et al. [On the Utility of Learning about Humans for Human AI Coordination](https://proceedings.neurips.cc/paper/2019/hash/f5b1b89d98b7286673128a5fb112cb9a-Abstract.html). NeurIPS, 2019.
 3. Kurach, K. et al. [Google Research Football: A Novel Reinforcement Learning Environment](https://research.google/pubs/google-research-football-a-novel-reinforcement-learning-environment/). AAAI, 2020.
 4. Yu, C. et al. [The Surprising Effectiveness of PPO in Cooperative Multi Agent Games](https://papers.neurips.cc/paper_files/paper/2022/hash/9c1535a02f0ce079433344e14d910597-Abstract-Datasets_and_Benchmarks.html). NeurIPS, 2022. Football values from Table 2.
-5. Gessler, T. et al. [OvercookedV2: Rethinking Overcooked for Zero-Shot Coordination](https://arxiv.org/abs/2503.17821). ICLR, 2025. PPO values from Table 1, standard self-play.
-6. Ye, J. et al. MATCHA: Bridging the Gap between Sample and Wall-Clock Efficiency in Model-Based Multi-Agent Reinforcement Learning. Under review. Overcooked values from Figure 6.
+5. Song, Y. et al. [Boosting Studies of Multi-Agent Reinforcement Learning on Google Research Football Environment: the Past, Present, and Future](https://arxiv.org/abs/2309.12951). arXiv, 2023. Football values from Table 3.
+6. Gessler, T. et al. [OvercookedV2: Rethinking Overcooked for Zero-Shot Coordination](https://arxiv.org/abs/2503.17821). ICLR, 2025. PPO values from Table 1, standard self-play.
+7. Ye, J. et al. MATCHA: Bridging the Gap between Sample and Wall-Clock Efficiency in Model-Based Multi-Agent Reinforcement Learning. Under review. Overcooked values from Figure 6.
