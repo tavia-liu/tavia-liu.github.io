@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1008" height="172" viewBox="0 0 1008 172" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1008" height="180" viewBox="0 0 1008 180" role="img" aria-labelledby="title desc">
   <title id="title">The self-improvement loop</title>
   <desc id="desc">Write a policy, evaluate it, inspect the feedback, and revise the policy. A return arrow connects the revision to the next cycle.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#52514e"/>
     </marker>
-    <marker id="loop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+    <marker id="loop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97757"/>
     </marker>
     <style>
@@ -16,7 +16,7 @@
       .loop { fill: none; stroke: #d97757; stroke-width: 2.5; marker-end: url(#loop-arrow); }
     </style>
   </defs>
-  <rect width="1008" height="172" fill="#ffffff"/>
+  <rect width="1008" height="180" fill="#ffffff"/>
   <rect class="agent" x="24" y="28" width="204" height="80" rx="10"/>
   <text class="label" x="126" y="68">Write policy</text>
   <path class="arrow" d="M 240 68 H 264"/>
@@ -28,5 +28,6 @@
   <path class="arrow" d="M 744 68 H 768"/>
   <rect class="agent" x="780" y="28" width="204" height="80" rx="10"/>
   <text class="label" x="882" y="68">Revise policy</text>
-  <path class="loop" d="M 882 116 C 882 164, 126 164, 126 116"/>
+  <path class="loop" d="M 882 110 V 136 Q 882 148 870 148 H 138 Q 126 148 126 136 V 112"/>
+  <text x="504" y="166" text-anchor="middle" style="font: 15px Arial, sans-serif; fill: #8a4a33;">next round</text>
 </svg>

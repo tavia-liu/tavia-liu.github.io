@@ -42,7 +42,7 @@ The most useful finding is how the loop changes its approach to the task. In a p
 Each round has four steps: write `policy.py`, evaluate it, inspect the feedback, and propose the next revision. The policy maps the team's observations to actions for all controlled players. Feedback includes metrics, a step-level trace, a failure summary, and rendered rollouts. Proposals record a hypothesis and a criterion for abandoning it, giving us a history of what the agent believed and what it tested.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-short" alt="The language model writes a team policy, evaluates it, reads scores and rollout traces, and revises the policy." style="display: block; width: 100%; height: auto;">
+  <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-loop2" alt="The language model writes a team policy, evaluates it, reads scores and rollout traces, and revises the policy." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> The self-improvement loop.</figcaption>
 </figure>
 
@@ -58,7 +58,7 @@ We use two existing benchmarks with different demands on coordination:
 
 The Overcooked runs evaluate a jointly designed team at seed 0. The football campaigns use fresh random seeds, typically screening on smaller batches before evaluating promising candidates on 100 episodes; Three vs One uses 300-episode validation for its final leaders. The football campaigns have varying stopping rules and lengths. They test what sustained iteration discovers under noisy feedback.
 
-Official evaluation rounds are one part of the computation. The agent can run offline simulations and search between them, and these become central to the Overcooked results. We compare scores with published reinforcement-learning references; those references provide context under their original training and evaluation protocols. Our experiment measures team performance from one campaign per model and task, with access to joint observations and control of the team.
+Official evaluation rounds are one part of the computation. The agent can run offline simulations and search between them, and these become central to the Overcooked results. We compare the self-evolved controllers with reported reinforcement-learning results: PPO and MATCHA on Overcooked, and IPPO and MAPPO on Google Research Football. Our experiment measures team performance from one campaign per model and task, with access to joint observations and control of the team.
 
 ## Results: strong schedules in Overcooked, a larger gap in football
 
