@@ -9,7 +9,7 @@ redirect_from:
 image: /assets/img/research/overcooked-rsi-ten-rounds.png
 ---
 
-Can a language model discover how a team should coordinate by writing a controller, watching it fail, and rewriting it? And can a policy written as code match neural-network policies trained with reinforcement learning?
+Can a language model discover how a team should coordinate by writing a controller, watching it fail, and rewriting it? And can a code policy match reinforcement learning?
 
 We tested this in two games. In [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai), two chefs must prepare and deliver soup without blocking each other. In [Google Research Football](https://github.com/google-research/football), teammates must move the ball past defenders and score. The language model writes a Python policy for the team, runs it, reads the resulting trace, and decides what to change. The controller and the tools it builds improve over time.
 
