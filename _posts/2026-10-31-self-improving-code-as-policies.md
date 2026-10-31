@@ -112,8 +112,8 @@ This is a specific failure of self-verification. An agent can use the same contr
 The strongest rule-based football policies fall below the IPPO reference on all eight scenarios, and below MAPPO on seven. Run, Pass and Shoot is the exception: 72% compared with MAPPO's reported 66%. The largest gaps appear on Counterattack Hard and the full Eleven vs Eleven game, where the controller wins 14 of 100 matches and draws 57 against the strongest built-in opponent.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-3v1" alt="Success rates on eight football tasks. Code policies trail IPPO on all eight and MAPPO on seven, with the largest gaps on Counterattack Hard and Eleven vs Eleven." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football results under fresh seeds. Code-policy values come from larger validation batches, pooling designated replications where applicable. IPPO and MAPPO are published references from Song et al. (2023).</figcaption>
+  <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-legend" alt="Success rates on eight football tasks. Code policies trail IPPO on all eight and MAPPO on seven, with the largest gaps on Counterattack Hard and Eleven vs Eleven." style="display: block; width: 100%; height: auto;">
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football results under fresh seeds. Code-policy values come from larger validation batches, pooling designated replications where applicable.</figcaption>
 </figure>
 
 | Scenario | IPPO | MAPPO | Fable 5 rules |
@@ -127,14 +127,14 @@ The strongest rule-based football policies fall below the IPPO reference on all 
 | Five vs Five | 99.1 | 96.0 | 65 |
 | Eleven vs Eleven | 52.7 | 45.4 | 14 |
 
-All entries are percentages. The reinforcement-learning columns are maximum mean win rates during training from [Song et al., Table 3](https://arxiv.org/html/2309.12951v1#S4.T3). Our column reports success on 100 fresh evaluation seeds for each selected policy. These batches also informed selection during the campaigns. The following analysis examines how the policies reached these scores and what held them back.
+All entries are percentages. The reinforcement-learning columns are maximum mean win rates during training. Our column reports success on 100 fresh evaluation seeds for each selected policy. These batches also informed selection during the campaigns. The following analysis examines how the policies reached these scores and what held them back.
 
 ### Noisy feedback changes what counts as a useful revision
 
 In deterministic Overcooked, a saved tick survives the next evaluation from the same start. In football, a promising revision can disappear when replayed on fresh seeds. Three vs One illustrates the cost: an early policy scores 63% on one 100-episode batch and 46% on its exact replication. Larger batches become part of discovering whether an edit helped.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-3v1" alt="Football evaluations across the campaigns. Individual scores fluctuate; larger-batch leaders progress more slowly. Separate markers indicate learned-policy follow-ups and excluded seed-reading evaluations." style="display: block; width: 100%; height: auto;">
+  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-legend" alt="Football evaluations across the campaigns. Individual scores fluctuate; larger-batch leaders progress more slowly. Separate markers indicate learned-policy follow-ups and excluded seed-reading evaluations." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football campaign histories. Dot size reflects evaluation size. Lines summarize the best values meeting each scenario's validation threshold; designated replications are pooled retrospectively. Triangles mark learned-policy follow-ups reported in the Pass and Shoot campaign summary. Crosses mark seed-reading evaluations, excluded from the valid frontier.</figcaption>
 </figure>
 
