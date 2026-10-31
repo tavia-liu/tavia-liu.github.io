@@ -48,7 +48,7 @@ Each round, the language model writes `policy.py`, which maps the team's observa
 
 ## Benchmarks and evaluation
 
-We use two existing benchmarks with different demands on coordination:
+We use two existing benchmarks with different demands on coordination, [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai) and [Google Research Football](https://github.com/google-research/football):
 
 | | Overcooked | Google Research Football |
 | --- | --- | --- |
@@ -63,7 +63,7 @@ Official evaluation rounds are one part of the computation. The agent can run of
 
 ## Results: strong schedules in Overcooked, a larger gap in football
 
-We evaluated the loop on five [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai) layouts and seven [Google Research Football](https://github.com/google-research/football) scenarios.
+We evaluated the loop on five Overcooked layouts and seven Google Research Football scenarios.
 
 ### Overcooked: two models arrive at nearly the same scores
 
