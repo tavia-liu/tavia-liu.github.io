@@ -39,7 +39,7 @@ The gap comes from the feedback each game returns. In the kitchen, a failed roll
 
 ## The self-improvement loop
 
-Each round, the language model writes `policy.py`, which maps the team's observations to actions for every controlled player. The harness then runs evaluation on training seeds and returns the score, a step-level trace, a failure summary, and rendered rollouts. The model reads this feedback, keeps the best policy so far, and revises the policy code for the next round.
+We call this loop RSI, short for recursive self-improvement. Each round, the language model writes `policy.py`, which maps the team's observations to actions for every controlled player. The harness then runs evaluation on training seeds and returns the score, a step-level trace, a failure summary, and rendered rollouts. The model reads this feedback, keeps the best policy so far, and revises the policy code for the next round.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-loop5" alt="The language model writes a team policy, evaluates it, reads the feedback, and starts the next round." style="display: block; width: 100%; height: auto;">
