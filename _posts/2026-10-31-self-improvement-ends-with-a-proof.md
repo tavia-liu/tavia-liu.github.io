@@ -201,6 +201,10 @@ The next harness should make three distinctions explicit. Count offline search a
 
 For football, the most informative next experiment is to vary where a joint script hands control to a learned subpolicy. Pass and Shoot provides one encouraging case. Testing that split across scenarios would tell us which parts of coordination benefit from explicit planning and which benefit from learning through repeated interaction.
 
+## Acknowledgements
+
+Thanks to Jianing Ye for helpful discussions on this project.
+
 ## References
 
 1. Liang, J. et al. [Code as Policies: Language Model Programs for Embodied Control](https://arxiv.org/abs/2209.07753). ICRA, 2023.
