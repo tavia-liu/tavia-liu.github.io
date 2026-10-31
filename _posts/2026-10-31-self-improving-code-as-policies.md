@@ -129,7 +129,7 @@ The strongest rule-based football policies fall below the IPPO reference on all 
 
 All entries are percentages. The reinforcement-learning columns are maximum mean win rates during training from [Song et al., Table 3](https://arxiv.org/html/2309.12951v1#S4.T3). Our column reports success on 100 fresh evaluation seeds for each selected policy. These batches also informed selection during the campaigns. The following analysis examines how the policies reached these scores and what held them back.
 
-## Noisy feedback changes what counts as a useful revision
+### Noisy feedback changes what counts as a useful revision
 
 In deterministic Overcooked, a saved tick survives the next evaluation from the same start. In football, a promising revision can disappear when replayed on fresh seeds. Three vs One illustrates the cost: an early policy scores 63% on one 100-episode batch and 46% on its exact replication. Larger batches become part of discovering whether an edit helped.
 
@@ -138,7 +138,7 @@ In deterministic Overcooked, a saved tick survives the next evaluation from the 
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football campaign histories. Dot size reflects evaluation size. Lines summarize the best values meeting each scenario's validation threshold; designated replications are pooled retrospectively. Triangles mark learned-policy follow-ups reported in the Pass and Shoot campaign summary. Crosses mark seed-reading evaluations, excluded from the valid frontier.</figcaption>
 </figure>
 
-### Case study: find the shot that actually wins
+#### Case study: find the shot that actually wins
 
 Counterattack Hard shows what trace analysis can still recover. The early controller tries to draw defenders wide and cut the ball back. It wins 18 of 100 episodes. Reading the traces overturns the explanation attached to that strategy: 17 of those wins come from a shot through the central seam, while entries into the wide phase produce only one win in 54 episodes.
 
@@ -155,11 +155,11 @@ The useful diagnosis separates reaching an opportunity from converting it. Routi
 
 The same pressure shapes coordination. Extra passes create more opportunities for interception or a poor touch, so several campaigns abandon elaborate passing sequences. Yet teammates remain useful: the validated Three vs One leader places an attacker at the far post to collect parries, taking advantage of the scenario's disabled offside rule. The loop retains spatial support while discarding several unreliable sequences of transfers.
 
-### Can the initial observation predict the outcome?
+#### Can the initial observation predict the outcome?
 
 An outcome-prediction experiment gives another view of the difficulty. In Three vs One, an MLP trained on 1,200 seeds predicts success from an early observation and one of eight tactical options. Held-out classification accuracy is 69.2%, compared with a 68.3% majority baseline. Its selected policy scores 76% on 100 fresh seeds, below the 80% validated leader. That feature set and training procedure recover little predictive signal about the later outcome; the result directs attention toward richer control and training across trajectories.
 
-## The evaluator shapes what the loop learns
+### The evaluator shapes what the loop learns
 
 We first evaluated football on fixed development seeds. This made it possible to improve a particular trajectory until it succeeded. Transfer to other seeds told a different story.
 
