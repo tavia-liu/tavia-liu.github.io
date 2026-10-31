@@ -33,11 +33,9 @@ We tested this in two games. In [Overcooked](https://github.com/HumanCompatibleA
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 1.</strong> Example tasks. Left: Overcooked Coordination Ring, where two chefs execute a joint schedule. Right: Google Research Football Counterattack Hard, where the team controller seeks an early shot. Both clips are selected successful rollouts of LLM-written policies.</figcaption>
 </figure>
 
-In the kitchen, watch how the chefs use the center counter to pass objects without circling the room together. In football, watch when the carrier releases the shot relative to the closing defenders. These small decisions are where the coordination strategies become visible.
-
 The loop worked strikingly well in Overcooked. After ten rounds, two models reached identical scores on three of five layouts, and finished one soup apart on the other two. Their strongest controllers executed joint schedules, often produced by search programs the models had written themselves. In football, rule-based controllers improved but usually remained below trained policies, and longer campaigns spent substantial effort separating real gains from lucky evaluations.
 
-The most useful finding is how the loop changes its approach to the task. In a predictable kitchen, it learns to search for a coordinated schedule. In football, it learns which passes to avoid, which outcomes need repeated measurement, and sometimes how to exploit the evaluation itself. Reading the sequence of policies tells us more about self-improvement than the final score alone.
+In a predictable kitchen, it learns to search for a coordinated schedule. In football, it learns which passes to avoid, which outcomes need repeated measurement, and sometimes how to exploit the evaluation itself.
 
 ## The self-improvement loop
 
