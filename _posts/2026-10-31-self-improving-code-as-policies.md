@@ -79,7 +79,7 @@ PPO values are the standard self-play means in [Gessler et al., Table 1](https:/
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}" alt="Best reward across ten rounds on five Overcooked layouts. The models tie on three layouts; GPT finishes one delivery ahead on the other two." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked over ten rounds. Solid lines show the best score so far; faint dots show individual evaluations. Dashed and dotted lines show published PPO and approximate MATCHA reference values.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked over ten rounds. Solid lines show the best score so far; faint dots show individual evaluations. Dashed and dotted lines show PPO and MATCHA reference values.</figcaption>
 </figure>
 
 The starting policies differ much more than the final ones. GPT begins with zero reward on two layouts, then recovers to match Fable on three layouts and finish one soup ahead on two. The trajectories below explain what changes between those first rules and the final schedules.
