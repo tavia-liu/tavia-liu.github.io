@@ -9,7 +9,7 @@ redirect_from:
 image: /assets/img/research/overcooked-rsi-ten-rounds.png
 ---
 
-Can a language model discover how a team should coordinate by writing a controller, watching it fail, and rewriting it?
+Can a language model discover how a team should coordinate by writing a controller, watching it fail, and rewriting it? And can a policy written as code match neural-network policies trained with reinforcement learning?
 
 We tested this in two games. In [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai), two chefs must prepare and deliver soup without blocking each other. In [Google Research Football](https://github.com/google-research/football), teammates must move the ball past defenders and score. The language model writes a Python policy for the team, runs it, reads the resulting trace, and decides what to change. The controller and the tools it builds improve over time.
 
@@ -33,7 +33,7 @@ We tested this in two games. In [Overcooked](https://github.com/HumanCompatibleA
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 1.</strong> Example tasks. Left: Overcooked Coordination Ring, where two chefs execute a joint schedule. Right: Google Research Football Counterattack Hard, where the team controller seeks an early shot. Both clips are selected successful rollouts of LLM-written policies.</figcaption>
 </figure>
 
-The answer depends on how predictable the world is. In Overcooked, a deterministic kitchen, ten rounds of rewriting were enough for Fable 5 and GPT 6.1 Sol to beat published PPO self-play on all five layouts. Their best policies are joint schedules found by search programs the models wrote for themselves. In Google Research Football, where every kick is random, the same loop improved its policies but stayed below trained IPPO on all seven scenarios and below MAPPO on six.
+The answer depends on how predictable the world is. In Overcooked, a deterministic kitchen, ten rounds of rewriting were enough for Fable 5 and GPT 6.1 Sol to beat neural policies trained with PPO self-play on all five layouts. Their best policies are joint schedules found by search programs the models wrote for themselves. In Google Research Football, where every kick is random, the same loop improved its policies but stayed below neural policies trained with IPPO on all seven scenarios and with MAPPO on six.
 
 The gap comes from what the loop learns to do. When outcomes are predictable, it turns coordination into search and plans both chefs' moves together. When outcomes are noisy, most of its effort goes into separating real improvements from lucky evaluations, and when the evaluator leaks information, it learns to exploit that too. The rest of this post shows how each of these happens.
 
