@@ -10,7 +10,7 @@ image: /assets/img/research/overcooked-rsi-ten-rounds.png
 
 Multi-agent coordination is usually learned: a MARL algorithm samples millions of joint rollouts and shapes a policy whose agents divide labor, stagger their cycles, and hand objects to each other. This post asks whether a language model can discover the same coordination by recursive self-improvement instead, writing the joint controller as a program, watching it run, and rewriting it, with no gradient and no change to its weights. We ran that loop for ten rounds on five Overcooked layouts with two frontier models and on six Google Research Football scenarios with one, and kept every proposal, trace, and search script.
 
-The answer depends on the environment, and the rounds show why. In Overcooked, both models pass the PPO self-play reference on every layout and the MATCHA reference on every layout but one, and on three of five layouts they finish at exactly the same score. They get there by the same route: the coordination they discover is a joint schedule, and the last rounds go to writing a planner that finds it. In football, where every kick is a random draw, the loop stays below MAPPO on every scenario, and each round removes coordination from the policy rather than adding it.
+The answer depends on the environment, and the rounds show why. In Overcooked, both models pass the PPO self-play reference on every layout and the MATCHA reference on every layout but one, and on three of five layouts they finish at exactly the same score. They get there by the same route: the coordination they discover is a joint schedule, and the last rounds go to writing a planner that finds it. In football, where every kick is a random draw, the loop stays below both IPPO and MAPPO on every scenario, and each round removes coordination from the policy rather than adding it.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}" alt="Five panels, one per Overcooked layout, showing the running best sparse return over ten rounds for Fable 5 and GPT 6.1 Sol, with PPO and MATCHA reference lines and light dots for each single round's raw score" style="display: block; width: 100%; height: auto;">
@@ -28,7 +28,7 @@ The loop is the simplest form of recursive self-improvement. The agent writes `p
 
 **Overcooked** (Carroll et al., 2019) is a two-chef kitchen: collect onions, fill a pot, start it cooking, plate the soup, deliver. The five classic layouts each force a different coordination problem, from a shared corridor to a wall that splits the kitchen so onions cannot cross. Dynamics are deterministic; we score sparse return at twenty points per soup over a 400-step episode with seed 0. **Google Research Football** (Kurach et al., 2020) is a physics engine with scripted opponents; we use six academy and small-sided scenarios with two to ten controlled players, evaluated on fresh random seeds every round.
 
-We ran Codex with GPT 6.1 Sol and Claude Code with Fable 5 on all five Overcooked layouts, each from an empty folder, and Fable 5 on the football scenarios. The PPO reference for Overcooked is self-play PPO from OvercookedV2 (Gessler et al., 2025); the MATCHA reference is the MATCHA training curve after one million transitions; the football reference is MAPPO (Yu et al., 2022) as measured by the Song et al. (2023) GRF benchmark.
+We ran Codex with GPT 6.1 Sol and Claude Code with Fable 5 on all five Overcooked layouts, each from an empty folder, and Fable 5 on the football scenarios. The PPO reference for Overcooked is self-play PPO from OvercookedV2 (Gessler et al., 2025); the MATCHA reference is the MATCHA training curve after one million transitions; the football references are IPPO and MAPPO (Yu et al., 2022) as measured by the Song et al. (2023) GRF benchmark.
 
 | Layout | PPO self-play | MATCHA, 1M transitions | Fable 5 (round reached) | GPT 6.1 Sol (round reached) |
 | --- | ---: | ---: | ---: | ---: |
@@ -71,20 +71,25 @@ Nothing inside either loop could have caught this. We found it by laying the two
 We ran the same loop on Google Research Football with fresh random seeds on every evaluation. The agent traced the randomness to the engine: every kick draws a worst-case factor from the engine's random generator, so a correctly aimed shot still loses a quarter of its power or crosses outside the post on a bad draw. The agent counted 109 wins out of 109 when the first shot went in and 35 losses out of 36 when it was parried. Opponents and keeper decide differently on every seed; saves deflect rather than catch; keeper dive timing and the controller-to-player mapping live outside the observation. Pin the seed and the engine stops being the problem: in an earlier fixed-seed run, Codex GPT 5.5 solved Empty Goal, Empty Goal Close, and Run to Score at 100 percent on round zero.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}" alt="Grouped bar chart of success rate on six Google Research Football scenarios: trained MAPPO from Yu et al. 2022 versus the self-evolved Fable 5 code policy" style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Success rate under fresh random seeds. MAPPO values are from Table 3 of Song et al. 2023: the maximum mean win rate during training, with standard deviation across seeds, after 10 to 30 million environment steps on academy scenarios and 100 million on Five vs Five. Code-policy values are the frontier policy of each self-evolution run, measured on 100 fresh seeds.</figcaption>
+  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}" alt="Six panels, one per football scenario, showing each round's measured win rate as a dot sized by episodes, the frontier of rounds confirmed on 100 or more episodes, IPPO and MAPPO reference lines, and two policy-class-change markers on Pass and Shoot" style="display: block; width: 100%; height: auto;">
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Round-by-round self-evolution in football, the counterpart of Figure 1. Each dot is one round's measured win rate, sized by the number of episodes in that evaluation; the frontier advances only on rounds confirmed with 100 or more episodes, pooling an exact replication with the round it replicates. Football had no round cap, so scenarios ran 8 to 46 rounds. Reference lines are IPPO and MAPPO from Song et al. 2023. The two triangles on Pass and Shoot mark the rounds where the agent changed policy class: a scripted prefix with a PPO subgame, then a trained rMAPPO network.</figcaption>
 </figure>
 
-| Scenario | MAPPO, mean (SD) | Code policy, Fable 5 |
-| --- | ---: | ---: |
-| Pass and Shoot | 92.9 (2.6) | 74 |
-| Run, Pass and Shoot | 66.0 (6.3) | 72 |
-| Counterattack Easy | 88.9 (6.6) | 65 |
-| Counterattack Hard | 81.3 (9.6) | 29 |
-| Corner | 50.5 (7.2) | 35 |
-| Five vs Five | 96.0 (1.8) | 65 |
+<figure style="margin: 2rem 0; max-width: 100%;">
+  <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}" alt="Grouped bar chart of success rate on six Google Research Football scenarios: IPPO and MAPPO from Song et al. 2023 versus the self-evolved Fable 5 code policy" style="display: block; width: 100%; height: auto;">
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> Final success rate under fresh random seeds. IPPO and MAPPO values are from Table 3 of Song et al. 2023: the maximum mean win rate during training, with standard deviation across seeds, after 10 to 30 million environment steps on academy scenarios and 100 million on Five vs Five. Code-policy values are the frontier policy of each self-evolution run, measured on 100 fresh seeds.</figcaption>
+</figure>
 
-Three things change under fresh seeds, each visible in the run logs. First, the loop optimizes a sample. A Five versus Five candidate looked like a gain on a sixteen-seed screen and was rejected on a fifty-seed confirmation with the note *screen was noise*; a large share of the rounds went to re-measuring. Second, the planner disappears. The third rung needs a transition function to search over, and in football an offline model cannot be validated against official traces, so the agent stays on the second rung: hand-edited rules screened by twenty-minute noisy rollouts.
+| Scenario | IPPO, mean (SD) | MAPPO, mean (SD) | Code policy, Fable 5 |
+| --- | ---: | ---: | ---: |
+| Pass and Shoot | 93.7 (0.9) | 92.9 (2.6) | 74 |
+| Run, Pass and Shoot | 73.7 (13.4) | 66.0 (6.3) | 72 |
+| Counterattack Easy | 85.7 (6.6) | 88.9 (6.6) | 65 |
+| Counterattack Hard | 71.6 (4.9) | 81.3 (9.6) | 29 |
+| Corner | 50.4 (10.3) | 50.5 (7.2) | 41 |
+| Five vs Five | 99.1 (0.6) | 96.0 (1.8) | 65 |
+
+Three things change under fresh seeds, each visible in Figure 3 and the run logs. First, the loop optimizes a sample. A Five versus Five candidate looked like a gain on a sixteen-seed screen and was rejected on a fifty-seed confirmation with the note *screen was noise*; a large share of the rounds went to re-measuring. Second, the planner disappears. The third rung needs a transition function to search over, and in football an offline model cannot be validated against official traces, so the agent stays on the second rung: hand-edited rules screened by twenty-minute noisy rollouts.
 
 Third, and this is the coordination result, every handoff becomes a risk, so the evolved policy has fewer of them. In Overcooked, handoffs are deterministic and free, and the loop added them: GPT's best Coordination Ring schedule contains 42 counter exchanges. In football the loop deleted them. The Five versus Five escape pass was rejected with *pass = turnover*. The Counterattack Hard wing draw and cutback converted 1 of 54 entries. On corners, crosses into the box converted 0 percent, ground passes to a shooter 5 percent, screens 20 percent, and all three families were abandoned. The agent's phrase for the mechanism is *transport compounds*. The final football policies are a single carrier and a single shot, with teammates holding defensive stations. Spatial partition survives because it needs no handoff; temporal sequencing between agents dies because in a random engine it is a product of per-touch success probabilities.
 
