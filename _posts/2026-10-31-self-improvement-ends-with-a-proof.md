@@ -10,7 +10,7 @@ image: /assets/img/research/overcooked-rsi-ten-rounds.png
 
 Can a language model discover how a team should coordinate by writing a controller, watching it fail, and rewriting it?
 
-We tested this in two games. In Overcooked, two chefs must prepare and deliver soup without blocking each other. In Google Research Football, teammates must move the ball past defenders and score. The language model writes a Python policy for the team, runs it, reads the resulting trace, and decides what to change. Its weights stay fixed; the controller and the tools it builds improve over time.
+We tested this in two games. In [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai), two chefs must prepare and deliver soup without blocking each other. In [Google Research Football](https://github.com/google-research/football), teammates must move the ball past defenders and score. The language model writes a Python policy for the team, runs it, reads the resulting trace, and decides what to change. Its weights stay fixed; the controller and the tools it builds improve over time.
 
 The loop worked strikingly well in Overcooked. After ten rounds, two models reached identical scores on three of five layouts, and finished one soup apart on the other two. Their strongest controllers executed joint schedules, often produced by search programs the models had written themselves. In football, rule-based controllers improved but usually remained below trained policies, and longer campaigns spent substantial effort separating real gains from lucky evaluations.
 
@@ -40,6 +40,8 @@ The Overcooked runs evaluate a jointly designed team at seed 0. The football cam
 Official evaluation rounds are one part of the computation. The agent can run offline simulations and search between them, and these become central to the Overcooked results. We compare scores with published reinforcement-learning references; those references provide context under their original training and evaluation protocols. Our experiment measures team performance from one campaign per model and task, with access to joint observations and control of the team.
 
 ## Results: strong schedules in Overcooked, a larger gap in football
+
+We evaluated the loop on five [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai) layouts and seven [Google Research Football](https://github.com/google-research/football) scenarios.
 
 ### Overcooked: two models arrive at nearly the same scores
 
