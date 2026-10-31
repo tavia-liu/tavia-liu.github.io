@@ -28,7 +28,7 @@ We tested this in two games. In [Overcooked](https://github.com/HumanCompatibleA
       </video>
     </div>
   </div>
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 1.</strong> Two team controllers in action. The kitchen executes a joint schedule; the football controller seeks an early shot. These are selected successful rollouts. Aggregate results appear below.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 1.</strong> Example tasks. Left: Overcooked Coordination Ring, where two chefs execute a joint schedule. Right: Google Research Football Counterattack Hard, where the team controller seeks an early shot. Both clips are selected successful rollouts of LLM-written policies.</figcaption>
 </figure>
 
 In the kitchen, watch how the chefs use the center counter to pass objects without circling the room together. In football, watch when the carrier releases the shot relative to the closing defenders. These small decisions are where the coordination strategies become visible.
