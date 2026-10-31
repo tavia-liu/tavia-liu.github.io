@@ -103,7 +103,7 @@ This is a specific failure of self-verification. An agent can use the same contr
 
 #### Iteration improves rules, but most gaps remain
 
-The strongest rule-based football policies fall below the IPPO reference on all eight scenarios, and below MAPPO on seven. Run, Pass and Shoot is the exception: 72% compared with MAPPO's reported 66%. The largest gaps appear on Counterattack Hard and the full Eleven vs Eleven game, where the controller wins 14 of 100 matches and draws 57 against the strongest built-in opponent.
+The strongest rule-based football policies fall below IPPO on all eight scenarios, and below MAPPO on seven. Run, Pass and Shoot is the exception: 72% compared with MAPPO's reported 66%. The largest gaps appear on Counterattack Hard and the full Eleven vs Eleven game, where the controller wins 14 of 100 matches and draws 57 against the strongest built-in opponent.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-legend" alt="Success rates on eight football tasks. Code policies trail IPPO on all eight and MAPPO on seven, with the largest gaps on Counterattack Hard and Eleven vs Eleven." style="display: block; width: 100%; height: auto;">
