@@ -57,13 +57,11 @@ We use two existing benchmarks with different demands on coordination, [Overcook
 | Metric | Soup reward over 400 steps; 20 points per delivery | Success rate on 100 fresh evaluation seeds |
 | Models | Fable 5 in Claude Code; GPT 6.1 Sol in Codex | Fable 5 in Claude Code |
 
-Each Overcooked run has a budget of ten rounds, numbered 0 to 9, and evaluates a jointly designed team at seed 0. Each football campaign has a two-hour limit. Within it, the agent evaluates on fresh random seeds, typically screening on smaller batches before validating promising candidates on 100 episodes; Three vs One uses 300-episode validation for its final leaders.
+Each Overcooked run has a budget of ten rounds, numbered 0 to 9. Overcooked is deterministic, so training and evaluation both use seed 0. Each football campaign has a two-hour limit. In each round, the agent runs its policy on a fresh batch of 25 to 100 random training seeds, choosing the batch size itself, and no seed is reused. Reported football scores come from 100 fresh evaluation seeds, or 300 for Three vs One.
 
-Official evaluation rounds are one part of the computation. The agent can run offline simulations and search between them, and these become central to the Overcooked results. We compare the self-evolved controllers with reported reinforcement-learning results: PPO and MATCHA on Overcooked, and IPPO and MAPPO on Google Research Football. Our experiment measures team performance from one campaign per model and task, with access to joint observations and control of the team.
+Official evaluation rounds are one part of the computation. The agent can run offline simulations and search between them, and these become central to the Overcooked results. We compare the self-evolved controllers with reported reinforcement-learning results: PPO self-play from [Gessler et al. (2025)](https://arxiv.org/abs/2503.17821) and MATCHA from Ye et al. on Overcooked, and IPPO and MAPPO from [Song et al. (2023)](https://arxiv.org/abs/2309.12951) on Google Research Football. Our experiment measures team performance from one campaign per model and task, with access to joint observations and control of the team.
 
 ## Results: strong schedules in Overcooked, a larger gap in football
-
-We evaluated the loop on five Overcooked layouts and seven Google Research Football scenarios.
 
 ### Overcooked: two models arrive at nearly the same scores
 
@@ -105,7 +103,7 @@ The strongest rule-based football policies fall below the IPPO reference on all 
 | Corner | 50.4 | 50.5 | 41 |
 | Five vs Five | 99.1 | 96.0 | 65 |
 
-All entries are percentages. The reinforcement-learning columns are maximum mean win rates during training from [Song et al., Table 3](https://arxiv.org/html/2309.12951v1#S4.T3); their SDs summarize variation across training seeds. Our column reports success on fresh evaluation seeds for selected policies, with at least 100 episodes and 300 for Three vs One. These batches also informed selection during the campaigns. The following analysis examines how the policies reached these scores and what held them back.
+All entries are percentages. The reinforcement-learning columns are maximum mean win rates during training from [Song et al., Table 3](https://arxiv.org/html/2309.12951v1#S4.T3). Our column reports success on fresh evaluation seeds for selected policies, with at least 100 episodes and 300 for Three vs One. These batches also informed selection during the campaigns. The following analysis examines how the policies reached these scores and what held them back.
 
 ## Insight 1: the loop learns to turn coordination into search
 
@@ -213,5 +211,5 @@ Thanks to Jianing Ye for helpful discussions on this project.
 3. Kurach, K. et al. [Google Research Football: A Novel Reinforcement Learning Environment](https://research.google/pubs/google-research-football-a-novel-reinforcement-learning-environment/). AAAI, 2020.
 4. Yu, C. et al. [The Surprising Effectiveness of PPO in Cooperative Multi Agent Games](https://papers.neurips.cc/paper_files/paper/2022/hash/9c1535a02f0ce079433344e14d910597-Abstract-Datasets_and_Benchmarks.html). NeurIPS, 2022.
 5. Song, Y. et al. [Boosting Studies of Multi-Agent Reinforcement Learning on Google Research Football Environment: the Past, Present, and Future](https://arxiv.org/abs/2309.12951). arXiv, 2023. Football references: Table 3.
-6. Gessler, T. et al. [OvercookedV2: Rethinking Overcooked for Zero-Shot Coordination](https://arxiv.org/abs/2503.17821). 2025. Classic Overcooked PPO references: Table 1, standard self-play.
+6. Gessler, T. et al. [OvercookedV2: Rethinking Overcooked for Zero-Shot Coordination](https://arxiv.org/abs/2503.17821). ICLR, 2025. Classic Overcooked PPO references: Table 1, standard self-play.
 7. Ye, J. et al. MATCHA: Bridging the Gap between Sample and Wall-Clock Efficiency in Model-Based Multi-Agent Reinforcement Learning. Under review. Approximate Overcooked curve values: Figure 6.
