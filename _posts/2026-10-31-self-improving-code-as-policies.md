@@ -11,7 +11,7 @@ image: /assets/img/research/overcooked-rsi-ten-rounds.png
 
 Can a language model discover how a team should coordinate by writing a controller, watching it fail, and rewriting it? And how does a policy written as code compare with neural-network policies trained with reinforcement learning?
 
-We tested this on two benchmarks. In [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai), two chefs must prepare and deliver soup without blocking each other. In [Google Research Football](https://github.com/google-research/football), teammates must move the ball past defenders and score. The language model writes a Python policy for the team, runs it, reads the resulting trace, and decides what to change. The controller and the tools it builds improve over time.
+We tested this on two benchmarks. In [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai), two chefs must prepare and deliver soup without blocking each other. In [Google Research Football](https://github.com/google-research/football), teammates must move the ball past defenders and score. The language model writes a Python policy for the team, runs it, reads the resulting trace, and decides what to change. We call this loop RSI, short for recursive self-improvement. The controller and the tools it builds improve over time.
 
 <figure style="margin: 2rem 0;">
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1.25rem;">
@@ -39,7 +39,7 @@ The gap comes from the feedback each game returns. In the kitchen, a failed roll
 
 ## The self-improvement loop
 
-We call this loop RSI, short for recursive self-improvement. Each round, the language model writes `policy.py`, which maps the team's observations to actions for every controlled player. The harness then runs evaluation on training seeds and returns the score, a step-level trace, a failure summary, and rendered rollouts. The model reads this feedback, keeps the best policy so far, and revises the policy code for the next round.
+Each round, the language model writes `policy.py`, which maps the team's observations to actions for every controlled player. The harness then runs evaluation on training seeds and returns the score, a step-level trace, a failure summary, and rendered rollouts. The model reads this feedback, keeps the best policy so far, and revises the policy code for the next round.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-loop5" alt="The language model writes a team policy, evaluates it, reads the feedback, and starts the next round." style="display: block; width: 100%; height: auto;">
