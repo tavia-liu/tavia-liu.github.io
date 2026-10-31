@@ -46,8 +46,6 @@ The Overcooked code policies run in the overcooked_ai simulator, where cooking s
 | Forced Coordination | 199 | 240 | **340** (7) | **340** (6) |
 | Counter Circuit | 163 | 20 | 260 (9) | **280** (8) |
 
-Rounds are indexed from zero. The PPO column is the mean over ten seeds; the source reports standard deviations of 1, 1, 8, 1, and 14.
-
 ### Both models climb the same ladder and arrive at the environment's ceiling
 
 The ten proposals for any layout, from either model, follow three rungs. The first is reactive rules: each chef gets a priority list, fetch an onion if a pot needs one, grab a dish if a soup is ready. This scores between zero and respectable and produces both failures behind every zero in Figure 1, the swap deadlock in a one-tile corridor and a wrong map fact. GPT's first Coordination Ring policy aimed at the wrong onion station and executed 395 interactions that did nothing.
