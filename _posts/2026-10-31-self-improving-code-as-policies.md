@@ -67,15 +67,15 @@ Official evaluation rounds are one part of the computation. The agent can run of
 
 Both models finish above the published standard self-play PPO mean on all five layouts. They also reach or exceed the MATCHA curve values used as references here. The two models agree at 260, 500, and 340 on Cramped Room, Asymmetric Advantages, and Forced Coordination. GPT finishes one soup ahead on Coordination Ring and Counter Circuit.
 
-| Layout | PPO self-play | MATCHA, ≈1M transitions | Fable 5 | GPT 6.1 Sol |
+| Layout | PPO self-play | MATCHA | Fable 5 | GPT 6.1 Sol |
 | --- | ---: | ---: | ---: | ---: |
-| Cramped Room | 259 | ≈238 | **260** | **260** |
-| Asymmetric Advantages | 278 | ≈499 | **500** | **500** |
-| Coordination Ring | 214 | ≈305 | 340 | **360** |
-| Forced Coordination | 199 | ≈240 | **340** | **340** |
-| Counter Circuit | 163 | ≈20 | 260 | **280** |
+| Cramped Room | 259 | 238 | **260** | **260** |
+| Asymmetric Advantages | 278 | 499 | **500** | **500** |
+| Coordination Ring | 214 | 305 | 340 | **360** |
+| Forced Coordination | 199 | 240 | **340** | **340** |
+| Counter Circuit | 163 | 20 | 260 | **280** |
 
-PPO values are the standard self-play means in [Gessler et al., Table 1](https://arxiv.org/html/2503.17821v1#S5.T1), measured on classic Overcooked. MATCHA values are approximate readings from its Figure 6 at one million transitions. The code-policy columns report each campaign's best evaluated score within rounds 0–9.
+PPO values are the standard self-play means in [Gessler et al., Table 1](https://arxiv.org/html/2503.17821v1#S5.T1), measured on classic Overcooked. MATCHA values are read from its Figure 6 at one million transitions. The code-policy columns report each campaign's best evaluated score within rounds 0–9.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}" alt="Best reward across ten rounds on five Overcooked layouts. The models tie on three layouts; GPT finishes one delivery ahead on the other two." style="display: block; width: 100%; height: auto;">
