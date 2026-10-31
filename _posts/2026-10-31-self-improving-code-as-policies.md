@@ -39,11 +39,11 @@ The gap comes from the feedback each game returns. In the kitchen, a failed roll
 
 ## The self-improvement loop
 
-Each round has four steps: write `policy.py`, evaluate it, inspect the feedback, and propose the next revision. The policy maps the team's observations to actions for all controlled players. Feedback includes metrics, a step-level trace, a failure summary, and rendered rollouts. Proposals record a hypothesis and a criterion for abandoning it, giving us a history of what the agent believed and what it tested.
+Each round, the language model writes two files. `policy.py` maps the team's observations to actions for every controlled player. `proposal.md` states the hypothesis behind the change and the result that would make the model abandon it. The harness then runs one official evaluation and returns the score, a step-level trace, a failure summary, and rendered rollouts. The model reads this feedback, keeps the best policy so far, and writes the next round. Between official evaluations it can run its own simulations and search programs, and only the harness evaluation counts as a round. Read in order, the proposals record what the agent believed and what it tested.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-loop2" alt="The language model writes a team policy, evaluates it, reads scores and rollout traces, and revises the policy." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> The self-improvement loop.</figcaption>
+  <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-loop3" alt="The language model writes proposal.md and policy.py, the harness runs one official evaluation, and the score, trace, failure summary, and video return to the model for the next round. Offline simulation and search sit inside the model step." style="display: block; width: 100%; height: auto;">
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 2.</strong> The self-improvement loop. Each round ends in one official evaluation. Offline simulation and search between rounds do not count as rounds.</figcaption>
 </figure>
 
 ## Benchmarks and evaluation
