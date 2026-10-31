@@ -56,7 +56,6 @@ We use two existing benchmarks with different demands on coordination:
 | Dynamics | Deterministic, fixed start | Random outcomes and scripted opponents |
 | Metric | Soup reward over 400 steps; 20 points per delivery | Success rate on 100 fresh evaluation seeds |
 | Models | Fable 5 in Claude Code; GPT 6.1 Sol in Codex | Fable 5 in Claude Code |
-| Budget | Ten evaluated rounds per model and layout, numbered 0–9 | Scenario-dependent campaigns with screening and larger validation batches |
 
 The Overcooked runs evaluate a jointly designed team at seed 0. The football campaigns use fresh random seeds, typically screening on smaller batches before evaluating promising candidates on 100 episodes; Three vs One uses 300-episode validation for its final leaders. The football campaigns have varying stopping rules and lengths. They test what sustained iteration discovers under noisy feedback.
 
