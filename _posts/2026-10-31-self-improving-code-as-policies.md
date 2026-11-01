@@ -87,7 +87,7 @@ The models obtain schedules differently. Fable 5 builds its own model of the env
 
 #### A false ceiling ends exploration
 
-On Forced Coordination, Fable 5 concludes that a seventeenth soup is out of reach and spends its last round only "to keep 320 robustly". GPT 6.1 Sol, with the same division of labor, delivers seventeen soups, because its cook wastes fewer steps walking. Once the agent believed its own ceiling, it stopped searching for a better plan.
+Once an agent believes it has reached the best possible score, it stops exploring. On Forced Coordination, Fable 5 concludes that a seventeenth soup is out of reach and spends its last round only "to keep 320 robustly". GPT 6.1 Sol, with the same division of labor, delivers seventeen soups, so the ceiling was wrong.
 
 ### Google Research Football under stochastic dynamics
 
