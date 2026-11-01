@@ -65,8 +65,6 @@ We compare the self-evolved controllers with reported reinforcement-learning res
 
 ### Overcooked: coordination becomes search
 
-#### Both models beat PPO without touching the simulator
-
 Both models finish above the published PPO self-play mean on all five layouts. On four layouts they end within one soup of each other: they tie at 260 on Cramped Room and 300 on Coordination Ring, Fable finishes one soup ahead on Asymmetric Advantages, and GPT one soup ahead on Forced Coordination. Counter Circuit separates them. Fable reaches 300 in its fifth round, three soups ahead of GPT's 240.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
@@ -100,8 +98,6 @@ Fable closes four of its five campaigns with an argument that its score is the c
 This is a specific failure of self-verification. An agent can use the same controller to propose a solution, justify its ceiling, and search for counterexamples, so agreement among those steps can reflect a shared blind spot. The bound described Fable's own controller, not the kitchen. A useful stopping rule should distinguish a plateau in the current search from a bound over the environment's legal actions, and a ceiling claim needs a checker that does not share the proposer's habits.
 
 ### Google Research Football: noisy feedback changes what counts as a useful revision
-
-#### Iteration improves rules, but most gaps remain
 
 The strongest rule-based football policies fall below IPPO on all eight scenarios, and below MAPPO on seven. Run, Pass and Shoot is the exception: 72% compared with MAPPO's reported 66%. The largest gaps appear on Counterattack Hard and the full Eleven vs Eleven game, where the controller wins 14 of 100 matches and draws 57 against the strongest built-in opponent.
 
