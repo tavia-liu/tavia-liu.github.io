@@ -74,7 +74,7 @@ Both GPT 6.1 Sol and Fable 5 exceed the published PPO self-play mean on all five
 
 #### Role assignment and offline planning
 
-The policies improve in three stages: each chef follows its own rules, the chefs take fixed roles, and finally the whole schedule is planned in advance. The first stage fails because two chefs acting on their own get in each other's way. Some early policies leave both chefs blocking each other for most of the episode and deliver nothing.
+The policies improve in three stages: local priorities, fixed roles, and schedules planned in advance. Early policies give each chef local priorities, such as fetching an onion when a pot needs one or serving a finished soup. Each rule is reasonable on its own, but the two chefs follow them without regard for each other, and their plans collide. Some early policies leave both chefs blocking each other for most of the episode and deliver nothing.
 
 Fixed roles fix this. In Forced Coordination, GPT 6.1 Sol raises its return from 240 to 340 at round 6. One chef supplies three onions and a dish across the counter while the other operates both pots and serves at a 22-step cadence. In Counter Circuit, the Fable 5 controller transfers onions across the middle counter in a four-step supply cycle, compared with roughly fifteen steps for carrying them around the ring.
 
