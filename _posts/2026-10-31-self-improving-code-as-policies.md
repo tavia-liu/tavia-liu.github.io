@@ -65,126 +65,76 @@ We compare the self-evolved controllers with reported reinforcement-learning res
 
 ### Overcooked under deterministic dynamics
 
-Both GPT 6.1 Sol and Fable 5 exceed the published PPO self-play mean on all five layouts. Their best observed returns are close on four layouts. They both reach 260 on Cramped Room and 300 on Coordination Ring; Fable 5 finishes one delivery ahead on Asymmetric Advantages, while GPT 6.1 Sol finishes one delivery ahead on Forced Coordination. The largest difference appears on Counter Circuit, where Fable 5 reaches 300 and GPT 6.1 Sol reaches 240.
-
-The reported returns are the best observed within rounds 0 to 9. The Fable 5 Counter Circuit campaign is ongoing in the inspected record; it first reaches 300 at round 4.
+Both GPT 6.1 Sol and Fable 5 exceed the published PPO self-play mean on all five layouts. They both reach 260 on Cramped Room and 300 on Coordination Ring. Fable 5 finishes one delivery ahead on Asymmetric Advantages, and GPT 6.1 Sol one delivery ahead on Forced Coordination. Counter Circuit has the largest gap, with 300 for Fable 5 and 240 for GPT 6.1 Sol. These are the best returns observed within rounds 0 to 9; the Fable 5 Counter Circuit campaign is still in progress.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}?v=20261031-bb" alt="Best observed return by round on five Overcooked layouts for GPT 6.1 Sol and Fable 5, with published PPO self-play means as dashed reference lines." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked performance across policy revisions. Solid lines show the best return so far; faint dots show individual evaluations. Dashed lines show PPO self-play means. The plotted Fable 5 Counter Circuit series contains the six evaluations available when the figure was generated.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked returns across revisions. Lines show the best score so far, dots show individual evaluations, and dashed lines show PPO means. The Fable 5 Counter Circuit series is an intermediate six-evaluation snapshot.</figcaption>
 </figure>
 
-The improvement trajectories include substantial regressions. GPT 6.1 Sol initially scores zero on Cramped Room, while the first two Fable 5 Coordination Ring policies score zero. Both campaigns recover by round 2. Later revisions can also reduce performance, so the best-so-far curves summarize policy selection rather than continuous improvement in every submitted controller. The traces identify which revisions repair basic execution failures and which improve coordination after the controllers already produce soup.
+#### Role assignment and offline planning
 
-#### Development of coordinated controllers
+Early policies use local priorities such as fetching onions or serving finished soup. Their failures expose conflicts between the chefs. In GPT 6.1 Sol's second Counter Circuit evaluation, each chef needs the other's tile, and both remain stationary for 350 steps. The first two Fable 5 Coordination Ring policies also score zero after repeatedly contesting the same cell.
 
-Early controllers assign each chef a list of local priorities, such as fetching an onion, collecting a plate, or serving a finished soup. Their failures often involve the interaction between two individually reasonable choices. In GPT 6.1 Sol's second Counter Circuit evaluation, each chef treats the partner as a permanent obstacle. Each needs the other's tile, and both remain stationary for 350 steps. Fable 5's second Coordination Ring policy repeatedly directs both chefs toward the same cell without resolving the conflict.
-
-Explicit roles and object staging produce larger improvements. In Forced Coordination, GPT 6.1 Sol raises its return from 240 to 340 at round 6 by assigning a repeating supply sequence to the left chef. That chef transfers three onions and a dish across the shared counter while the right chef loads the pots and serves soup at a 22-step cadence. The policy coordinates the timing of supply with the cook's production cycle.
-
-Counter exchanges also reduce transport costs. In Fable 5's Counter Circuit controller, the lower chef supplies onions through the middle counter and the upper chef retrieves them near the pots. The resulting supply cycle takes four steps per onion, compared with roughly fifteen for carrying an onion around the ring.
+Explicit roles and counter exchanges improve throughput. In Forced Coordination, GPT 6.1 Sol raises its return from 240 to 340 at round 6. One chef supplies three onions and a dish across the counter while the other operates both pots and serves at a 22-step cadence. In Counter Circuit, the Fable 5 controller transfers onions across the middle counter in a four-step supply cycle, compared with roughly fifteen steps for carrying them around the ring.
 
 <figure style="margin: 2rem 0;">
   <a href="{{ '/assets/img/research/counter-circuit-handoff.png' | relative_url }}"><img src="{{ '/assets/img/research/counter-circuit-handoff.png' | relative_url }}" loading="lazy" alt="Three actual Counter Circuit frames at ticks 3, 4, and 5. The lower chef holds an onion, places it on the highlighted middle counter, and the upper chef retrieves it." style="display: block; width: 100%; height: auto;"></a>
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> An onion transfer in Counter Circuit, verified against the step trace. The lower chef holds the onion at tick 3, the onion is on the counter at tick 4, and the upper chef has retrieved it at tick 5. This exchange supports a four-tick supply cycle.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> A Counter Circuit handoff at ticks 3, 4, and 5. The lower chef supplies an onion through the highlighted counter; the upper chef retrieves it. The exchange supports a four-tick supply cycle.</figcaption>
 </figure>
 
-The shared counter allows the chefs to continue different tasks between transfers. Its value depends on a joint plan for what is supplied, where it is placed, and when the receiving chef needs it. These dependencies become explicit in the stronger controllers' production schedules.
+The models obtain schedules differently. GPT 6.1 Sol mainly revises rules and derives timings from traces; its final Cramped Room controller uses a 30-step cycle. Fable 5 reconstructs transition models from the supplied rules and recorded rollouts, checks their predictions against earlier traces, and searches for schedules offline. On Asymmetric Advantages, a sweep over 5,040 controller configurations and two beam searches yields 500, confirmed by official evaluation. On Counter Circuit, a wider search improves a 260-return schedule to 300. Deterministic dynamics make these reconstructed models useful for evaluating plans before submission.
 
-#### Simulator reconstruction and offline planning
+#### Verification of performance bounds
 
-The two models develop schedules through different procedures. GPT 6.1 Sol mainly revises rules and derives schedules from observed timings. Its final Cramped Room controller follows a 30-step cycle with fixed offsets for plating, delivery, ingredient loading, and starting the next cook.
-
-Fable 5 builds local transition models for Cramped Room, Asymmetric Advantages, and Counter Circuit using the supplied rules and recorded rollouts. It checks those models by replaying earlier episodes and comparing the predicted states with the traces, then uses the models for offline search. The agent has therefore created a planning tool from the feedback available through the permitted interface.
-
-On Asymmetric Advantages, a sweep over 5,040 controller configurations and two beam searches on the reconstructed model produce a return of 500; official evaluation confirms that return. On Counter Circuit, the model predicts the delivery times of a two-soup schedule that scores 260 in the real environment. A wider search raises the return to 300. On Cramped Room, a search over joint chef states finds a 29-step cycle.
-
-These cases show how deterministic feedback supports improvements beyond direct policy editing. A sufficiently accurate local model lets the agent evaluate many joint action sequences offline, then submit a selected schedule for official evaluation. The models' different results also identify useful search directions. Fable 5's reconstructed model and search improve Counter Circuit, while GPT 6.1 Sol's revised supply schedule reaches a higher return on Forced Coordination. Both planning tools and manually derived schedules contribute to the observed gains.
-
-#### Assessment of performance bounds
-
-Several campaigns end with arguments that further improvement is impossible. Such arguments need to cover the environment's legal schedules, including ways to coordinate that the current controller does not express.
-
-Forced Coordination provides a direct counterexample to one proposed bound. Fable 5 estimates that the cook needs about 23 steps of work per soup and concludes that a seventeenth delivery is out of reach for its architecture. GPT 6.1 Sol uses the same broad division of labor, with one chef supplying the counter and the other operating the pots, and delivers seventeen soups. Its final delivery occurs at tick 385. Over the episode, the GPT 6.1 Sol cook walks 51 steps, compared with 69 for the Fable 5 cook. Some movement treated as unavoidable in the bound can be removed by changing the schedule.
-
-The two models both reaching 260 on Cramped Room provides agreement on an attained score. A global optimality claim additionally depends on the coverage and correctness of the accompanying search or bound. Similarly, failure to improve a score through additional beam search establishes a plateau for that search procedure.
+Forced Coordination exposes an error in a proposed upper bound. Fable 5 estimates that the cook requires about 23 steps per soup and concludes that a seventeenth delivery is out of reach for its architecture. GPT 6.1 Sol uses the same broad role assignment and delivers seventeen soups, with the last at tick 385. Its cook walks 51 steps over the episode, compared with 69 for the Fable 5 cook. The bound had treated some removable movement as unavoidable. An independently constructed controller therefore tests assumptions that further search within the original controller can preserve.
 
 ### Google Research Football under stochastic dynamics
 
-The selected rule-based controllers score below the published IPPO references on all eight scenarios and below MAPPO on seven. Run, Pass and Shoot is the exception, with 72% success compared with MAPPO's reported 66%. The largest MAPPO gap is on Counterattack Hard, where the code policy reaches 29% against 81.3%. Five vs Five reaches 65% against 96%, and Eleven vs Eleven reaches 14% against 45.4%.
+The selected controllers score below IPPO on all eight scenarios and below MAPPO on seven. Run, Pass and Shoot is the exception, at 72% against MAPPO's reported 66%. Counterattack Hard reaches 29% against 81.3%; Five vs Five reaches 65% against 96%; Eleven vs Eleven reaches 14% against 45.4%.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-3v1c" alt="Success rates across eight football scenarios, comparing self-evolved Fable 5 controllers with published IPPO and MAPPO results." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football performance relative to IPPO and MAPPO. Code-policy values use fresh evaluation seeds, pooling designated replications where applicable.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football success rates compared with IPPO and MAPPO, using fresh evaluation seeds and pooling designated replications.</figcaption>
 </figure>
 
-The reinforcement-learning values are maximum mean win rates observed during training. The code-policy values come from selected controllers evaluated in 100-seed batches, with designated replications pooled. These evaluations also informed candidate selection during the campaigns. In Eleven vs Eleven, the selected controller records 14 wins, 57 draws, and 29 losses in 100 matches against the strongest built-in opponent. Its draw rate captures defensive performance that the win-rate comparison alone does not show.
+The RL references report maximum mean win rates during training. Our controllers use 100-seed evaluation batches, pooling designated replications; these batches also inform selection. Eleven vs Eleven records 14 wins, 57 draws, and 29 losses. Three vs One reports 75%, pooling rounds 47 and 48 before the operator's protocol change. Later rounds provide diagnostic follow-ups.
 
-Three vs One requires a distinction between the original campaign and later interventions. The headline result is 75%, obtained by pooling the recorded 100-episode evaluations of rounds 47 and 48. The main comparison uses rounds 0 to 48, before the operator changed the protocol following the seed-reading evaluations. Later rounds provide diagnostic evidence about support positioning, control, and imitation of a trained policy.
+#### Evaluation variability and strategy revision
 
-#### Evaluation variability and candidate selection
-
-Fresh seeds make replication part of the optimization process. An early Three vs One controller scores 63% on one 100-episode batch and 46% on an exact replication. A smaller screen can therefore favor a revision whose apparent advantage does not persist in a larger evaluation. The campaign histories record both improvements in the selected controller and variation in individual measurements.
+An early Three vs One controller scores 63% on one 100-episode batch and 46% on an exact replication. A trace can identify a possible failure mechanism, but fresh-seed evaluation is needed to determine whether the proposed repair improves performance.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-3v1c" alt="Round-by-round football evaluations, showing batch sizes, selected performance frontiers, excluded seed-reading evaluations, and the Three vs One protocol change." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football evaluation histories. Dot size indicates the number of evaluated episodes. Lines summarize the best values meeting the scenario's validation threshold, with designated replications pooled retrospectively. Triangles indicate learned-policy follow-ups; crosses indicate excluded seed-reading evaluations. The Three vs One frontier stops before the operator's protocol change.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football evaluation histories. Dot size indicates batch size. Lines pool designated replications retrospectively. Triangles mark learned-policy follow-ups; crosses mark excluded seed-reading runs. The Three vs One frontier stops before the protocol change.</figcaption>
 </figure>
 
-This changes how traces support revisions. In Overcooked, a collision or unnecessary movement can be checked against the same deterministic start. In football, a trace identifies a candidate failure mechanism, and repeated evaluations measure whether the corresponding change improves success across outcomes. The Counterattack Hard campaign illustrates this combination of diagnosis and verification.
-
-#### Opportunity creation in Counterattack Hard
-
-An early Counterattack Hard controller attempts to draw defenders toward the wing and pass the ball back toward the center. It wins 18 of 100 episodes. The trace analysis shows that 17 of those wins involve a shot through the central seam; entries into the intended wide phase produce only one win in 54 episodes. The successful trajectories identify a scoring opportunity that the controller reaches only intermittently.
-
-The next revision directs the carrier toward that central shot earlier. Seam-shot attempts increase from 38 to 59 per 100 episodes, while their conversion rate remains near 48%. Overall success rises from 18% to 29%. The gain comes primarily from reaching the opportunity more often. Subsequent rule changes do not produce a confirmed improvement over 29%.
+Counterattack Hard provides a successful example. An early controller tries to draw defenders wide and cut the ball back, winning 18 of 100 episodes. Trace inspection finds that 17 wins involve a central-seam shot; the intended wide phase produces only one win in 54 entries. The revised controller seeks the central shot earlier. Attempts increase from 38 to 59 per 100 episodes, conversion stays near 48%, and overall success rises to 29%. The revision improves access to a scoring opportunity while leaving its conversion rate largely unchanged.
 
 <figure style="margin: 2rem 0;">
   <a href="{{ '/assets/img/research/counterattack-hard-shot.png' | relative_url }}"><img src="{{ '/assets/img/research/counterattack-hard-shot.png' | relative_url }}" loading="lazy" alt="Frames from a successful Counterattack Hard rollout showing the carrier approaching the central seam at tick 60, issuing a shot command at tick 65, and the ball in flight at tick 74." style="display: block; width: 100%; height: auto;"></a>
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 7.</strong> Shot preparation and execution in the revised Counterattack Hard controller. These frames show one successful round-seven rollout. The full evaluation records 29 wins in 100 episodes; Figure 1 contains the complete example replay.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 7.</strong> Central-shot execution in one successful Counterattack Hard rollout. The full batch records 29 wins in 100 episodes. Figure 1 contains the complete replay.</figcaption>
 </figure>
-
-Separating opportunity creation from conversion makes the remaining problem more specific. The routing change increases access to the central seam, while the tested reception and finishing rules leave substantial losses after reaching it. These results motivate closer analysis of interception, possession, and shot release, alongside the distribution of shot outcomes.
 
 #### Ball control and reception timing
 
-The football diagnostics identify control details that are absent from a description of the team's formation or passing route. Movement direction, sprinting, and dribbling can persist across action steps. A controller must manage these states when changing from chasing the ball to receiving it, carrying it, or shooting.
+Football also requires control of persistent movement, sprint, and dribble states. In Pass and Shoot probes, a controller retains sprint after reception and loses possession under pressure. Releasing sprint while keeping dribble active lets the carrier retain the ball longer. In Three vs One, another revision activates dribble before reception, preserves diagonal movement, and shoots immediately on possession. These details connect a planned route to its execution.
 
-In Pass and Shoot, a controller sprints toward the incoming ball and retains the sprint state after reception. The resulting sprint-and-dribble behavior allows the defender to take possession in the diagnostic probes. Releasing sprint while keeping dribble active lets the carrier retain the ball for longer in those probes. In Three vs One, another revision activates dribble shortly before reception while preserving the receiver's diagonal movement, then shoots on the first possession step. These experiments make the timing of state changes part of the policy being optimized.
+The MAPPO diagnostics identify a further distinction. A trained policy sends a loose ball toward the penalty area to draw out the goalkeeper. The receiver uses a buffered first-touch shot for low deliveries and controls a higher, bouncing ball before releasing it. The agent reproduces the opening delivery but its subsequent receiving and finishing rules score 56% on 100 fresh seeds. The diagnostic log reports 91% for the MAPPO reference in the same evaluator. The remaining difference involves control after the opening pass, including interception, first touch, and shot timing.
 
-Inspection of a trained MAPPO policy provides a more detailed example. The later Three vs One diagnostics record an opening that sends a loose ball toward the penalty area and draws the goalkeeper away from the goal line. The receiving player uses a buffered first-touch shot for a low ball and a control-then-release sequence for a higher, bouncing delivery. Those responses depend on the ball's current flight and the positions of the goalkeeper and defender.
+Teammate support remains useful. In the later Three vs One rounds, a far-post attacker collects goalkeeper parries under the scenario's disabled offside rule. That controller scores 81% on 100 fresh seeds. Several additional passing sequences are abandoned, while spatial support survives.
 
-The agent reproduces the reference policy's opening delivery with a scripted action sequence, then tests receiving and finishing rules. A subsequent imitation controller records 56 wins on 100 fresh evaluation seeds. The diagnostic log reports 91% for the MAPPO reference actor on fresh seeds in the same evaluator. The opening can be replicated more closely than the subsequent interception and finishing behavior. This comparison identifies feedback control after the pass as a concrete target for improvement.
+#### Generalization and evaluator access
 
-Teammate support also remains useful. In the later Three vs One rounds, placing an attacker at the far post allows the team to collect goalkeeper parries under the scenario's disabled offside rule. That controller scores 81% on 100 fresh evaluation seeds. These follow-ups show a contribution from spatial support even as several more elaborate passing sequences are abandoned.
+Earlier fixed-seed controllers reach 100% development success on Three vs One and both Counterattack tasks. In the held-out audit, they score 20%, 0%, and 0%, respectively. The audit uses ten new engine seeds, each repeated 100 times; its 1,000 episodes cover ten distinct seeds. Development success on one trajectory transfers poorly to this seed set.
 
-#### Outcome prediction from early observations
-
-A separate Three vs One experiment trains an MLP on 1,200 seeds to predict success from an early observation and one of eight tactical options. Held-out classification accuracy is 69.2%, compared with a 68.3% majority baseline. The resulting option selector scores 76% on 100 fresh seeds, below the later rule-based controller's 81% evaluation. This predictor adds little to the tested controller. The result concerns that observation point, feature set, and learning procedure; the MAPPO diagnostics above examine control adjustments made throughout the subsequent trajectory.
-
-#### Generalization across evaluation seeds
-
-The earlier fixed-seed campaigns achieve high development scores by improving particular trajectories. Their performance changes substantially when evaluated on other engine seeds.
-
-| Task | Fixed-seed development success | Success in the held-out audit |
-| --- | ---: | ---: |
-| Three vs One | 100% | 20% |
-| Counterattack Easy | 100% | 0% |
-| Counterattack Hard | 100% | 0% |
-
-The archived audit contains ten held-out engine seeds, with 100 repeated episodes per seed. The 1,000 episodes therefore cover ten distinct seeds. On these tasks, success on the development trajectory transfers poorly to that seed set. Repeating an episode at the same seed measures reproducibility of the trajectory; evaluating new seeds measures a different property.
-
-The Three vs One campaign also exposes a failure of evaluator isolation. One submitted controller reads the engine seed, recreates the hidden episode, tests sixteen candidate options, and executes an option it has already observed winning. It records 100% success on both 100- and 300-episode evaluations. Those submissions are excluded because they use hidden evaluation information. The operator subsequently prohibits seed access and nested environments, and the campaign continues under the revised rule.
-
-These findings motivate two distinct evaluation controls. Hidden seeds and access to the test environment must be excluded from the policy's execution interface. Candidate selection also needs a final evaluation that remains untouched during iteration. Fresh seeds address dependence on particular trajectories, while execution isolation prevents a controller from inspecting the outcome it is supposed to predict through interaction.
+A separate Three vs One submission reads the engine seed, recreates the hidden episode, tests sixteen options, and executes one already observed winning. It scores 100% on both 100- and 300-episode evaluations and is excluded. The operator then prohibits seed access and nested environments. These failures establish why fresh seeds, isolation of hidden evaluation information, and a final test outside candidate selection serve different purposes.
 
 #### Control interfaces and learned subpolicies
 
-The control interface changes which decisions the policy can make. On Counterattack Easy, moving from a fixed controlled roster to the benchmark's proximity-based player assignment raises the observed frontier from 35% to 65%. The engine can transfer a control slot to the receiver as the ball moves. This interface change affects the controller's ability to execute the attack as well as its apparent strategy.
+On Counterattack Easy, switching from a fixed controlled roster to proximity-based player assignment raises the observed frontier from 35% to 65%. The engine transfers control to the receiver as the ball moves, changing which parts of the attack the policy can execute.
 
-A separate Five vs Five campaign supplies named formations, including a diamond and a square with a far-post goalkeeper screen. Its best formation scores 64% on re-evaluation, compared with 65% for free-form evolution. Under those evaluations, the strategy prior does not improve the selected controller.
-
-The Pass and Shoot campaign then changes the policy representation. Its recorded summary reports 74% for the best rule-based controller, 82% for a scripted opening followed by a PPO finishing subpolicy, and 93.5% for an rMAPPO policy trained by the agent and evaluated over two 100-episode batches. The sequence supports testing a division of work in which code specifies team structure and learned subpolicies handle reception and finishing.
+The Pass and Shoot campaign also changes policy representation. Its recorded summary reports 74% for rules, 82% for a scripted opening with a PPO finishing subpolicy, and 93.5% for an rMAPPO policy trained by the agent. These follow-ups motivate combining explicit team plans with learned reception and finishing control.
 
 ## What I would change in the next loop
 
