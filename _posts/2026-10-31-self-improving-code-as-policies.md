@@ -98,7 +98,7 @@ The selected controllers score below IPPO on all eight scenarios and below MAPPO
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football success rates compared with IPPO and MAPPO, using fresh evaluation seeds and pooling designated replications.</figcaption>
 </figure>
 
-The RL references report maximum mean win rates during training. Our controllers use 100-seed evaluation batches, pooling designated replications; these batches also inform selection. Eleven vs Eleven records 14 wins, 57 draws, and 29 losses. Three vs One reports 75%, pooling rounds 47 and 48 before the operator's protocol change. Later rounds provide diagnostic follow-ups.
+The RL references report maximum mean win rates during training. Our controllers use 100-seed evaluation batches, pooling designated replications; these batches also inform selection. Eleven vs Eleven records 14 wins, 57 draws, and 29 losses. Three vs One reports 75%, pooling its replicated rounds 47 and 48.
 
 #### Evaluation variability and strategy revision
 
@@ -106,7 +106,7 @@ An early Three vs One controller scores 63% on one 100-episode batch and 46% on 
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-3v1c" alt="Round-by-round football evaluations, showing batch sizes, selected performance frontiers, excluded seed-reading evaluations, and the Three vs One protocol change." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football evaluation histories. Dot size indicates batch size. Lines pool designated replications retrospectively. Triangles mark learned-policy follow-ups; crosses mark excluded seed-reading runs. The Three vs One frontier stops before the protocol change.</figcaption>
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football evaluation histories. Dot size indicates batch size. Lines pool designated replications retrospectively. Triangles mark learned-policy follow-ups; crosses mark excluded seed-reading runs. The vertical line in Three vs One marks a change discussed under evaluator access below.</figcaption>
 </figure>
 
 Counterattack Hard provides a successful example. An early controller tries to draw defenders wide and cut the ball back, winning 18 of 100 episodes. Trace inspection finds that 17 wins involve a central-seam shot; the intended wide phase produces only one win in 54 entries. The revised controller seeks the central shot earlier. Attempts increase from 38 to 59 per 100 episodes, conversion stays near 48%, and overall success rises to 29%. The revision improves access to a scoring opportunity while leaving its conversion rate largely unchanged.
@@ -128,7 +128,7 @@ Teammate support remains useful. In the later Three vs One rounds, a far-post at
 
 Earlier fixed-seed controllers reach 100% development success on Three vs One and both Counterattack tasks. In the held-out audit, they score 20%, 0%, and 0%, respectively. The audit uses ten new engine seeds, each repeated 100 times; its 1,000 episodes cover ten distinct seeds. Development success on one trajectory transfers poorly to this seed set.
 
-A separate Three vs One submission reads the engine seed, recreates the hidden episode, tests sixteen options, and executes one already observed winning. It scores 100% on both 100- and 300-episode evaluations and is excluded. The operator then prohibits seed access and nested environments. These failures establish why fresh seeds, isolation of hidden evaluation information, and a final test outside candidate selection serve different purposes.
+A separate Three vs One submission reads the engine seed, recreates the hidden episode, tests sixteen options, and executes one already observed winning. It scores 100% on both 100- and 300-episode evaluations and is excluded. The operator then prohibits seed access and nested environments, and the campaign continues under that rule. Three vs One is therefore reported from the rounds before this change, and the later rounds appear in this post only as diagnostics. These failures establish why fresh seeds, isolation of hidden evaluation information, and a final test outside candidate selection serve different purposes.
 
 #### Control interfaces and learned subpolicies
 
