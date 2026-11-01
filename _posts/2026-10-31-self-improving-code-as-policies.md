@@ -65,7 +65,7 @@ We compare the self-evolved controllers with reported reinforcement-learning res
 
 ### Overcooked under deterministic dynamics
 
-Both GPT 6.1 Sol and Fable 5 exceed the published PPO self-play mean on all five layouts. They both reach 260 on Cramped Room and 300 on Coordination Ring. Fable 5 finishes one delivery ahead on Asymmetric Advantages, and GPT 6.1 Sol one delivery ahead on Forced Coordination. Counter Circuit has the largest gap, with 300 for Fable 5 and 240 for GPT 6.1 Sol. These are the best returns observed within rounds 0 to 9.
+Both GPT 6.1 Sol and Fable 5 exceed the published PPO self-play mean on all five layouts. They both reach 260 on Cramped Room and 300 on Coordination Ring. Fable 5 finishes one delivery ahead on Asymmetric Advantages, and GPT 6.1 Sol one delivery ahead on Forced Coordination. Counter Circuit has the largest gap, with 300 for Fable 5 and 240 for GPT 6.1 Sol.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}?v=20261031-final" alt="Best observed return by round on five Overcooked layouts for GPT 6.1 Sol and Fable 5, with published PPO self-play means as dashed reference lines." style="display: block; width: 100%; height: auto;">
