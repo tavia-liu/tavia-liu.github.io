@@ -83,7 +83,7 @@ The agents solve this by giving each chef a fixed role and passing items across 
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> A Counter Circuit handoff at ticks 3, 4, and 5. The lower chef supplies an onion through the highlighted counter; the upper chef retrieves it. The exchange supports a four-tick supply cycle.</figcaption>
 </figure>
 
-The models obtain schedules differently. Fable 5 builds its own model of the environment without being asked to. Denied the simulator, it writes a simulator of its own on three layouts. It reconstructs the kitchen's rules from the prompt and the recorded rollouts, replays every earlier episode until its predictions match the traces step for step, and then searches for schedules on this copy. GPT 6.1 Sol keeps revising rules by hand. On Asymmetric Advantages, a sweep over 5,040 controller configurations and two beam searches yields 500, confirmed by official evaluation. On Counter Circuit, a wider search improves a 260-return schedule to 300. Deterministic dynamics make these reconstructed models useful for evaluating plans before submission.
+The models obtain schedules differently. Fable 5 builds its own model of the environment without being asked to. Denied the simulator, it writes a simulator of its own on three layouts. It reconstructs the kitchen's rules from the prompt and the recorded rollouts, replays every earlier episode until its predictions match the traces step for step, and then searches for schedules on this copy. GPT 6.1 Sol keeps revising rules by hand. On Asymmetric Advantages, a sweep over 5,040 controller configurations and two beam searches yields 500, confirmed by evaluation. On Counter Circuit, a wider search improves a 260-return schedule to 300. Deterministic dynamics make these reconstructed models useful for evaluating plans before submission.
 
 #### Verification of performance bounds
 
@@ -140,7 +140,7 @@ The Pass and Shoot campaign also changes policy representation. Its recorded sum
 
 The Overcooked result makes a case for letting coding agents build tools rather than only edit a policy file. Denied the simulator, Fable rebuilt one from the rollout traces, checked it against every recorded episode, and planned on the copy. The strongest artifact may be the model that produces the policy.
 
-The next harness should make three distinctions explicit. Count offline search alongside official evaluations so the budget reflects the work performed. Check ceiling claims with a checker independent of the proposing agent's controller. Separate candidate selection from an isolated final evaluation on unseen randomness.
+The next harness should make three distinctions explicit. Count offline search alongside evaluations so the budget reflects the work performed. Check ceiling claims with a checker independent of the proposing agent's controller. Separate candidate selection from an isolated final evaluation on unseen randomness.
 
 For football, the most informative next experiment is to vary where a joint script hands control to a learned subpolicy. Pass and Shoot provides one encouraging case. Testing that split across scenarios would tell us which parts of coordination benefit from explicit planning and which benefit from learning through repeated interaction.
 
