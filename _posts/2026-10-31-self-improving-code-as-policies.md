@@ -74,16 +74,16 @@ Both GPT 6.1 Sol and Fable 5 exceed the published PPO self-play mean on all five
 
 #### Role assignment and offline planning
 
-The policies improve in three stages: local priorities, fixed roles, and schedules planned in advance. Early policies give each chef local priorities, such as fetching an onion when a pot needs one or serving a finished soup. Each rule is reasonable on its own, but the two chefs follow them without regard for each other, and their plans collide. Some early policies leave both chefs blocking each other for most of the episode and deliver nothing.
+Early policies give each chef local priorities, such as fetching an onion when a pot needs one or serving a finished soup. Each rule is reasonable on its own, but the two chefs follow them without regard for each other, and their plans collide. Some early policies leave both chefs blocking each other for most of the episode and deliver nothing.
 
-Fixed roles fix this. In Forced Coordination, GPT 6.1 Sol raises its return from 240 to 340 at round 6. One chef supplies three onions and a dish across the counter while the other operates both pots and serves at a 22-step cadence. In Counter Circuit, the Fable 5 controller transfers onions across the middle counter in a four-step supply cycle, compared with roughly fifteen steps for carrying them around the ring.
+Explicit roles and counter exchanges improve throughput. In Forced Coordination, GPT 6.1 Sol raises its return from 240 to 340 at round 6. One chef supplies three onions and a dish across the counter while the other operates both pots and serves at a 22-step cadence. In Counter Circuit, the Fable 5 controller transfers onions across the middle counter in a four-step supply cycle, compared with roughly fifteen steps for carrying them around the ring.
 
 <figure style="margin: 2rem 0;">
   <a href="{{ '/assets/img/research/counter-circuit-handoff.png' | relative_url }}"><img src="{{ '/assets/img/research/counter-circuit-handoff.png' | relative_url }}" loading="lazy" alt="Three actual Counter Circuit frames at ticks 3, 4, and 5. The lower chef holds an onion, places it on the highlighted middle counter, and the upper chef retrieves it." style="display: block; width: 100%; height: auto;"></a>
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> A Counter Circuit handoff at ticks 3, 4, and 5. The lower chef supplies an onion through the highlighted counter; the upper chef retrieves it. The exchange supports a four-tick supply cycle.</figcaption>
 </figure>
 
-The last stage is where the two models differ. GPT 6.1 Sol mainly revises rules and derives timings from traces; its final Cramped Room controller uses a 30-step cycle. Fable 5 reconstructs transition models from the supplied rules and recorded rollouts, checks their predictions against earlier traces, and searches for schedules offline. On Asymmetric Advantages, a sweep over 5,040 controller configurations and two beam searches yields 500, confirmed by official evaluation. On Counter Circuit, a wider search improves a 260-return schedule to 300. Deterministic dynamics make these reconstructed models useful for evaluating plans before submission.
+The models obtain schedules differently. GPT 6.1 Sol mainly revises rules and derives timings from traces; its final Cramped Room controller uses a 30-step cycle. Fable 5 reconstructs transition models from the supplied rules and recorded rollouts, checks their predictions against earlier traces, and searches for schedules offline. On Asymmetric Advantages, a sweep over 5,040 controller configurations and two beam searches yields 500, confirmed by official evaluation. On Counter Circuit, a wider search improves a 260-return schedule to 300. Deterministic dynamics make these reconstructed models useful for evaluating plans before submission.
 
 #### Verification of performance bounds
 
