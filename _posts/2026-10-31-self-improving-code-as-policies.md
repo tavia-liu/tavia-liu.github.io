@@ -63,7 +63,7 @@ We compare the self-evolved controllers with reported reinforcement-learning res
 
 ## Results and Analysis
 
-### Overcooked under deterministic dynamics
+### Under deterministic dynamics: Overcooked
 
 Both GPT 6.1 Sol and Fable 5 exceed the published PPO self-play mean on all five layouts. They both reach 260 on Cramped Room and 300 on Coordination Ring. Fable 5 finishes one delivery ahead on Asymmetric Advantages, and GPT 6.1 Sol one delivery ahead on Forced Coordination. Counter Circuit has the largest gap, with 300 for Fable 5 and 240 for GPT 6.1 Sol.
 
@@ -89,7 +89,7 @@ The models obtain schedules differently. Fable 5 builds its own model of the env
 
 An agent can easily mistake a plateau for the best possible score, and then it stops exploring. On Forced Coordination, Fable 5 concludes that a seventeenth soup is out of reach and spends its last round only "to keep 320 robustly". GPT 6.1 Sol, with the same division of labor, delivers seventeen soups, so the ceiling was wrong.
 
-### Google Research Football under stochastic dynamics
+### Under stochastic dynamics: Google Research Football
 
 The best controllers score below IPPO on all eight scenarios and below MAPPO on seven. Run, Pass and Shoot is the exception, at 72% against MAPPO's reported 66%. Counterattack Hard reaches 29% against 81.3%; Five vs Five reaches 65% against 96%; Eleven vs Eleven reaches 14% against 45.4%.
 
