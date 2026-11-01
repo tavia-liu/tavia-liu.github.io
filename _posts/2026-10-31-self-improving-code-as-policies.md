@@ -106,7 +106,7 @@ This is a specific failure of self-verification. An agent can use the same contr
 The strongest rule-based football policies fall below IPPO on all eight scenarios, and below MAPPO on seven. Run, Pass and Shoot is the exception: 72% compared with MAPPO's reported 66%. The largest gaps appear on Counterattack Hard and the full Eleven vs Eleven game, where the controller wins 14 of 100 matches and draws 57 against the strongest built-in opponent.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-3v1b" alt="Success rates on eight football tasks. Code policies trail IPPO on all eight and MAPPO on seven, with the largest gaps on Counterattack Hard and Eleven vs Eleven." style="display: block; width: 100%; height: auto;">
+  <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-3v1c" alt="Success rates on eight football tasks. Code policies trail IPPO on all eight and MAPPO on seven, with the largest gaps on Counterattack Hard and Eleven vs Eleven." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football results on fresh seeds. Code-policy values are success rates on 100 fresh evaluation seeds, pooling designated replications where applicable.</figcaption>
 </figure>
 
@@ -117,7 +117,7 @@ The reinforcement-learning bars are maximum mean win rates during training. Ours
 In deterministic Overcooked, a saved tick survives the next evaluation from the same start. In football, a promising revision can disappear when replayed on fresh seeds. Three vs One illustrates the cost: an early policy scores 63% on one 100-episode batch and 46% on its exact replication. Larger batches become part of discovering whether an edit helped.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-3v1b" alt="Football evaluations across the campaigns. Individual scores fluctuate; larger-batch leaders progress more slowly. Separate markers indicate learned-policy follow-ups and excluded seed-reading evaluations." style="display: block; width: 100%; height: auto;">
+  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-3v1c" alt="Football evaluations across the campaigns. Individual scores fluctuate; larger-batch leaders progress more slowly. Separate markers indicate learned-policy follow-ups and excluded seed-reading evaluations." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football campaign histories. Dot size reflects evaluation size. Lines summarize the best values meeting each scenario's validation threshold; designated replications are pooled retrospectively. Triangles mark learned-policy follow-ups reported in the Pass and Shoot campaign summary. Crosses mark seed-reading evaluations, excluded from the valid frontier. In Three vs One the vertical line marks where the operator changed the protocol; the frontier is drawn only for the rounds before it.</figcaption>
 </figure>
 
@@ -136,7 +136,7 @@ The video makes the revision easier to interpret. The controller moves the carri
 
 The useful diagnosis separates reaching an opportunity from converting it. Routing improves the first; the tested finishing rules leave the second largely unchanged. This identifies where to spend the next round of work without claiming that the remaining conversion rate is an intrinsic ceiling.
 
-The same pressure shapes coordination. Extra passes create more opportunities for interception or a poor touch, so several campaigns abandon elaborate passing sequences. Yet teammates remain useful: in the later, operator-guided Three vs One rounds, the best policy places an attacker at the far post to collect parries, taking advantage of the scenario's disabled offside rule, and scores 81% on 100 fresh seeds against 77% before the change. The loop retains spatial support while discarding several unreliable sequences of transfers.
+The same pressure shapes coordination. Extra passes create more opportunities for interception or a poor touch, so several campaigns abandon elaborate passing sequences. Yet teammates remain useful: in the later, operator-guided Three vs One rounds, the best policy places an attacker at the far post to collect parries, taking advantage of the scenario's disabled offside rule, and scores 81% on 100 fresh seeds against 75% before the change. The loop retains spatial support while discarding several unreliable sequences of transfers.
 
 #### Can the initial observation predict the outcome?
 
