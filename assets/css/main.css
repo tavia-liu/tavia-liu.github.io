@@ -2281,4 +2281,4 @@ body { color: #1a1a1a; }
 /* Blog post heading hierarchy: section > part > subsection (ID prefix outranks #content h3 above) */
 #content .blog-article .prose h2 { font-size: 1.55rem; margin-top: 2.8rem; }
 #content .blog-article .prose h3 { font-size: 1.28rem; margin-top: 2.3rem; }
-#content .blog-article .prose h4 { font-size: 1rem; font-weight: 600; margin-top: 1.5rem; color: #444; }
+#content .blog-article .prose h4 { font-size: 1rem; font-weight: 600; margin-top: 1.5rem; color: #111; }
