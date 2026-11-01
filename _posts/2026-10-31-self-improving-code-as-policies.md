@@ -65,11 +65,11 @@ We compare the self-evolved controllers with reported reinforcement-learning res
 
 ### Overcooked under deterministic dynamics
 
-Both GPT 6.1 Sol and Fable 5 exceed the published PPO self-play mean on all five layouts. They both reach 260 on Cramped Room and 300 on Coordination Ring. Fable 5 finishes one delivery ahead on Asymmetric Advantages, and GPT 6.1 Sol one delivery ahead on Forced Coordination. Counter Circuit has the largest gap, with 300 for Fable 5 and 240 for GPT 6.1 Sol. These are the best returns observed within rounds 0 to 9; the Fable 5 Counter Circuit campaign is still in progress.
+Both GPT 6.1 Sol and Fable 5 exceed the published PPO self-play mean on all five layouts. They both reach 260 on Cramped Room and 300 on Coordination Ring. Fable 5 finishes one delivery ahead on Asymmetric Advantages, and GPT 6.1 Sol one delivery ahead on Forced Coordination. Counter Circuit has the largest gap, with 300 for Fable 5 and 240 for GPT 6.1 Sol. These are the best returns observed within rounds 0 to 9.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}?v=20261031-bb" alt="Best observed return by round on five Overcooked layouts for GPT 6.1 Sol and Fable 5, with published PPO self-play means as dashed reference lines." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked returns across revisions. Lines show the best score so far, dots show individual evaluations, and dashed lines show PPO means. The Fable 5 Counter Circuit series is an intermediate six-evaluation snapshot.</figcaption>
+  <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}?v=20261031-final" alt="Best observed return by round on five Overcooked layouts for GPT 6.1 Sol and Fable 5, with published PPO self-play means as dashed reference lines." style="display: block; width: 100%; height: auto;">
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 3.</strong> Overcooked returns across revisions. Lines show the best score so far, dots show individual evaluations, and dashed lines show PPO means.</figcaption>
 </figure>
 
 #### Role assignment and offline planning
@@ -105,7 +105,7 @@ The RL references report maximum mean win rates during training. Our controllers
 An early Three vs One controller scores 63% on one 100-episode batch and 46% on an exact replication. A trace can identify a possible failure mechanism, but fresh-seed evaluation is needed to determine whether the proposed repair improves performance.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-3v1c" alt="Round-by-round football evaluations, showing batch sizes, selected performance frontiers, excluded seed-reading evaluations, and the Three vs One protocol change." style="display: block; width: 100%; height: auto;">
+  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-3v1c" alt="Round-by-round football evaluations for eight scenarios, with the best confirmed value as a line and reinforcement-learning references as dashed lines." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football evaluation histories. Dot size indicates batch size. Lines pool designated replications retrospectively. Triangles mark learned-policy follow-ups; crosses mark excluded seed-reading runs. The vertical line in Three vs One marks a change discussed under evaluator access below.</figcaption>
 </figure>
 
