@@ -106,30 +106,19 @@ This is a specific failure of self-verification. An agent can use the same contr
 The strongest rule-based football policies fall below IPPO on all eight scenarios, and below MAPPO on seven. Run, Pass and Shoot is the exception: 72% compared with MAPPO's reported 66%. The largest gaps appear on Counterattack Hard and the full Eleven vs Eleven game, where the controller wins 14 of 100 matches and draws 57 against the strongest built-in opponent.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-legend" alt="Success rates on eight football tasks. Code policies trail IPPO on all eight and MAPPO on seven, with the largest gaps on Counterattack Hard and Eleven vs Eleven." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football results under fresh seeds. Code-policy values come from larger validation batches, pooling designated replications where applicable.</figcaption>
+  <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-3v1b" alt="Success rates on eight football tasks. Code policies trail IPPO on all eight and MAPPO on seven, with the largest gaps on Counterattack Hard and Eleven vs Eleven." style="display: block; width: 100%; height: auto;">
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football results on fresh seeds. Code-policy values are success rates on 100 fresh evaluation seeds, pooling designated replications where applicable.</figcaption>
 </figure>
 
-| Scenario | IPPO | MAPPO | Fable 5 rules |
-| --- | ---: | ---: | ---: |
-| Pass and Shoot | 93.7 | 92.9 | 74 |
-| Run, Pass and Shoot | 73.7 | 66.0 | 72 |
-| Three vs One | 91.7 | 90.0 | 81 |
-| Counterattack Easy | 85.7 | 88.9 | 65 |
-| Counterattack Hard | 71.6 | 81.3 | 29 |
-| Corner | 50.4 | 50.5 | 41 |
-| Five vs Five | 99.1 | 96.0 | 65 |
-| Eleven vs Eleven | 52.7 | 45.4 | 14 |
-
-All entries are percentages. The reinforcement-learning columns are maximum mean win rates during training. Our column reports success on 100 fresh evaluation seeds for each selected policy. These batches also informed selection during the campaigns. The following analysis examines how the policies reached these scores and what held them back.
+The reinforcement-learning bars are maximum mean win rates during training. Ours are success rates on 100 fresh evaluation seeds, batches that also informed selection during the campaigns. Three vs One is reported from rounds 0 to 48, which ran without intervention; the operator changed the protocol after the seed-reading rounds that followed, and the later rounds appear only in the analysis below.
 
 #### A promising revision has to survive fresh seeds
 
 In deterministic Overcooked, a saved tick survives the next evaluation from the same start. In football, a promising revision can disappear when replayed on fresh seeds. Three vs One illustrates the cost: an early policy scores 63% on one 100-episode batch and 46% on its exact replication. Larger batches become part of discovering whether an edit helped.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
-  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-legend" alt="Football evaluations across the campaigns. Individual scores fluctuate; larger-batch leaders progress more slowly. Separate markers indicate learned-policy follow-ups and excluded seed-reading evaluations." style="display: block; width: 100%; height: auto;">
-  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football campaign histories. Dot size reflects evaluation size. Lines summarize the best values meeting each scenario's validation threshold; designated replications are pooled retrospectively. Triangles mark learned-policy follow-ups reported in the Pass and Shoot campaign summary. Crosses mark seed-reading evaluations, excluded from the valid frontier.</figcaption>
+  <img src="{{ '/assets/img/research/football-rsi-rounds.png' | relative_url }}?v=20261031-3v1b" alt="Football evaluations across the campaigns. Individual scores fluctuate; larger-batch leaders progress more slowly. Separate markers indicate learned-policy follow-ups and excluded seed-reading evaluations." style="display: block; width: 100%; height: auto;">
+  <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Football campaign histories. Dot size reflects evaluation size. Lines summarize the best values meeting each scenario's validation threshold; designated replications are pooled retrospectively. Triangles mark learned-policy follow-ups reported in the Pass and Shoot campaign summary. Crosses mark seed-reading evaluations, excluded from the valid frontier. In Three vs One the vertical line marks where the operator changed the protocol; the frontier is drawn only for the rounds before it.</figcaption>
 </figure>
 
 #### Case study: find the shot that actually wins
@@ -147,11 +136,11 @@ The video makes the revision easier to interpret. The controller moves the carri
 
 The useful diagnosis separates reaching an opportunity from converting it. Routing improves the first; the tested finishing rules leave the second largely unchanged. This identifies where to spend the next round of work without claiming that the remaining conversion rate is an intrinsic ceiling.
 
-The same pressure shapes coordination. Extra passes create more opportunities for interception or a poor touch, so several campaigns abandon elaborate passing sequences. Yet teammates remain useful: the validated Three vs One leader places an attacker at the far post to collect parries, taking advantage of the scenario's disabled offside rule. The loop retains spatial support while discarding several unreliable sequences of transfers.
+The same pressure shapes coordination. Extra passes create more opportunities for interception or a poor touch, so several campaigns abandon elaborate passing sequences. Yet teammates remain useful: in the later, operator-guided Three vs One rounds, the best policy places an attacker at the far post to collect parries, taking advantage of the scenario's disabled offside rule, and scores 81% on 100 fresh seeds against 77% before the change. The loop retains spatial support while discarding several unreliable sequences of transfers.
 
 #### Can the initial observation predict the outcome?
 
-An outcome-prediction experiment gives another view of the difficulty. In Three vs One, an MLP trained on 1,200 seeds predicts success from an early observation and one of eight tactical options. Held-out classification accuracy is 69.2%, compared with a 68.3% majority baseline. Its selected policy scores 76% on 100 fresh seeds, below the 80% validated leader. That feature set and training procedure recover little predictive signal about the later outcome; the result directs attention toward richer control and training across trajectories.
+An outcome-prediction experiment from the later Three vs One rounds gives another view of the difficulty. An MLP trained on 1,200 seeds predicts success from an early observation and one of eight tactical options. Held-out classification accuracy is 69.2%, compared with a 68.3% majority baseline. Its selected policy scores 76% on 100 fresh seeds, below the 81% of the best rule-based policy from the same rounds. That feature set and training procedure recover little predictive signal about the later outcome; the result directs attention toward richer control and training across trajectories.
 
 #### The evaluator shapes what the loop learns
 
@@ -165,7 +154,7 @@ We first evaluated football on fixed development seeds. This made it possible to
 
 The archived audit uses **10 held-out engine seeds, with 100 repeated episodes per seed**. Its 1,000 episodes therefore cover ten distinct seeds. The resulting failures reveal how strongly these controllers depended on the development trajectories.
 
-Fresh seeds improve the objective, but evaluation access matters too. During Three vs One, the agent writes a policy that reads the evaluator's engine seed, recreates the episode, tries sixteen candidate options, and executes one it has already observed winning. It scores 100% on both 100- and 300-episode evaluations. Those runs are excluded from the valid results because the controller used hidden evaluation information.
+Fresh seeds improve the objective, but evaluation access matters too. During Three vs One, the agent writes a policy that reads the evaluator's engine seed, recreates the episode, tries sixteen candidate options, and executes one it has already observed winning. It scores 100% on both 100- and 300-episode evaluations. Those runs are excluded from the valid results because the controller used hidden evaluation information. The operator then barred seed access and nested environments, and the campaign continued for another 37 rounds under that rule. We report the campaign's result from the rounds before the change and treat the rest as analysis.
 
 The lesson is operational: evaluation isolation belongs in the harness. A policy should receive its allowed observations and episode state; hidden seeds and nested access to the test environment should remain outside its execution boundary. An independent final test is also needed to measure transfer after repeated candidate selection.
 
