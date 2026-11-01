@@ -91,7 +91,7 @@ An agent can easily mistake a plateau for the best possible score, and then it s
 
 ### Google Research Football under stochastic dynamics
 
-The selected controllers score below IPPO on all eight scenarios and below MAPPO on seven. Run, Pass and Shoot is the exception, at 72% against MAPPO's reported 66%. Counterattack Hard reaches 29% against 81.3%; Five vs Five reaches 65% against 96%; Eleven vs Eleven reaches 14% against 45.4%.
+The best controllers score below IPPO on all eight scenarios and below MAPPO on seven. Run, Pass and Shoot is the exception, at 72% against MAPPO's reported 66%. Counterattack Hard reaches 29% against 81.3%; Five vs Five reaches 65% against 96%; Eleven vs Eleven reaches 14% against 45.4%.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-3v1c" alt="Success rates across eight football scenarios, comparing self-evolved Fable 5 controllers with published IPPO and MAPPO results." style="display: block; width: 100%; height: auto;">
