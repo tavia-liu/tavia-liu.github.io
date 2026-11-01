@@ -85,9 +85,11 @@ The agents solve this by giving each chef a fixed role and passing items across 
 
 The models obtain schedules differently. Fable 5 builds its own model of the environment without being asked to. Denied the simulator, it writes a simulator of its own on three layouts. It reconstructs the kitchen's rules from the prompt and the recorded rollouts, replays every earlier episode until its predictions match the traces step for step, and then searches for schedules on this copy. GPT 6.1 Sol keeps revising rules by hand. On Asymmetric Advantages, a sweep over 5,040 controller configurations and two beam searches yields 500, confirmed by evaluation. On Counter Circuit, a wider search improves a 260-return schedule to 300. Deterministic dynamics make these reconstructed models useful for evaluating plans before submission.
 
-#### Verification of performance bounds
+#### A false ceiling ends exploration
 
-Forced Coordination exposes an error in a proposed upper bound. Fable 5 estimates that the cook requires about 23 steps per soup and concludes that a seventeenth delivery is out of reach for its architecture. GPT 6.1 Sol uses the same broad role assignment and delivers seventeen soups, with the last at tick 385. Its cook walks 51 steps over the episode, compared with 69 for the Fable 5 cook. The bound had treated some removable movement as unavoidable. An independently constructed controller therefore tests assumptions that further search within the original controller can preserve.
+On Forced Coordination, Fable 5 stops exploring because it believes it has reached the ceiling. It estimates that the cook needs about 23 steps per soup and concludes that a seventeenth delivery is out of reach. Its final proposal states the consequence directly. A seventeenth soup is "out of reach", so the goal of the last round is "to keep 320 robustly", and the round only polishes the existing controller.
+
+The ceiling was wrong. GPT 6.1 Sol uses the same division of labor and delivers seventeen soups, the last at tick 385. Its cook walks 51 steps over the episode, against 69 for the Fable 5 cook, so the movement Fable 5 counted as unavoidable could be removed. The bound described Fable 5's own controller rather than the kitchen, and once the agent believed it, it spent its remaining rounds defending the score instead of searching for a better one.
 
 ### Google Research Football under stochastic dynamics
 
