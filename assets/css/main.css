@@ -2277,3 +2277,8 @@ body { color: #1a1a1a; }
     font-size: 0.85rem;
   }
 }
+
+/* Blog post heading hierarchy: section > part > subsection */
+.blog-article .prose h2 { font-size: 1.5rem; margin-top: 2.8rem; }
+.blog-article .prose h3 { font-size: 1.22rem; margin-top: 2.2rem; }
+.blog-article .prose h4 { font-size: 1rem; margin-top: 1.5rem; color: #3b3b3b; }
