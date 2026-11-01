@@ -85,7 +85,7 @@ The agents solve this by giving each chef a fixed role and passing items across 
 
 The models obtain schedules differently. Fable 5 builds its own model of the environment without being asked to. Denied the simulator, it writes a simulator of its own on three layouts. It reconstructs the kitchen's rules from the prompt and the recorded rollouts, replays every earlier episode until its predictions match the traces step for step, and then searches for schedules on this copy. GPT 6.1 Sol keeps revising rules by hand. On Asymmetric Advantages, a sweep over 5,040 controller configurations and two beam searches yields 500, confirmed by evaluation. On Counter Circuit, a wider search improves a 260-return schedule to 300. Deterministic dynamics make these reconstructed models useful for evaluating plans before submission.
 
-#### A plateau ends exploration
+#### Verification of performance bounds
 
 Once an agent mistakes a plateau for the best possible score, it stops exploring. On Forced Coordination, Fable 5 concludes that a seventeenth soup is out of reach and spends its last round only "to keep 320 robustly". GPT 6.1 Sol, with the same division of labor, delivers seventeen soups, so the ceiling was wrong.
 
