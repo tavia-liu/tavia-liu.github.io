@@ -87,9 +87,7 @@ The models obtain schedules differently. Fable 5 builds its own model of the env
 
 #### A false ceiling ends exploration
 
-On Forced Coordination, Fable 5 stops exploring because it believes it has reached the ceiling. It estimates that the cook needs about 23 steps per soup and concludes that a seventeenth delivery is out of reach. Its final proposal states the consequence directly. A seventeenth soup is "out of reach", so the goal of the last round is "to keep 320 robustly", and the round only polishes the existing controller.
-
-The ceiling was wrong. GPT 6.1 Sol uses the same division of labor and delivers seventeen soups, the last at tick 385. Its cook walks 51 steps over the episode, against 69 for the Fable 5 cook, so the movement Fable 5 counted as unavoidable could be removed. The bound described Fable 5's own controller rather than the kitchen, and once the agent believed it, it spent its remaining rounds defending the score instead of searching for a better one.
+On Forced Coordination, Fable 5 concludes that a seventeenth soup is out of reach and spends its last round only "to keep 320 robustly". GPT 6.1 Sol, with the same division of labor, delivers seventeen soups, because its cook wastes fewer steps walking. Once the agent believed its own ceiling, it stopped searching for a better plan.
 
 ### Google Research Football under stochastic dynamics
 
