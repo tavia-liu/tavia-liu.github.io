@@ -87,7 +87,7 @@ The models obtain schedules differently. Fable 5 builds its own model of the env
 
 #### Verification of performance bounds
 
-Once an agent mistakes a plateau for the best possible score, it stops exploring. On Forced Coordination, Fable 5 concludes that a seventeenth soup is out of reach and spends its last round only "to keep 320 robustly". GPT 6.1 Sol, with the same division of labor, delivers seventeen soups, so the ceiling was wrong.
+An agent can easily mistake a plateau for the best possible score, and then it stops exploring. On Forced Coordination, Fable 5 concludes that a seventeenth soup is out of reach and spends its last round only "to keep 320 robustly". GPT 6.1 Sol, with the same division of labor, delivers seventeen soups, so the ceiling was wrong.
 
 ### Google Research Football under stochastic dynamics
 
