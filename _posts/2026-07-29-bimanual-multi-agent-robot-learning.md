@@ -1,4 +1,5 @@
 ---
+published: false
 title: "Bimanual Multi-Agent Robot Learning Benchmark"
 date: 2026-05-12
 description: "Building bimanual robot manipulation tasks and evaluating RL baselines from scratch."
