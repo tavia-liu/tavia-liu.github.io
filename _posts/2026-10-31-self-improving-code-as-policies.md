@@ -65,7 +65,7 @@ We compare the self-evolved controllers with reported reinforcement-learning res
 
 ### Under deterministic dynamics: Overcooked
 
-Both models beat the published PPO self-play mean on four layouts and tie it on Cramped Room (260 vs. 259). The biggest margin is on Counter Circuit, where PPO gets 163, GPT 6.1 Sol gets **240**, and Fable 5 gets **300**.
+Both language models exceed the published PPO self-play mean on four layouts and tie it on Cramped Room (260 vs. 259). The performance gap peaks on Counter Circuit. PPO self-play achieves 163, GPT 6.1 Sol reaches 240, and Fable 5 achieves 300.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/overcooked-rsi-ten-rounds.png' | relative_url }}?v=20261031-final" alt="Best observed return by round on five Overcooked layouts for GPT 6.1 Sol and Fable 5, with published PPO self-play means as dashed reference lines." style="display: block; width: 100%; height: auto;">
@@ -74,44 +74,46 @@ Both models beat the published PPO self-play mean on four layouts and tie it on 
 
 #### Role assignment and offline planning
 
-The first policies are what you'd expect. Fetch an onion when a pot needs one, serve a soup when it's done. Each rule is fine on its own, but the two chefs follow them without looking at each other, and some early policies have both chefs blocking each other for most of the episode and delivering nothing.
+Early generated policies prioritize local tasks. Chefs fetch onions or serve soups based on immediate needs. These isolated heuristics cause severe gridlock, sometimes resulting in zero deliveries.
 
-Both models fix this the same way. They give each chef a fixed role and pass items across counters, so the chefs stop fighting over the same tiles. In Forced Coordination, GPT 6.1 Sol goes from **240 → 340** at round 6, with one chef passing onions and dishes across the counter while the other runs both pots and serves a soup every 22 steps. In Counter Circuit, Fable 5 moves onions across the middle counter in a four-step cycle, where walking them around the ring takes roughly fifteen. I think this kind of strategy is hard for RL to find by exploration, since a handoff only pays off after both chefs finish a long joint sequence and the reward only shows up when the soup is delivered.
+Both models independently discover role specialization to resolve this. They assign fixed roles and pass items across counters to eliminate spatial competition. In Forced Coordination, GPT 6.1 Sol increases its return from 240 to 340 at round 6. One chef passes onions and dishes across the counter while the other operates both pots and serves a soup every 22 steps. In Counter Circuit, Fable 5 engineers a four-step supply cycle across the middle counter, bypassing the roughly fifteen-step perimeter route.
+
+RL exploration struggles to discover these handover strategies. The reward only triggers upon final soup delivery, requiring two independent agents to accidentally complete a long, perfectly synchronized joint sequence.
 
 <figure style="margin: 2rem 0;">
   <a href="{{ '/assets/img/research/counter-circuit-handoff.png' | relative_url }}"><img src="{{ '/assets/img/research/counter-circuit-handoff.png' | relative_url }}" loading="lazy" alt="Three actual Counter Circuit frames at ticks 3, 4, and 5. The lower chef holds an onion, places it on the highlighted middle counter, and the upper chef retrieves it." style="display: block; width: 100%; height: auto;"></a>
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 4.</strong> A Counter Circuit handoff at ticks 3, 4, and 5. The lower chef supplies an onion through the highlighted counter; the upper chef retrieves it. The exchange supports a four-tick supply cycle.</figcaption>
 </figure>
 
-The part I find most interesting is how Fable 5 got its schedules. It had no access to the simulator, and nobody asked it to build one, but on three layouts it wrote its own. It reconstructed the kitchen's rules from the prompt and the recorded rollouts, replayed every earlier episode until its predictions matched the traces step for step, and then searched for schedules on that copy. On Asymmetric Advantages, a sweep over 5,040 controller configurations plus two beam searches gave 500, which held up in the real evaluation. On Counter Circuit, a wider search took a 260 schedule to **300**. GPT 6.1 Sol kept revising its rules by hand and still beat PPO.
+Crucially, Fable 5 proactively builds its own offline simulator to discover these schedules. The harness never provides a simulator. The model reconstructs the kitchen's transition rules from the prompt and the rollout traces. It validates its internal simulator against historical episodes and executes offline search. On Asymmetric Advantages, a sweep over 5,040 controller configurations and two beam searches identifies a 500-point policy. The real evaluation confirms this result.
 
 ### Under stochastic dynamics: Google Research Football
 
-The loop gets better at football round by round, and on Run, Pass and Shoot it reaches **72%** against MAPPO's reported 66%. On the other seven scenarios MAPPO leads, with Counterattack Hard at 29% vs. 81.3% and Eleven vs Eleven at 14% vs. 45.4%.
+The RSI loop steadily improves football policies. On Run, Pass and Shoot, it reaches 72% success against MAPPO's reported 66%. However, MAPPO maintains the lead on the remaining seven scenarios. Counterattack Hard reaches 29% vs. 81.3%, and Eleven vs Eleven reaches 14% vs. 45.4%.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-3v1c" alt="Success rates across eight football scenarios, comparing self-evolved Fable 5 controllers with published IPPO and MAPPO results." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football success rates compared with IPPO and MAPPO, using fresh evaluation seeds and pooling designated replications.</figcaption>
 </figure>
 
-The RL numbers are maximum mean win rates during training. Mine come from batches of 100 fresh seeds, which I also used to pick between candidates.
+#### Strategy vs. Execution in Continuous Control
 
-#### Strategy and execution
-
-The loop is good at team strategy. On Counterattack Hard, an early controller tried to pull defenders wide and cut the ball back, and it won 18 of 100 episodes. Then the model read its own traces and noticed that 17 of those 18 wins came from a shot through the middle; the wide play it was built around produced exactly one. The next version went for the central shot earlier and got to **29%**.
+Google Research Football highlights the limitations of explicit policy generation. The RSI loop successfully optimizes high-level spatial strategy. In Counterattack Hard, an early controller attempted to pull defenders wide before cutting the ball back. It won 18 of 100 episodes. The model analyzed its own traces and identified a structural flaw. 17 of those 18 wins originated from a central shot, while the intended wide play succeeded exactly once. The revised code forced an early central shot and increased overall success to 29%.
 
 <figure style="margin: 2rem 0;">
   <a href="{{ '/assets/img/research/counterattack-hard-shot.png' | relative_url }}"><img src="{{ '/assets/img/research/counterattack-hard-shot.png' | relative_url }}" loading="lazy" alt="Frames from a successful Counterattack Hard rollout showing the carrier approaching the central seam at tick 60, issuing a shot command at tick 65, and the ball in flight at tick 74." style="display: block; width: 100%; height: auto;"></a>
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Central-shot execution in one successful Counterattack Hard rollout. The full batch records 29 wins in 100 episodes. Figure 1 contains the complete replay.</figcaption>
 </figure>
 
-Execution is where a learned policy helps. On Pass and Shoot, rules alone reach 74%. Keep the scripted opening and let a PPO policy handle the finish, and it goes to **82%**. An rMAPPO policy that the agent trained itself reaches **93.5%**.
+Code generation breaks down at the level of physical execution. Successful coordination in football demands precise, continuous control over sprint states, dribbling, and reception timing. Explicit rules hit a performance ceiling. On Pass and Shoot, pure Python rules reach 74%. Replacing the rule-based finishing logic with a trained PPO subpolicy increases success to 82%. Substituting the entire sequence with an rMAPPO policy trained directly by the agent achieves 93.5%.
 
-## Conclusion
+## Conclusion: Bridging Explicit Planning and Learned Execution
 
-Writing code, running it, and rewriting it is enough for a language model to discover real multi-agent coordination. When the game can be planned, as in Overcooked, the model plans, and it will even rebuild the simulator to do it. When the game also needs reflexes, as in football, the model still finds the right team strategy, and the control is better left to a learned policy.
+The recursive self-improvement loop exposes a clear boundary in multi-agent coordination. In discrete environments like Overcooked, LLM-driven Code-as-Policies excels. The agent actively builds offline simulators to search for joint schedules and solves coordination as a pure logic problem. Conversely, Google Research Football requires agents to absorb the high-variance, continuous dynamics of physical movement. In this domain, rule-based scripts trail the robust reflexes of RL-trained neural networks on most scenarios.
 
-What I don't know yet is where that handoff should sit. Pass and Shoot is one scenario, and I'd guess the right split looks different in a full match. That's the next thing I want to try. If you're working on something similar, I'd love to hear about it.
+This difference directly motivates our shift toward hybrid architectures. Language models will dictate explicit high-level team strategy while learned neural subpolicies execute low-level physical control. Our preliminary Pass and Shoot experiments support this structural handoff.
+
+Testing these neuro-symbolic systems requires a hardened evaluation harness. Future iterations will strictly separate candidate selection from final evaluation on unseen randomness and explicitly track offline search compute. This framework will map which elements of multi-agent coordination demand explicit reasoning and which rely entirely on the learned intuition of repeated experience.
 
 ## Acknowledgements
 
