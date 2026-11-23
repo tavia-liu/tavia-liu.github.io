@@ -1,7 +1,7 @@
 ---
 title: "Self-Improving Code as Policies for Multi-Agent Coordination"
 date: 2026-10-31
-description: "We let language models write, run, and revise multi-agent controllers in Overcooked and Google Research Football. The results show how the loop discovers joint schedules, mistakes its search space for a performance ceiling, and adapts to the evaluator."
+description: "I let language models write, run, and revise multi-agent controllers in Overcooked and Google Research Football. The results show how the loop discovers joint schedules, mistakes its search space for a performance ceiling, and adapts to the evaluator."
 reading_time: "14 min"
 permalink: /blog/self-improving-code-as-policies/
 redirect_from:
@@ -11,7 +11,7 @@ image: /assets/img/research/overcooked-rsi-ten-rounds.png
 
 Can a language model discover how a team should coordinate by writing a controller, watching it fail, and rewriting it? And how does a policy written as code compare with neural-network policies trained with reinforcement learning?
 
-We study this with a simple recursive self-improvement (RSI) loop. The language model writes a Python policy for the team, runs it, reads the resulting trace, and decides what to change. The controller and the tools it builds improve over time. We tested RSI on two benchmarks. In [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai), two chefs must prepare and deliver soup without blocking each other. In [Google Research Football](https://github.com/google-research/football), teammates must move the ball past defenders and score.
+I study this with a simple recursive self-improvement (RSI) loop. The language model writes a Python policy for the team, runs it, reads the resulting trace, and decides what to change. The controller and the tools it builds improve over time. I tested RSI on two benchmarks. In [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai), two chefs must prepare and deliver soup without blocking each other. In [Google Research Football](https://github.com/google-research/football), teammates must move the ball past defenders and score.
 
 <figure style="margin: 2rem 0;">
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1.25rem;">
@@ -48,7 +48,7 @@ Each round, the language model writes `policy.py`, which maps the team's observa
 
 ## Benchmarks and evaluation
 
-We use two existing benchmarks with different demands on coordination, [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai) and [Google Research Football](https://github.com/google-research/football):
+I use two existing benchmarks with different demands on coordination, [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai) and [Google Research Football](https://github.com/google-research/football):
 
 | | Overcooked | Google Research Football |
 | --- | --- | --- |
@@ -59,7 +59,7 @@ We use two existing benchmarks with different demands on coordination, [Overcook
 
 Each Overcooked run has a budget of ten rounds, numbered 0 to 9. Overcooked is deterministic, so training and evaluation both use seed 0. In each football round, the agent runs its policy on a fresh batch of 25 to 100 random training seeds, choosing the batch size itself, and no seed is reused. Reported football scores come from 100 fresh evaluation seeds.
 
-We compare the self-evolved controllers with reported reinforcement-learning results: PPO self-play from [Gessler et al. (2025)](https://arxiv.org/abs/2503.17821) on Overcooked, and IPPO and MAPPO from [Song et al. (2023)](https://arxiv.org/abs/2309.12951) on Google Research Football.
+I compare the self-evolved controllers with reported reinforcement-learning results: PPO self-play from [Gessler et al. (2025)](https://arxiv.org/abs/2503.17821) on Overcooked, and IPPO and MAPPO from [Song et al. (2023)](https://arxiv.org/abs/2309.12951) on Google Research Football.
 
 ## Results and Analysis
 
@@ -111,7 +111,7 @@ Code generation breaks down at the level of physical execution. Successful coord
 
 The recursive self-improvement loop exposes a clear boundary in multi-agent coordination. In discrete environments like Overcooked, LLM-driven Code-as-Policies excels. The agent actively builds offline simulators to search for joint schedules and solves coordination as a pure logic problem. Conversely, Google Research Football requires agents to absorb the high-variance, continuous dynamics of physical movement. In this domain, rule-based scripts trail the robust reflexes of RL-trained neural networks on most scenarios.
 
-This difference directly motivates our shift toward hybrid architectures. Language models will dictate explicit high-level team strategy while learned neural subpolicies execute low-level physical control. Our preliminary Pass and Shoot experiments support this structural handoff.
+This difference directly motivates my shift toward hybrid architectures. Language models will dictate explicit high-level team strategy while learned neural subpolicies execute low-level physical control. My preliminary Pass and Shoot experiments support this structural handoff.
 
 Testing these neuro-symbolic systems requires a hardened evaluation harness. Future iterations will strictly separate candidate selection from final evaluation on unseen randomness and explicitly track offline search compute. This framework will map which elements of multi-agent coordination demand explicit reasoning and which rely entirely on the learned intuition of repeated experience.
 
