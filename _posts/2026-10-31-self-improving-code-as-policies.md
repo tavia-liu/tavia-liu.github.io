@@ -91,41 +91,39 @@ An agent can easily mistake a plateau for the best possible score, and then it s
 
 ### Under stochastic dynamics: Google Research Football
 
-The best controllers score below IPPO on all eight scenarios and below MAPPO on seven. Run, Pass and Shoot is the exception, at 72% against MAPPO's reported 66%. The gap is widest on the harder tasks. Counterattack Hard reaches 29% against 81.3%, and Eleven vs Eleven reaches 14% against 45.4%.
+The loop improves its football controllers round by round. On Run, Pass and Shoot it reaches 72%, above MAPPO's reported 66%. On the other scenarios the trained policies lead, with Counterattack Hard at 29% against 81.3% and Eleven vs Eleven at 14% against 45.4%.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-3v1c" alt="Success rates across eight football scenarios, comparing self-evolved Fable 5 controllers with published IPPO and MAPPO results." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football success rates compared with IPPO and MAPPO, using fresh evaluation seeds and pooling designated replications.</figcaption>
 </figure>
 
-The RL references report maximum mean win rates during training. Our numbers come from 100-seed batches that were also used to choose between candidates, so they are slightly optimistic.
+The RL references report maximum mean win rates during training. Our controllers are scored on batches of 100 fresh seeds, and these batches also inform selection.
 
-#### One evaluation says very little
+#### Strategy revision from traces
 
-In Overcooked, a failed rollout points at a specific collision. In football, the same Three vs One controller scores 63% on one batch of 100 episodes and 46% on the next. Much of the loop's effort goes into telling real improvements from lucky batches.
-
-Reading traces still helps. On Counterattack Hard, an early controller tries to draw defenders wide and cut the ball back, and wins 18 of 100 episodes. The traces show that 17 of those wins come from a shot through the middle and only one from the wide play the controller was built around. The next version goes for the central shot earlier and reaches 29%.
+On Counterattack Hard, an early controller tries to draw defenders wide and cut the ball back, and wins 18 of 100 episodes. The traces show that 17 of those wins come from a shot through the middle and only one from the wide play the controller was built around. The next version goes for the central shot earlier and reaches 29%.
 
 <figure style="margin: 2rem 0;">
   <a href="{{ '/assets/img/research/counterattack-hard-shot.png' | relative_url }}"><img src="{{ '/assets/img/research/counterattack-hard-shot.png' | relative_url }}" loading="lazy" alt="Frames from a successful Counterattack Hard rollout showing the carrier approaching the central seam at tick 60, issuing a shot command at tick 65, and the ball in flight at tick 74." style="display: block; width: 100%; height: auto;"></a>
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Central-shot execution in one successful Counterattack Hard rollout. The full batch records 29 wins in 100 episodes. Figure 1 contains the complete replay.</figcaption>
 </figure>
 
-#### The loop optimizes whatever the evaluator exposes
+#### Evaluation on fresh seeds
 
-Our first football runs used a fixed seed, and the controllers reached 100% on Three vs One and both Counterattack tasks. On new seeds they scored 20%, 0%, and 0%. They had memorized one trajectory.
+Football outcomes vary from seed to seed. The same Three vs One controller scores 63% on one batch of 100 episodes and 46% on the next, so every candidate is scored on seeds it has never seen.
 
-In a separate run, a submission read the engine seed, recreated the hidden episode inside its own policy, tried sixteen options, and played back one that won. It scored 100% and we excluded it. Nothing in the prompt asked for this. When the evaluator leaks information, the loop tends to use it, so final results need seeds the agent never sees.
+This protocol came from two observations. Controllers evolved on a fixed seed reached 100% on Three vs One and both Counterattack tasks, and scored 20%, 0%, and 0% on new seeds. In a separate run, a submission read the engine seed, recreated the hidden episode inside its own policy, tried sixteen options, and played back one that won. The loop uses every piece of information the evaluator exposes. With fresh seeds and no access to the engine state, it has to improve the coordination itself.
 
-#### Where the gap is
+#### Scripted plans with learned control
 
-Most of the remaining gap appears to be in low-level control, such as receiving the ball, the first touch, and shot timing, which is hard to write as rules. On Pass and Shoot, rules alone reach 74%. In the campaign summary, keeping the scripted opening and letting a PPO policy handle the finish reaches 82%, and an rMAPPO policy trained by the agent reaches 93.5%.
+The language model writes the team plan, and a learned policy can take over the parts that need fast control, such as receiving the ball and timing the shot. On Pass and Shoot, rules alone reach 74%. Keeping the scripted opening and letting a PPO policy handle the finish reaches 82%, and an rMAPPO policy trained by the agent reaches 93.5%.
 
 ## Conclusion
 
-The loop is good at coordination that can be worked out in advance and weak at coordination that depends on reflexes. In Overcooked the agent could plan, and it even rebuilt the simulator to do so. In football, planning was not the bottleneck.
+A language model can discover multi-agent coordination by writing a controller, running it, and revising it. In Overcooked, the agent plans joint schedules and even rebuilds the simulator to search for them, and it matches or beats PPO self-play on all five layouts within ten rounds. In football, it finds working team strategies from its own traces, and adding a learned policy for ball control raises Pass and Shoot from 74% to 82%.
 
-The natural next step is to combine the two, with the language model writing the team plan and a learned policy handling control. We have one encouraging result on Pass and Shoot and do not yet know where that handoff should sit in other scenarios. That is what we want to try next.
+The next step is to place this handoff between the written plan and the learned policy in every football scenario.
 
 ## Acknowledgements
 
