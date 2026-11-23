@@ -1,7 +1,7 @@
 ---
 title: "Self-Improving Code as Policies for Multi-Agent Coordination"
 date: 2026-10-31
-description: "I let language models write, run, and revise multi-agent controllers in Overcooked and Google Research Football. The loop plans joint schedules in the kitchen, finds team strategies on the pitch, and pairs well with learned control."
+description: "We let language models write, run, and revise multi-agent controllers in Overcooked and Google Research Football. The results show how the loop discovers joint schedules, mistakes its search space for a performance ceiling, and adapts to the evaluator."
 reading_time: "14 min"
 permalink: /blog/self-improving-code-as-policies/
 redirect_from:
@@ -9,9 +9,9 @@ redirect_from:
 image: /assets/img/research/overcooked-rsi-ten-rounds.png
 ---
 
-I think a language model can work out how a team should coordinate just by writing a controller, watching it fail, and rewriting it. **In Overcooked, ten rounds of this were enough to match or beat neural policies trained with PPO self-play on all five layouts.**
+Can a language model discover how a team should coordinate by writing a controller, watching it fail, and rewriting it? And how does a policy written as code compare with neural-network policies trained with reinforcement learning?
 
-The setup is a simple recursive self-improvement (RSI) loop. The model writes a Python policy for the whole team, runs it, reads the trace, and decides what to change. I tried it on two benchmarks. In [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai), two chefs have to cook and deliver soup without getting in each other's way. In [Google Research Football](https://github.com/google-research/football), teammates have to move the ball past defenders and score.
+We study this with a simple recursive self-improvement (RSI) loop. The language model writes a Python policy for the team, runs it, reads the resulting trace, and decides what to change. The controller and the tools it builds improve over time. We tested RSI on two benchmarks. In [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai), two chefs must prepare and deliver soup without blocking each other. In [Google Research Football](https://github.com/google-research/football), teammates must move the ball past defenders and score.
 
 <figure style="margin: 2rem 0;">
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1.25rem;">
@@ -33,13 +33,13 @@ The setup is a simple recursive self-improvement (RSI) loop. The model writes a 
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 1.</strong> Example tasks. Left: Overcooked Coordination Ring, where two chefs execute a joint schedule. Right: Google Research Football Counterattack Hard, where the team controller seeks an early shot. Both clips are selected successful rollouts of LLM-written policies.</figcaption>
 </figure>
 
-Overcooked worked really well. Fable 5 and GPT 6.1 Sol both got there, and their best policies are joint schedules found by search programs the models wrote for themselves. Football was harder. The loop found team strategies that work and beat MAPPO on one scenario (72% vs. 66%), while trained policies led on the other seven.
+The loop worked strikingly well in Overcooked. After ten rounds, Fable 5 and GPT 6.1 Sol both beat neural policies trained with PPO self-play on all five layouts. Their best policies are joint schedules found by search programs the models wrote for themselves. Google Research Football is a soccer simulator where players coordinate against built-in opponents while controlling their movement, first touches, and shot timing under stochastic dynamics. There, the same loop improved its policies but remained below the reported IPPO results on all eight scenarios and MAPPO on seven.
 
-I think the difference comes down to what each game asks of the controller. In the kitchen, coordination is basically a scheduling problem, so the model can reason it out and search for a schedule. In football, the team plan is only half the job; the other half is continuous control (movement, first touches, shot timing), and a learned policy is better at that than hand-written rules.
+The gap comes from the feedback each game returns. In the kitchen, a failed rollout points to a specific collision or idle step, so the loop can treat coordination like a math problem and search for a joint schedule. In football, a single evaluation rarely says what went wrong. A lost episode could come from the team strategy, from low-level control of one player, or from a random bounce, and the loop spends most of its effort separating real improvements from lucky evaluations. When the evaluator leaks information, it learns to exploit that instead. The loop is strong at coordination it can reason out on paper and still weak at coordination that lives in physical movement, where low-level control must absorb large amounts of randomness. The rest of this post shows how each of these happens.
 
 ## Applying RSI to multi-agent coordination
 
-Each round, the model writes `policy.py`, which maps the team's observations to actions for every player. The harness runs it and hands back the score, a step-level trace, a failure summary, and rendered rollouts. The model reads all of that, keeps the best policy so far, and tries again.
+Each round, the language model writes `policy.py`, which maps the team's observations to actions for every controlled player. The harness then runs evaluation on training seeds and returns the score, a step-level trace, a failure summary, and rendered rollouts. The model reads this feedback, keeps the best policy so far, and revises the policy code for the next round.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/rsi-loop.svg' | relative_url }}?v=20261031-loop8" alt="The language model writes policy.py, the harness runs evaluation on training seeds, and the score, trace, failure summary, and video return to the model for the next round. Offline simulation and search sit inside the model step." style="display: block; width: 100%; height: auto;">
@@ -48,7 +48,7 @@ Each round, the model writes `policy.py`, which maps the team's observations to 
 
 ## Benchmarks and evaluation
 
-I use two existing benchmarks that ask for very different kinds of coordination.
+We use two existing benchmarks with different demands on coordination, [Overcooked](https://github.com/HumanCompatibleAI/overcooked_ai) and [Google Research Football](https://github.com/google-research/football):
 
 | | Overcooked | Google Research Football |
 | --- | --- | --- |
@@ -59,7 +59,7 @@ I use two existing benchmarks that ask for very different kinds of coordination.
 
 Each Overcooked run has a budget of ten rounds, numbered 0 to 9. Overcooked is deterministic, so training and evaluation both use seed 0. In each football round, the agent runs its policy on a fresh batch of 25 to 100 random training seeds, choosing the batch size itself, and no seed is reused. Reported football scores come from 100 fresh evaluation seeds.
 
-For reference, I compare against published RL results: PPO self-play from [Gessler et al. (2025)](https://arxiv.org/abs/2503.17821) on Overcooked, and IPPO and MAPPO from [Song et al. (2023)](https://arxiv.org/abs/2309.12951) on football. These numbers come from other implementations and protocols, so the comparison is about the level of performance reached.
+We compare the self-evolved controllers with reported reinforcement-learning results: PPO self-play from [Gessler et al. (2025)](https://arxiv.org/abs/2503.17821) on Overcooked, and IPPO and MAPPO from [Song et al. (2023)](https://arxiv.org/abs/2309.12951) on Google Research Football.
 
 ## Results and Analysis
 
