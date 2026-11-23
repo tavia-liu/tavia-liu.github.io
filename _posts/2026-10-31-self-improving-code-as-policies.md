@@ -91,53 +91,41 @@ An agent can easily mistake a plateau for the best possible score, and then it s
 
 ### Under stochastic dynamics: Google Research Football
 
-The best controllers score below IPPO on all eight scenarios and below MAPPO on seven. Run, Pass and Shoot is the exception, at 72% against MAPPO's reported 66%. Counterattack Hard reaches 29% against 81.3%; Five vs Five reaches 65% against 96%; Eleven vs Eleven reaches 14% against 45.4%.
+The best controllers score below IPPO on all eight scenarios and below MAPPO on seven. Run, Pass and Shoot is the exception, at 72% against MAPPO's reported 66%. The gap is widest on the harder tasks. Counterattack Hard reaches 29% against 81.3%, and Eleven vs Eleven reaches 14% against 45.4%.
 
 <figure style="margin: 2rem 0; max-width: 100%;">
   <img src="{{ '/assets/img/research/football-mappo-vs-code-policy.png' | relative_url }}?v=20261031-3v1c" alt="Success rates across eight football scenarios, comparing self-evolved Fable 5 controllers with published IPPO and MAPPO results." style="display: block; width: 100%; height: auto;">
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 5.</strong> Football success rates compared with IPPO and MAPPO, using fresh evaluation seeds and pooling designated replications.</figcaption>
 </figure>
 
-The RL references report maximum mean win rates during training. Our controllers use 100-seed evaluation batches, pooling designated replications; these batches also inform selection. Eleven vs Eleven records 14 wins, 57 draws, and 29 losses. Three vs One reports 75%, pooling an exact replication.
+The RL references report maximum mean win rates during training. Our numbers come from 100-seed batches that were also used to choose between candidates, so they are slightly optimistic.
 
-#### Evaluation variability and strategy revision
+#### One evaluation says very little
 
-An early Three vs One controller scores 63% on one 100-episode batch and 46% on an exact replication. A trace can identify a possible failure mechanism, but fresh-seed evaluation is needed to determine whether the proposed repair improves performance.
+In Overcooked, a failed rollout points at a specific collision. In football, the same Three vs One controller scores 63% on one batch of 100 episodes and 46% on the next. Much of the loop's effort goes into telling real improvements from lucky batches.
 
-Counterattack Hard provides a successful example. An early controller tries to draw defenders wide and cut the ball back, winning 18 of 100 episodes. Trace inspection finds that 17 wins involve a central-seam shot; the intended wide phase produces only one win in 54 entries. The revised controller seeks the central shot earlier. Attempts increase from 38 to 59 per 100 episodes, conversion stays near 48%, and overall success rises to 29%. The revision improves access to a scoring opportunity while leaving its conversion rate largely unchanged.
+Reading traces still helps. On Counterattack Hard, an early controller tries to draw defenders wide and cut the ball back, and wins 18 of 100 episodes. The traces show that 17 of those wins come from a shot through the middle and only one from the wide play the controller was built around. The next version goes for the central shot earlier and reaches 29%.
 
 <figure style="margin: 2rem 0;">
   <a href="{{ '/assets/img/research/counterattack-hard-shot.png' | relative_url }}"><img src="{{ '/assets/img/research/counterattack-hard-shot.png' | relative_url }}" loading="lazy" alt="Frames from a successful Counterattack Hard rollout showing the carrier approaching the central seam at tick 60, issuing a shot command at tick 65, and the ball in flight at tick 74." style="display: block; width: 100%; height: auto;"></a>
   <figcaption style="margin-top: .65rem; color: #65717d; font-size: .88rem; line-height: 1.5;"><strong>Figure 6.</strong> Central-shot execution in one successful Counterattack Hard rollout. The full batch records 29 wins in 100 episodes. Figure 1 contains the complete replay.</figcaption>
 </figure>
 
-#### Ball control and reception timing
+#### The loop optimizes whatever the evaluator exposes
 
-Football also requires control of persistent movement, sprint, and dribble states. In Pass and Shoot probes, a controller retains sprint after reception and loses possession under pressure. Releasing sprint while keeping dribble active lets the carrier retain the ball longer. In Three vs One, another revision activates dribble before reception, preserves diagonal movement, and shoots immediately on possession. These details connect a planned route to its execution.
+Our first football runs used a fixed seed, and the controllers reached 100% on Three vs One and both Counterattack tasks. On new seeds they scored 20%, 0%, and 0%. They had memorized one trajectory.
 
-The MAPPO diagnostics identify a further distinction. A trained policy sends a loose ball toward the penalty area to draw out the goalkeeper. The receiver uses a buffered first-touch shot for low deliveries and controls a higher, bouncing ball before releasing it. The agent reproduces the opening delivery but its subsequent receiving and finishing rules score 56% on 100 fresh seeds. The diagnostic log reports 91% for the MAPPO reference in the same evaluator. The remaining difference involves control after the opening pass, including interception, first touch, and shot timing.
+In a separate run, a submission read the engine seed, recreated the hidden episode inside its own policy, tried sixteen options, and played back one that won. It scored 100% and we excluded it. Nothing in the prompt asked for this. When the evaluator leaks information, the loop tends to use it, so final results need seeds the agent never sees.
 
-Teammate support remains useful. In later Three vs One experiments, a far-post attacker collects goalkeeper parries under the scenario's disabled offside rule. That controller scores 81% on 100 fresh seeds. Several additional passing sequences are abandoned, while spatial support survives.
+#### Where the gap is
 
-#### Generalization and evaluator access
+Most of the remaining gap appears to be in low-level control, such as receiving the ball, the first touch, and shot timing, which is hard to write as rules. On Pass and Shoot, rules alone reach 74%. In the campaign summary, keeping the scripted opening and letting a PPO policy handle the finish reaches 82%, and an rMAPPO policy trained by the agent reaches 93.5%.
 
-Earlier fixed-seed controllers reach 100% development success on Three vs One and both Counterattack tasks. In the held-out audit, they score 20%, 0%, and 0%, respectively. The audit uses ten new engine seeds, each repeated 100 times; its 1,000 episodes cover ten distinct seeds. Development success on one trajectory transfers poorly to this seed set.
+## Conclusion
 
-A separate Three vs One submission reads the engine seed, recreates the hidden episode, tests sixteen options, and executes one already observed winning. It scores 100% on both 100- and 300-episode evaluations and is excluded. The operator then prohibits seed access and nested environments, and the campaign continues under that rule. Three vs One is therefore reported from before this change, and the later experiments appear in this post only as diagnostics. These failures establish why fresh seeds, isolation of hidden evaluation information, and a final test outside candidate selection serve different purposes.
+The loop is good at coordination that can be worked out in advance and weak at coordination that depends on reflexes. In Overcooked the agent could plan, and it even rebuilt the simulator to do so. In football, planning was not the bottleneck.
 
-#### Control interfaces and learned subpolicies
-
-On Counterattack Easy, switching from a fixed controlled roster to proximity-based player assignment raises the observed frontier from 35% to 65%. The engine transfers control to the receiver as the ball moves, changing which parts of the attack the policy can execute.
-
-The Pass and Shoot campaign also changes policy representation. Its recorded summary reports 74% for rules, 82% for a scripted opening with a PPO finishing subpolicy, and 93.5% for an rMAPPO policy trained by the agent. These follow-ups motivate combining explicit team plans with learned reception and finishing control.
-
-## What I would change in the next loop
-
-The Overcooked result makes a case for letting coding agents build tools rather than only edit a policy file. Denied the simulator, Fable rebuilt one from the rollout traces, checked it against every recorded episode, and planned on the copy. The strongest artifact may be the model that produces the policy.
-
-The next harness should make three distinctions explicit. Count offline search alongside evaluations so the budget reflects the work performed. Check ceiling claims with a checker independent of the proposing agent's controller. Separate candidate selection from an isolated final evaluation on unseen randomness.
-
-For football, the most informative next experiment is to vary where a joint script hands control to a learned subpolicy. Pass and Shoot provides one encouraging case. Testing that split across scenarios would tell us which parts of coordination benefit from explicit planning and which benefit from learning through repeated interaction.
+The natural next step is to combine the two, with the language model writing the team plan and a learned policy handling control. We have one encouraging result on Pass and Shoot and do not yet know where that handoff should sit in other scenarios. That is what we want to try next.
 
 ## Acknowledgements
 
